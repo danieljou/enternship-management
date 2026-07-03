@@ -1,4 +1,22 @@
 {
+  "landing": {
+    "nav_login": "Sign in",
+    "nav_dashboard": "Dashboard",
+    "hero_tagline_prefix": "Intern tracking,",
+    "hero_tagline_highlight": "simplified",
+    "hero_subtitle": "FUTURIX-iTech centralizes the management of your interns, partner institutions, and programs on a single modern, secure platform.",
+    "hero_cta": "Access the platform",
+    "features_title": "Everything you need",
+    "feature_stagiaires_title": "Intern management",
+    "feature_stagiaires_description": "Create intern profiles, automatically generate their accounts, and track their journey.",
+    "feature_academic_title": "Institutions & programs",
+    "feature_academic_description": "Organize your academic partnerships and the programs tied to each intern.",
+    "feature_dashboard_title": "Centralized dashboard",
+    "feature_dashboard_description": "See your headcount and its breakdown at a glance.",
+    "feature_security_title": "Secure access",
+    "feature_security_description": "Supabase authentication and dedicated roles to protect your interns' data.",
+    "footer": "All rights reserved."
+  },
   "table": {
     "empty": "No results.",
     "columns": "Columns",
@@ -95,7 +113,13 @@
       "stagiaires": "Interns",
       "etablissements": "Institutions",
       "filieres": "Programs"
-    }
+    },
+    "quick_actions_title": "Quick actions",
+    "quick_add_stagiaire": "Add an intern",
+    "quick_manage_etablissements": "Manage institutions",
+    "quick_manage_filieres": "Manage programs",
+    "section_breakdown_title": "Breakdown by section",
+    "section_breakdown_empty": "No interns yet."
   },
   "etablissements": {
     "title": "Institutions",
@@ -186,6 +210,16 @@
     "delete_confirm_description": "This permanently deletes the intern and their associated account.",
     "delete_success": "Intern deleted.",
     "delete_error": "Couldn't delete the intern."
+  },
+  "stagiaireSpace": {
+    "welcome": "Welcome",
+    "title": "Your intern space is coming soon",
+    "description": "We're building your portal: task tracking, evaluations, documents, and messaging with your supervisor. Check back soon!",
+    "feature_tasks": "Track your assignments and tasks",
+    "feature_evaluations": "Your evaluation history",
+    "feature_documents": "Documents and resources",
+    "feature_messaging": "Messaging with your supervisor",
+    "logout": "Log out"
   },
   "unauthorized": {
     "title": "Access denied",

@@ -26,6 +26,10 @@ export default async function DashboardLayout({
     .eq("id", user.id)
     .single();
 
+  if (profile?.role === "stagiaire") {
+    redirect("/espace-stagiaire");
+  }
+
   if (profile?.role !== "admin") {
     redirect("/unauthorized");
   }

@@ -28,6 +28,7 @@ export function getEtablissementColumns({
   return [
     {
       accessorKey: "nom",
+      meta: { title: t("etablissements.nom_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("etablissements.nom_column")} />
       ),
@@ -37,6 +38,7 @@ export function getEtablissementColumns({
     },
     {
       accessorKey: "created_at",
+      meta: { title: t("etablissements.created_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("etablissements.created_column")} />
       ),
@@ -48,6 +50,7 @@ export function getEtablissementColumns({
     },
     {
       id: "actions",
+      enableHiding: false,
       header: () => <span className="sr-only">{t("common.actions")}</span>,
       cell: ({ row }) => (
         <DropdownMenu>

@@ -24,6 +24,7 @@ export function getFiliereColumns({ t, onEdit, onDelete }: ColumnsOptions): Colu
   return [
     {
       accessorKey: "nom",
+      meta: { title: t("filieres.nom_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("filieres.nom_column")} />
       ),
@@ -33,6 +34,7 @@ export function getFiliereColumns({ t, onEdit, onDelete }: ColumnsOptions): Colu
     },
     {
       accessorKey: "created_at",
+      meta: { title: t("filieres.created_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("filieres.created_column")} />
       ),
@@ -44,6 +46,7 @@ export function getFiliereColumns({ t, onEdit, onDelete }: ColumnsOptions): Colu
     },
     {
       id: "actions",
+      enableHiding: false,
       header: () => <span className="sr-only">{t("common.actions")}</span>,
       cell: ({ row }) => (
         <DropdownMenu>

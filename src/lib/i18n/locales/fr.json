@@ -1,4 +1,22 @@
 {
+  "landing": {
+    "nav_login": "Se connecter",
+    "nav_dashboard": "Tableau de bord",
+    "hero_tagline_prefix": "Le suivi des stagiaires,",
+    "hero_tagline_highlight": "simplifié",
+    "hero_subtitle": "FUTURIX-iTech centralise la gestion de vos stagiaires, établissements partenaires et filières sur une seule plateforme moderne et sécurisée.",
+    "hero_cta": "Accéder à la plateforme",
+    "features_title": "Tout ce dont vous avez besoin",
+    "feature_stagiaires_title": "Gestion des stagiaires",
+    "feature_stagiaires_description": "Créez des profils stagiaires, générez automatiquement leurs comptes et suivez leur parcours.",
+    "feature_academic_title": "Établissements & filières",
+    "feature_academic_description": "Organisez vos partenariats académiques et les filières associées à chaque stagiaire.",
+    "feature_dashboard_title": "Tableau de bord centralisé",
+    "feature_dashboard_description": "Visualisez vos effectifs et leur répartition en un coup d'œil.",
+    "feature_security_title": "Accès sécurisé",
+    "feature_security_description": "Authentification Supabase et rôles dédiés pour protéger les données de vos stagiaires.",
+    "footer": "Tous droits réservés."
+  },
   "table": {
     "empty": "Aucun résultat.",
     "columns": "Colonnes",
@@ -95,7 +113,13 @@
       "stagiaires": "Stagiaires",
       "etablissements": "Établissements",
       "filieres": "Filières"
-    }
+    },
+    "quick_actions_title": "Actions rapides",
+    "quick_add_stagiaire": "Ajouter un stagiaire",
+    "quick_manage_etablissements": "Gérer les établissements",
+    "quick_manage_filieres": "Gérer les filières",
+    "section_breakdown_title": "Répartition par section",
+    "section_breakdown_empty": "Aucun stagiaire pour le moment."
   },
   "etablissements": {
     "title": "Établissements",
@@ -190,6 +214,16 @@
   "unauthorized": {
     "title": "Accès refusé",
     "description": "Vous n'avez pas les droits nécessaires pour accéder au tableau de bord. Contactez un administrateur si vous pensez qu'il s'agit d'une erreur.",
+    "logout": "Se déconnecter"
+  },
+  "stagiaireSpace": {
+    "welcome": "Bienvenue",
+    "title": "Votre espace stagiaire arrive bientôt",
+    "description": "Nous construisons votre portail : suivi de vos missions, évaluations, documents et échanges avec votre encadrant. Revenez bientôt !",
+    "feature_tasks": "Suivi de vos missions et tâches",
+    "feature_evaluations": "Historique de vos évaluations",
+    "feature_documents": "Documents et ressources",
+    "feature_messaging": "Messagerie avec votre encadrant",
     "logout": "Se déconnecter"
   },
   "comingSoon": {

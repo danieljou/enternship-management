@@ -28,6 +28,7 @@ export function getStagiaireColumns({
   return [
     {
       accessorKey: "nom",
+      meta: { title: t("stagiaires.nom_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("stagiaires.nom_column")} />
       ),
@@ -37,12 +38,14 @@ export function getStagiaireColumns({
     },
     {
       accessorKey: "prenom",
+      meta: { title: t("stagiaires.prenom_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("stagiaires.prenom_column")} />
       ),
     },
     {
       accessorKey: "email",
+      meta: { title: t("stagiaires.email_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("stagiaires.email_column")} />
       ),
@@ -53,6 +56,7 @@ export function getStagiaireColumns({
     {
       id: "niveau",
       accessorFn: (row) => String(row.niveau),
+      meta: { title: t("stagiaires.niveau_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("stagiaires.niveau_column")} />
       ),
@@ -60,6 +64,7 @@ export function getStagiaireColumns({
     {
       id: "etablissement",
       accessorFn: (row) => row.etablissement?.nom ?? "—",
+      meta: { title: t("stagiaires.etablissement_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("stagiaires.etablissement_column")} />
       ),
@@ -67,12 +72,14 @@ export function getStagiaireColumns({
     {
       id: "filiere",
       accessorFn: (row) => row.filiere?.nom ?? "—",
+      meta: { title: t("stagiaires.filiere_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("stagiaires.filiere_column")} />
       ),
     },
     {
       accessorKey: "section",
+      meta: { title: t("stagiaires.section_column") },
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t("stagiaires.section_column")} />
       ),
@@ -84,6 +91,7 @@ export function getStagiaireColumns({
     },
     {
       id: "actions",
+      enableHiding: false,
       header: () => <span className="sr-only">{t("common.actions")}</span>,
       cell: ({ row }) => (
         <DropdownMenu>
