@@ -9,6 +9,7 @@ import {
   Building2,
   FileText,
   GraduationCap,
+  KanbanSquare,
   LayoutDashboard,
   ListChecks,
   NotebookText,
@@ -45,6 +46,7 @@ const NAV_GROUPS: { labelKey: string; items: NavItem[] }[] = [
     labelKey: "sidebar.group_management",
     items: [
       { href: "/dashboard/stagiaires", labelKey: "sidebar.stagiaires", icon: GraduationCap },
+      { href: "/dashboard/sessions", labelKey: "sidebar.sessions", icon: KanbanSquare },
       { href: "/dashboard/etablissements", labelKey: "sidebar.etablissements", icon: Building2 },
       { href: "/dashboard/filieres", labelKey: "sidebar.filieres", icon: NotebookText },
     ],

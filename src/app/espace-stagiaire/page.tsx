@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
-import { Sparkles } from "lucide-react";
 
-import { FuturixLogo } from "@/components/futurix-logo";
-import { LanguageToggle } from "@/components/language-toggle";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { EmptyStateMessage } from "@/components/empty-state-message";
 import { createClient } from "@/lib/supabase/server";
+import type { Evaluation, StageSession, StagiaireWithRelations } from "@/lib/types";
 
-import { StagiaireSpaceContent } from "./stagiaire-space-content";
+import { StagiaireHome } from "./stagiaire-home";
 
 export const metadata: Metadata = {
   title: "Espace stagiaire — FUTURIX-iTech",
@@ -19,38 +16,64 @@ export default async function EspaceStagiairePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/login");
-  }
-
   const { data: stagiaire } = await supabase
     .from("stagiaires")
-    .select("prenom")
-    .eq("user_id", user.id)
+    .select("*, etablissement:etablissements(id, nom), filiere:filieres(id, nom)")
+    .eq("user_id", user!.id)
     .single();
 
-  const firstName = stagiaire?.prenom ?? user.email?.split("@")[0] ?? null;
+  if (!stagiaire) {
+    return <EmptyStateMessage messageKey="stagiaireHome.no_profile" />;
+  }
+
+  const { data: enrollment } = await supabase
+    .from("session_stagiaires")
+    .select("session:stage_sessions(*)")
+    .eq("stagiaire_id", stagiaire.id)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const currentSession = enrollment?.session as StageSession | null | undefined;
+
+  let etapesCount = 0;
+  let tachesCount = 0;
+  let latestEvaluation: Evaluation | null = null;
+
+  if (currentSession) {
+    const [{ count: etapesTotal }, { count: tachesTotal }, { data: evaluation }] =
+      await Promise.all([
+        supabase
+          .from("session_etapes")
+          .select("id", { count: "exact", head: true })
+          .eq("session_id", currentSession.id),
+        supabase
+          .from("session_taches")
+          .select("id", { count: "exact", head: true })
+          .eq("session_id", currentSession.id)
+          .eq("stagiaire_id", stagiaire.id),
+        supabase
+          .from("evaluations")
+          .select("*")
+          .eq("session_id", currentSession.id)
+          .eq("stagiaire_id", stagiaire.id)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+      ]);
+
+    etapesCount = etapesTotal ?? 0;
+    tachesCount = tachesTotal ?? 0;
+    latestEvaluation = (evaluation as Evaluation | null) ?? null;
+  }
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center bg-background px-6 py-16">
-      <div className="absolute top-6 right-6 flex gap-1">
-        <LanguageToggle />
-        <ThemeToggle />
-      </div>
-
-      <div className="w-full max-w-sm">
-        <div className="mb-8 flex justify-center">
-          <FuturixLogo />
-        </div>
-
-        <div className="flex flex-col items-center rounded-2xl bg-card p-8 text-center shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset,0_24px_60px_-24px_rgba(0,0,0,0.25)] sm:p-10 dark:shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset,0_24px_60px_-24px_rgba(0,0,0,0.7)]">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
-            <Sparkles className="h-6 w-6" />
-          </span>
-
-          <StagiaireSpaceContent firstName={firstName} />
-        </div>
-      </div>
-    </main>
+    <StagiaireHome
+      stagiaire={stagiaire as StagiaireWithRelations}
+      currentSession={currentSession ?? null}
+      etapesCount={etapesCount}
+      tachesCount={tachesCount}
+      latestEvaluation={latestEvaluation}
+    />
   );
 }
