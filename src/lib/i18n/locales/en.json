@@ -15,6 +15,14 @@
     "feature_dashboard_description": "See your headcount and its breakdown at a glance.",
     "feature_security_title": "Secure access",
     "feature_security_description": "Supabase authentication and dedicated roles to protect your interns' data.",
+    "hero_badge": "Internship management platform",
+    "hero_secondary_cta": "See what's inside",
+    "preview_column_todo": "To onboard",
+    "preview_column_progress": "In progress",
+    "preview_column_done": "Done",
+    "cta_title": "Ready to simplify intern tracking?",
+    "cta_subtitle": "Join FUTURIX-iTech and centralize the management of your cohorts in minutes.",
+    "cta_button": "Get started",
     "footer": "All rights reserved."
   },
   "table": {
@@ -121,7 +129,9 @@
     "quick_manage_etablissements": "Manage institutions",
     "quick_manage_filieres": "Manage programs",
     "section_breakdown_title": "Breakdown by section",
-    "section_breakdown_empty": "No interns yet."
+    "section_breakdown_empty": "No interns yet.",
+    "filiere_chart_title": "Interns by program",
+    "filiere_chart_empty": "No intern assigned to a program yet."
   },
   "etablissements": {
     "title": "Institutions",
@@ -393,6 +403,7 @@
     "delete_confirm_description": "This action cannot be undone. The task will be permanently deleted.",
     "move_error": "Couldn't move the task.",
     "move_to": "Move to",
+    "drag_handle": "Drag to move",
     "no_etapes": "No steps have been defined for this session yet."
   },
   "unauthorized": {

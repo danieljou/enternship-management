@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { SidebarCollapseButton } from "@/components/sidebar-collapse-button";
 import {
   Sidebar,
   SidebarContent,
@@ -58,23 +59,27 @@ export function StagiaireSidebar() {
 
   return (
     <Sidebar collapsible="icon" variant="inset">
-      <SidebarHeader>
-        <Link href="/espace-stagiaire" className="flex items-center gap-3 px-2 py-2">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-400 text-sm font-bold text-neutral-950">
-            F
-          </span>
-          <span className="flex items-baseline gap-1 text-sm font-semibold tracking-tight text-foreground group-data-[collapsible=icon]:hidden">
-            FUTURIX
-            <span className="text-cyan-600 dark:text-cyan-400">iTech</span>
-          </span>
-        </Link>
+      <SidebarHeader className="relative">
+        <div className="flex items-center gap-2 px-2 py-2">
+          <Link href="/espace-stagiaire" className="flex min-w-0 flex-1 items-center gap-3">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sm font-bold text-sidebar-primary-foreground">
+              F
+            </span>
+            <span className="flex items-baseline gap-1 text-sm font-semibold tracking-tight text-sidebar-foreground group-data-[collapsible=icon]:hidden">
+              FUTURIX
+              <span className="text-sidebar-primary">iTech</span>
+            </span>
+          </Link>
+          <SidebarCollapseButton className="group-data-[collapsible=icon]:hidden" />
+        </div>
+        <SidebarCollapseButton className="hidden group-data-[collapsible=icon]:flex" />
       </SidebarHeader>
 
       <SidebarSeparator />
 
       <SidebarContent className="gap-1 py-1">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-[10px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
+          <SidebarGroupLabel className="text-[10px] font-semibold tracking-wider text-sidebar-foreground/50 uppercase">
             {t("stagiaireNav.group_label")}
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -86,7 +91,7 @@ export function StagiaireSidebar() {
                 return (
                   <SidebarMenuItem key={href}>
                     {isActive && (
-                      <span className="absolute inset-y-1.5 left-0 w-0.5 rounded-full bg-cyan-500" />
+                      <span className="absolute inset-y-1.5 left-0 w-0.5 rounded-full bg-sidebar-primary" />
                     )}
                     {disabled ? (
                       <SidebarMenuButton disabled tooltip={label}>

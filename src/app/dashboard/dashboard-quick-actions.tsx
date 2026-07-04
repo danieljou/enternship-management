@@ -36,7 +36,7 @@ export function DashboardQuickActions() {
         {ACTIONS.map(({ href, labelKey, icon: Icon }) => (
           <Button key={href} asChild variant="ghost" className="justify-start px-3">
             <Link href={href}>
-              <Icon className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
+              <Icon className="h-4 w-4 text-primary" />
               {t(labelKey)}
               <ChevronRight className="ml-auto h-4 w-4 text-muted-foreground" />
             </Link>

@@ -15,6 +15,14 @@
     "feature_dashboard_description": "Visualisez vos effectifs et leur répartition en un coup d'œil.",
     "feature_security_title": "Accès sécurisé",
     "feature_security_description": "Authentification Supabase et rôles dédiés pour protéger les données de vos stagiaires.",
+    "hero_badge": "Plateforme de gestion des stages",
+    "hero_secondary_cta": "Découvrir les fonctionnalités",
+    "preview_column_todo": "À intégrer",
+    "preview_column_progress": "En cours",
+    "preview_column_done": "Terminé",
+    "cta_title": "Prêt à simplifier le suivi de vos stagiaires ?",
+    "cta_subtitle": "Rejoignez FUTURIX-iTech et centralisez la gestion de vos promotions en quelques minutes.",
+    "cta_button": "Commencer maintenant",
     "footer": "Tous droits réservés."
   },
   "table": {
@@ -121,7 +129,9 @@
     "quick_manage_etablissements": "Gérer les établissements",
     "quick_manage_filieres": "Gérer les filières",
     "section_breakdown_title": "Répartition par section",
-    "section_breakdown_empty": "Aucun stagiaire pour le moment."
+    "section_breakdown_empty": "Aucun stagiaire pour le moment.",
+    "filiere_chart_title": "Stagiaires par filière",
+    "filiere_chart_empty": "Aucun stagiaire rattaché à une filière pour le moment."
   },
   "etablissements": {
     "title": "Établissements",
@@ -328,6 +338,7 @@
     "delete_confirm_description": "Cette action est irréversible. La tâche sera définitivement supprimée.",
     "move_error": "Impossible de déplacer la tâche.",
     "move_to": "Déplacer vers",
+    "drag_handle": "Glisser pour déplacer",
     "no_etapes": "Aucune étape n'a encore été définie pour cette session."
   },
   "unauthorized": {
