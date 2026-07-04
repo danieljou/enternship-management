@@ -45,12 +45,7 @@ const NAV_ITEMS: NavItem[] = [
     icon: ClipboardCheck,
   },
   { href: "/espace-stagiaire/documents", labelKey: "stagiaireNav.documents", icon: FileText },
-  {
-    href: "/espace-stagiaire/messagerie",
-    labelKey: "stagiaireNav.messagerie",
-    icon: MessageCircle,
-    disabled: true,
-  },
+  { href: "/espace-stagiaire/messagerie", labelKey: "stagiaireNav.messagerie", icon: MessageCircle },
 ];
 
 function isItemActive(pathname: string, href: string) {

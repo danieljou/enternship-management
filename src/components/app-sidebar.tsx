@@ -12,6 +12,7 @@ import {
   KanbanSquare,
   LayoutDashboard,
   ListChecks,
+  MessageCircle,
   NotebookText,
   Settings,
 } from "lucide-react";
@@ -40,7 +41,10 @@ interface NavItem {
 const NAV_GROUPS: { labelKey: string; items: NavItem[] }[] = [
   {
     labelKey: "sidebar.group_overview",
-    items: [{ href: "/dashboard", labelKey: "sidebar.dashboard", icon: LayoutDashboard }],
+    items: [
+      { href: "/dashboard", labelKey: "sidebar.dashboard", icon: LayoutDashboard },
+      { href: "/dashboard/messages", labelKey: "sidebar.messages", icon: MessageCircle },
+    ],
   },
   {
     labelKey: "sidebar.group_management",

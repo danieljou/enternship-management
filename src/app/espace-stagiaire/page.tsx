@@ -20,7 +20,7 @@ export default async function EspaceStagiairePage() {
     .from("stagiaires")
     .select("*, etablissement:etablissements(id, nom), filiere:filieres(id, nom)")
     .eq("user_id", user!.id)
-    .single();
+    .maybeSingle();
 
   if (!stagiaire) {
     return <EmptyStateMessage messageKey="stagiaireHome.no_profile" />;

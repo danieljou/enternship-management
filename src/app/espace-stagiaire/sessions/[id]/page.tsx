@@ -25,7 +25,7 @@ export default async function StagiaireSessionDetailPage({
     .from("stagiaires")
     .select("id")
     .eq("user_id", user!.id)
-    .single();
+    .maybeSingle();
 
   if (!stagiaire) {
     notFound();

@@ -108,3 +108,26 @@ export interface SessionDocument {
 export interface SessionDocumentWithSession extends SessionDocument {
   session: Pick<StageSession, "id" | "nom"> | null;
 }
+
+export type ChatChannelType = "general" | "inbox";
+
+export interface ChatChannel {
+  id: string;
+  type: ChatChannelType;
+  stagiaire_id: string | null;
+  created_at: string;
+}
+
+export interface ChatChannelWithStagiaire extends ChatChannel {
+  stagiaire: Pick<Stagiaire, "id" | "nom" | "prenom" | "email"> | null;
+}
+
+export interface ChatMessage {
+  id: string;
+  channel_id: string;
+  sender_id: string;
+  sender_role: AppRole;
+  sender_name: string;
+  body: string;
+  created_at: string;
+}

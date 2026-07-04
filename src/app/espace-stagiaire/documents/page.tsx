@@ -20,7 +20,7 @@ export default async function StagiaireDocumentsPage() {
     .from("stagiaires")
     .select("id")
     .eq("user_id", user!.id)
-    .single();
+    .maybeSingle();
 
   if (!stagiaire) {
     return <EmptyStateMessage messageKey="stagiaireHome.no_profile" />;

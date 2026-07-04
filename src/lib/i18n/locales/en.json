@@ -72,6 +72,7 @@
     "group_management": "Management",
     "group_monitoring": "Monitoring",
     "dashboard": "Dashboard",
+    "messages": "Messages",
     "stagiaires": "Interns",
     "sessions": "Sessions",
     "etablissements": "Institutions",
@@ -264,6 +265,18 @@
   },
   "documents": {
     "download_error": "Couldn't download the document."
+  },
+  "chat": {
+    "title": "Messages",
+    "description_admin": "Chat with interns in real time.",
+    "description_stagiaire": "Chat with the administration in real time.",
+    "no_channels": "No conversation available.",
+    "general_channel": "General",
+    "inbox_channel": "Private inbox",
+    "empty_conversation": "No messages yet. Start the conversation!",
+    "message_placeholder": "Write a message…",
+    "message_required": "Message can't be empty.",
+    "send_error": "Couldn't send the message."
   },
   "sessions": {
     "title": "Stage sessions",

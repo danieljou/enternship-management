@@ -72,6 +72,7 @@
     "group_management": "Gestion",
     "group_monitoring": "Suivi",
     "dashboard": "Dashboard",
+    "messages": "Messages",
     "stagiaires": "Stagiaires",
     "sessions": "Sessions",
     "etablissements": "Établissements",
@@ -386,6 +387,18 @@
   },
   "documents": {
     "download_error": "Impossible de télécharger le document."
+  },
+  "chat": {
+    "title": "Messages",
+    "description_admin": "Échangez avec les stagiaires en temps réel.",
+    "description_stagiaire": "Échangez avec l'administration en temps réel.",
+    "no_channels": "Aucune conversation disponible.",
+    "general_channel": "Général",
+    "inbox_channel": "Messagerie privée",
+    "empty_conversation": "Aucun message pour le moment. Lancez la conversation !",
+    "message_placeholder": "Écrivez un message…",
+    "message_required": "Le message ne peut pas être vide.",
+    "send_error": "Impossible d'envoyer le message."
   },
   "comingSoon": {
     "title": "Bientôt disponible",

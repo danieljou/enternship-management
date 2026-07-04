@@ -20,7 +20,7 @@ export default async function StagiaireKanbanPage() {
     .from("stagiaires")
     .select("id")
     .eq("user_id", user!.id)
-    .single();
+    .maybeSingle();
 
   if (!stagiaire) {
     return <EmptyStateMessage messageKey="stagiaireKanban.no_session" />;
