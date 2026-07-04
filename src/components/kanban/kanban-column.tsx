@@ -46,7 +46,7 @@ export function KanbanColumn({
   });
 
   return (
-    <div className="flex w-72 shrink-0 flex-col gap-3 rounded-xl border bg-muted/30 p-3">
+    <div className="flex min-w-72 flex-1 flex-col gap-3 rounded-xl border bg-muted/30 p-3">
       <div className="flex items-center gap-2">
         <span className={cn("flex h-7 w-7 shrink-0 items-center justify-center rounded-md", colors.soft)}>
           <Icon className="h-3.5 w-3.5" />

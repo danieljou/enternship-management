@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { DocumentDownloadButton } from "@/components/documents/document-download-button";
+import { FileDropzone } from "@/components/documents/file-dropzone";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -36,6 +37,7 @@ export function SessionDocumentsTab({
   const { t } = useTranslation();
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [deleting, setDeleting] = useState<SessionDocument | null>(null);
@@ -45,10 +47,11 @@ export function SessionDocumentsTab({
     const formData = new FormData(event.currentTarget);
     formData.set("sessionId", sessionId);
 
-    if (!(formData.get("file") as File)?.size) {
+    if (!file) {
       toast.error(t("sessions.document_file_required"));
       return;
     }
+    formData.set("file", file);
 
     setIsUploading(true);
     try {
@@ -64,6 +67,7 @@ export function SessionDocumentsTab({
 
       toast.success(t("sessions.document_create_success"));
       formRef.current?.reset();
+      setFile(null);
       router.refresh();
     } finally {
       setIsUploading(false);
@@ -103,8 +107,8 @@ export function SessionDocumentsTab({
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="document-file">{t("sessions.document_file_label")}</Label>
-            <Input id="document-file" name="file" type="file" required />
+            <Label>{t("sessions.document_file_label")}</Label>
+            <FileDropzone file={file} onFileChange={setFile} name="file" required />
           </div>
         </div>
         <div className="flex flex-col gap-2">

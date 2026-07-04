@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FUTURIX-iTech — Suivi des stagiaires",
+  title: "FUTURIX-iTech - Suivi des stagiaires",
   description: "Plateforme de suivi des stagiaires FUTURIX-iTech.",
 };
 

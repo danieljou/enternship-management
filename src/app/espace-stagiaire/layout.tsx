@@ -5,6 +5,7 @@ import { StagiaireTopbar } from "@/components/stagiaire-topbar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { createClient } from "@/lib/supabase/server";
+import type { AppNotification } from "@/lib/types";
 
 export default async function EspaceStagiaireLayout({
   children,
@@ -20,12 +21,23 @@ export default async function EspaceStagiaireLayout({
     redirect("/login");
   }
 
+  const { data: notifications } = await supabase
+    .from("notifications")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(20);
+
   return (
     <TooltipProvider>
       <SidebarProvider>
         <StagiaireSidebar />
         <SidebarInset className="overflow-hidden">
-          <StagiaireTopbar email={user.email ?? null} />
+          <StagiaireTopbar
+            email={user.email ?? null}
+            userId={user.id}
+            initialNotifications={(notifications as AppNotification[] | null) ?? []}
+          />
           <div className="flex-1 p-4 sm:p-6">{children}</div>
         </SidebarInset>
       </SidebarProvider>

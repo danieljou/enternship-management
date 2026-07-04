@@ -15,10 +15,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LanguageToggle } from "@/components/language-toggle";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import type { AppNotification } from "@/lib/types";
 
-export function StagiaireTopbar({ email }: { email: string | null }) {
+export function StagiaireTopbar({
+  email,
+  userId,
+  initialNotifications,
+}: {
+  email: string | null;
+  userId: string;
+  initialNotifications: AppNotification[];
+}) {
   const { t } = useTranslation();
   const initials = email ? email.slice(0, 2).toUpperCase() : "?";
 
@@ -27,6 +37,7 @@ export function StagiaireTopbar({ email }: { email: string | null }) {
       <SidebarTrigger />
 
       <div className="ml-auto flex items-center gap-1">
+        <NotificationBell userId={userId} initialNotifications={initialNotifications} />
         <LanguageToggle />
         <ThemeToggle />
 

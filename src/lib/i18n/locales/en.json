@@ -97,6 +97,8 @@
     "notifications": "Notifications",
     "notifications_empty_title": "No notifications",
     "notifications_empty_description": "You're all caught up.",
+    "notifications_mark_all_read": "Mark all as read",
+    "notifications_enable_push": "Enable browser notifications",
     "profile": "Profile",
     "settings": "Settings",
     "logout": "Log out"
@@ -122,7 +124,10 @@
     "stats": {
       "stagiaires": "Interns",
       "etablissements": "Institutions",
-      "filieres": "Programs"
+      "filieres": "Programs",
+      "sessions": "Sessions",
+      "evaluations": "Evaluations",
+      "documents": "Documents"
     },
     "quick_actions_title": "Quick actions",
     "quick_add_stagiaire": "Add an intern",
@@ -256,11 +261,17 @@
     "view_kanban": "View my Kanban",
     "link_sessions": "Session history",
     "link_evaluations": "My evaluations",
-    "link_documents": "My documents"
+    "link_documents": "My documents",
+    "stats": {
+      "sessions": "Sessions",
+      "taches": "Tasks in progress",
+      "documents": "Documents",
+      "note": "Latest grade"
+    }
   },
   "stagiaireKanban": {
     "no_session": "You're not enrolled in any stage session at the moment.",
-    "read_only": "Archived session — read only."
+    "read_only": "Archived session - read only."
   },
   "stagiaireHistorique": {
     "empty": "You haven't been enrolled in any stage session yet.",
@@ -275,6 +286,9 @@
   },
   "documents": {
     "download_error": "Couldn't download the document."
+  },
+  "notifications": {
+    "mark_read_error": "Couldn't update the notification."
   },
   "chat": {
     "title": "Messages",
@@ -341,6 +355,7 @@
     "etape_delete_confirm_description": "This action cannot be undone. The step and its tasks will be deleted.",
     "etape_move_up": "Move up",
     "etape_move_down": "Move down",
+    "etape_drag_handle": "Drag to reorder",
     "etape_reorder_error": "Couldn't reorder the steps.",
     "stagiaires_description": "Enroll interns in this session to give them access to their Kanban board.",
     "stagiaires_empty": "No interns enrolled in this session.",
@@ -376,6 +391,8 @@
     "document_titre_required": "Title is required.",
     "document_description_label": "Description",
     "document_file_label": "File",
+    "document_dropzone_label": "Drag a file here or click to browse",
+    "document_dropzone_hint": "PDF, image, Office document…",
     "document_file_required": "Please select a file.",
     "document_upload_button": "Upload",
     "document_uploading": "Uploading…",

@@ -15,7 +15,7 @@ import type {
 import { SessionDetail } from "./session-detail";
 
 export const metadata: Metadata = {
-  title: "Session de stage — FUTURIX-iTech",
+  title: "Session de stage - FUTURIX-iTech",
 };
 
 export default async function SessionDetailPage({
@@ -54,7 +54,10 @@ export default async function SessionDetailPage({
       .select("*, stagiaire:stagiaires(id, nom, prenom, email)")
       .eq("session_id", id)
       .order("created_at", { ascending: true }),
-    supabase.from("stagiaires").select("id, nom, prenom, email").order("nom", { ascending: true }),
+    supabase
+      .from("stagiaires")
+      .select("id, nom, prenom, email")
+      .order("nom", { ascending: true }),
     supabase.from("session_taches").select("*").eq("session_id", id),
     supabase.from("evaluations").select("*").eq("session_id", id),
     supabase
@@ -64,11 +67,14 @@ export default async function SessionDetailPage({
       .order("created_at", { ascending: false }),
   ]);
 
-  const enrolledRows = (enrolled as SessionStagiaireWithRelations[] | null) ?? [];
+  const enrolledRows =
+    (enrolled as SessionStagiaireWithRelations[] | null) ?? [];
   const enrolledIds = new Set(enrolledRows.map((row) => row.stagiaire_id));
-  const available = ((stagiaires as Pick<Stagiaire, "id" | "nom" | "prenom" | "email">[] | null) ?? []).filter(
-    (stagiaire) => !enrolledIds.has(stagiaire.id)
-  );
+  const available = (
+    (stagiaires as
+      | Pick<Stagiaire, "id" | "nom" | "prenom" | "email">[]
+      | null) ?? []
+  ).filter((stagiaire) => !enrolledIds.has(stagiaire.id));
 
   return (
     <SessionDetail

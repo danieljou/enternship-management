@@ -7,7 +7,7 @@ import type { SessionEtape, SessionTache, StageSession } from "@/lib/types";
 import { StagiaireSessionBoard } from "../stagiaire-kanban";
 
 export const metadata: Metadata = {
-  title: "Mon suivi de stage — FUTURIX-iTech",
+  title: "Mon suivi de stage - FUTURIX-iTech",
 };
 
 export default async function StagiaireKanbanPage() {

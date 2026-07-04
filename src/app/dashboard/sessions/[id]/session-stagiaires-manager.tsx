@@ -14,7 +14,11 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import type { SessionStagiaireWithRelations, Stagiaire } from "@/lib/types";
 
@@ -74,7 +78,9 @@ export function SessionStagiairesManager({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-sm text-muted-foreground">{t("sessions.stagiaires_description")}</p>
+        <p className="text-sm text-muted-foreground">
+          {t("sessions.stagiaires_description")}
+        </p>
         <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
           <PopoverTrigger asChild>
             <Button size="sm">
@@ -84,7 +90,9 @@ export function SessionStagiairesManager({
           </PopoverTrigger>
           <PopoverContent className="w-80 p-0" align="end">
             <Command>
-              <CommandInput placeholder={t("sessions.enroll_search_placeholder")} />
+              <CommandInput
+                placeholder={t("sessions.enroll_search_placeholder")}
+              />
               <CommandList>
                 <CommandEmpty>{t("table.empty")}</CommandEmpty>
                 <CommandGroup>
@@ -99,10 +107,14 @@ export function SessionStagiairesManager({
                         <span
                           className={cn(
                             "flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border",
-                            isSelected ? "border-primary bg-primary" : "border-input"
+                            isSelected
+                              ? "border-primary bg-primary"
+                              : "border-input",
                           )}
                         >
-                          {isSelected && <Check className="h-3 w-3 text-primary-foreground" />}
+                          {isSelected && (
+                            <Check className="h-3 w-3 text-primary-foreground" />
+                          )}
                         </span>
                         <span className="truncate">
                           {stagiaire.prenom} {stagiaire.nom}
@@ -137,10 +149,12 @@ export function SessionStagiairesManager({
             >
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium text-foreground">
-                  {stagiaire ? `${stagiaire.prenom} ${stagiaire.nom}` : "—"}
+                  {stagiaire ? `${stagiaire.prenom} ${stagiaire.nom}` : "-"}
                 </p>
                 {stagiaire && (
-                  <p className="truncate text-xs text-muted-foreground">{stagiaire.email}</p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {stagiaire.email}
+                  </p>
                 )}
               </div>
               <Button

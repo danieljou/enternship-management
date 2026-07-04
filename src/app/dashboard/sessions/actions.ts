@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
+import { createNotifications } from "@/lib/notifications";
 import { createClient } from "@/lib/supabase/server";
 import type { SessionEtape } from "@/lib/types";
 
@@ -27,14 +28,18 @@ function toSessionRow(values: SessionValues) {
   };
 }
 
-export async function createSession(values: SessionValues): Promise<ActionResult> {
+export async function createSession(
+  values: SessionValues,
+): Promise<ActionResult> {
   const parsed = sessionSchema.safeParse(values);
   if (!parsed.success) {
     return { error: "sessions.create_error" };
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.from("stage_sessions").insert(toSessionRow(parsed.data));
+  const { error } = await supabase
+    .from("stage_sessions")
+    .insert(toSessionRow(parsed.data));
   if (error) {
     return { error: "sessions.create_error" };
   }
@@ -43,7 +48,10 @@ export async function createSession(values: SessionValues): Promise<ActionResult
   return { success: true };
 }
 
-export async function updateSession(id: string, values: SessionValues): Promise<ActionResult> {
+export async function updateSession(
+  id: string,
+  values: SessionValues,
+): Promise<ActionResult> {
   const parsed = sessionSchema.safeParse(values);
   if (!parsed.success) {
     return { error: "sessions.update_error" };
@@ -76,7 +84,7 @@ export async function deleteSession(id: string): Promise<ActionResult> {
 
 export async function createEtape(
   sessionId: string,
-  values: EtapeValues
+  values: EtapeValues,
 ): Promise<ActionResult> {
   const parsed = etapeSchema.safeParse(values);
   if (!parsed.success) {
@@ -109,7 +117,7 @@ export async function createEtape(
 export async function updateEtape(
   id: string,
   sessionId: string,
-  values: EtapeValues
+  values: EtapeValues,
 ): Promise<ActionResult> {
   const parsed = etapeSchema.safeParse(values);
   if (!parsed.success) {
@@ -135,7 +143,10 @@ export async function updateEtape(
   return { success: true };
 }
 
-export async function deleteEtape(id: string, sessionId: string): Promise<ActionResult> {
+export async function deleteEtape(
+  id: string,
+  sessionId: string,
+): Promise<ActionResult> {
   const supabase = await createClient();
   const { error } = await supabase.from("session_etapes").delete().eq("id", id);
   if (error) {
@@ -149,7 +160,7 @@ export async function deleteEtape(id: string, sessionId: string): Promise<Action
 export async function moveEtape(
   sessionId: string,
   etapeId: string,
-  direction: "up" | "down"
+  direction: "up" | "down",
 ): Promise<ActionResult> {
   const supabase = await createClient();
   const { data } = await supabase
@@ -170,8 +181,14 @@ export async function moveEtape(
   const target = etapes[targetIndex];
 
   const [{ error: error1 }, { error: error2 }] = await Promise.all([
-    supabase.from("session_etapes").update({ ordre: target.ordre }).eq("id", current.id),
-    supabase.from("session_etapes").update({ ordre: current.ordre }).eq("id", target.id),
+    supabase
+      .from("session_etapes")
+      .update({ ordre: target.ordre })
+      .eq("id", current.id),
+    supabase
+      .from("session_etapes")
+      .update({ ordre: current.ordre })
+      .eq("id", target.id),
   ]);
 
   if (error1 || error2) {
@@ -182,9 +199,28 @@ export async function moveEtape(
   return { success: true };
 }
 
+export async function reorderEtapes(
+  sessionId: string,
+  orderedEtapeIds: string[],
+): Promise<ActionResult> {
+  const supabase = await createClient();
+  const results = await Promise.all(
+    orderedEtapeIds.map((id, index) =>
+      supabase.from("session_etapes").update({ ordre: index }).eq("id", id),
+    ),
+  );
+
+  if (results.some((result) => result.error)) {
+    return { error: "sessions.etape_reorder_error" };
+  }
+
+  revalidatePath(`/dashboard/sessions/${sessionId}`);
+  return { success: true };
+}
+
 export async function enrollStagiaires(
   sessionId: string,
-  stagiaireIds: string[]
+  stagiaireIds: string[],
 ): Promise<ActionResult> {
   if (stagiaireIds.length === 0) {
     return { success: true };
@@ -193,7 +229,12 @@ export async function enrollStagiaires(
   const supabase = await createClient();
   const { error } = await supabase
     .from("session_stagiaires")
-    .insert(stagiaireIds.map((stagiaireId) => ({ session_id: sessionId, stagiaire_id: stagiaireId })));
+    .insert(
+      stagiaireIds.map((stagiaireId) => ({
+        session_id: sessionId,
+        stagiaire_id: stagiaireId,
+      })),
+    );
 
   if (error) {
     return { error: "sessions.enroll_error" };
@@ -205,7 +246,7 @@ export async function enrollStagiaires(
 
 export async function unenrollStagiaire(
   sessionId: string,
-  stagiaireId: string
+  stagiaireId: string,
 ): Promise<ActionResult> {
   const supabase = await createClient();
   const { error } = await supabase
@@ -225,7 +266,7 @@ export async function unenrollStagiaire(
 export async function createEvaluation(
   sessionId: string,
   stagiaireId: string,
-  values: EvaluationValues
+  values: EvaluationValues,
 ): Promise<ActionResult> {
   const parsed = evaluationSchema.safeParse(values);
   if (!parsed.success) {
@@ -244,6 +285,23 @@ export async function createEvaluation(
     return { error: "sessions.evaluation_create_error" };
   }
 
+  const [{ data: stagiaire }, { data: session }] = await Promise.all([
+    supabase
+      .from("stagiaires")
+      .select("user_id")
+      .eq("id", stagiaireId)
+      .single(),
+    supabase.from("stage_sessions").select("nom").eq("id", sessionId).single(),
+  ]);
+
+  await createNotifications({
+    userIds: [stagiaire?.user_id],
+    type: "evaluation",
+    title: "Nouvelle évaluation",
+    body: `${parsed.data.note}/20 - ${session?.nom ?? ""}`,
+    link: "/espace-stagiaire/evaluations",
+  });
+
   revalidatePath(`/dashboard/sessions/${sessionId}`);
   revalidatePath("/espace-stagiaire/evaluations");
   return { success: true };
@@ -252,7 +310,7 @@ export async function createEvaluation(
 export async function updateEvaluation(
   id: string,
   sessionId: string,
-  values: EvaluationValues
+  values: EvaluationValues,
 ): Promise<ActionResult> {
   const parsed = evaluationSchema.safeParse(values);
   if (!parsed.success) {
@@ -278,7 +336,10 @@ export async function updateEvaluation(
   return { success: true };
 }
 
-export async function deleteEvaluation(id: string, sessionId: string): Promise<ActionResult> {
+export async function deleteEvaluation(
+  id: string,
+  sessionId: string,
+): Promise<ActionResult> {
   const supabase = await createClient();
   const { error } = await supabase.from("evaluations").delete().eq("id", id);
 
@@ -294,7 +355,7 @@ export async function deleteEvaluation(id: string, sessionId: string): Promise<A
 export async function createSessionDocument(
   sessionId: string,
   values: DocumentValues,
-  file: { storagePath: string; taille: number; typeMime: string }
+  file: { storagePath: string; taille: number; typeMime: string },
 ): Promise<ActionResult> {
   const parsed = documentSchema.safeParse(values);
   if (!parsed.success) {
@@ -323,12 +384,15 @@ export async function createSessionDocument(
 export async function deleteSessionDocument(
   id: string,
   sessionId: string,
-  storagePath: string
+  storagePath: string,
 ): Promise<ActionResult> {
   const supabase = await createClient();
   await supabase.storage.from("documents").remove([storagePath]);
 
-  const { error } = await supabase.from("session_documents").delete().eq("id", id);
+  const { error } = await supabase
+    .from("session_documents")
+    .delete()
+    .eq("id", id);
   if (error) {
     return { error: "sessions.document_delete_error" };
   }

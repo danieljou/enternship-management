@@ -1,6 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
+import { createNotifications } from "@/lib/notifications";
 import { createClient } from "@/lib/supabase/server";
 
 export async function POST(request: Request) {
@@ -57,6 +58,23 @@ export async function POST(request: Request) {
     await supabase.storage.from("documents").remove([storagePath]);
     return NextResponse.json({ error: insertError.message }, { status: 400 });
   }
+
+  const { data: enrolled } = await supabase
+    .from("session_stagiaires")
+    .select("stagiaire:stagiaires(user_id)")
+    .eq("session_id", sessionId);
+
+  const recipientIds = (enrolled ?? []).map(
+    (row) => (row.stagiaire as unknown as { user_id: string } | null)?.user_id
+  );
+
+  await createNotifications({
+    userIds: recipientIds,
+    type: "document",
+    title: "Nouveau document",
+    body: titre,
+    link: "/espace-stagiaire/documents",
+  });
 
   revalidatePath(`/dashboard/sessions/${sessionId}`);
   revalidatePath("/espace-stagiaire/documents");

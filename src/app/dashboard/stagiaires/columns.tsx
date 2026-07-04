@@ -30,7 +30,10 @@ export function getStagiaireColumns({
       accessorKey: "nom",
       meta: { title: t("stagiaires.nom_column") },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("stagiaires.nom_column")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("stagiaires.nom_column")}
+        />
       ),
       cell: ({ row }) => (
         <span className="font-medium text-foreground">{row.original.nom}</span>
@@ -40,14 +43,20 @@ export function getStagiaireColumns({
       accessorKey: "prenom",
       meta: { title: t("stagiaires.prenom_column") },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("stagiaires.prenom_column")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("stagiaires.prenom_column")}
+        />
       ),
     },
     {
       accessorKey: "email",
       meta: { title: t("stagiaires.email_column") },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("stagiaires.email_column")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("stagiaires.email_column")}
+        />
       ),
       cell: ({ row }) => (
         <span className="text-muted-foreground">{row.original.email}</span>
@@ -58,30 +67,42 @@ export function getStagiaireColumns({
       accessorFn: (row) => String(row.niveau),
       meta: { title: t("stagiaires.niveau_column") },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("stagiaires.niveau_column")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("stagiaires.niveau_column")}
+        />
       ),
     },
     {
       id: "etablissement",
-      accessorFn: (row) => row.etablissement?.nom ?? "—",
+      accessorFn: (row) => row.etablissement?.nom ?? "-",
       meta: { title: t("stagiaires.etablissement_column") },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("stagiaires.etablissement_column")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("stagiaires.etablissement_column")}
+        />
       ),
     },
     {
       id: "filiere",
-      accessorFn: (row) => row.filiere?.nom ?? "—",
+      accessorFn: (row) => row.filiere?.nom ?? "-",
       meta: { title: t("stagiaires.filiere_column") },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("stagiaires.filiere_column")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("stagiaires.filiere_column")}
+        />
       ),
     },
     {
       accessorKey: "section",
       meta: { title: t("stagiaires.section_column") },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("stagiaires.section_column")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("stagiaires.section_column")}
+        />
       ),
       cell: ({ row }) => (
         <span className="text-muted-foreground">
@@ -96,7 +117,11 @@ export function getStagiaireColumns({
       cell: ({ row }) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label={t("common.actions")}>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              aria-label={t("common.actions")}
+            >
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -105,7 +130,10 @@ export function getStagiaireColumns({
               <Pencil className="h-4 w-4" />
               {t("common.edit")}
             </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive" onSelect={() => onDelete(row.original)}>
+            <DropdownMenuItem
+              variant="destructive"
+              onSelect={() => onDelete(row.original)}
+            >
               <Trash2 className="h-4 w-4" />
               {t("common.delete")}
             </DropdownMenuItem>

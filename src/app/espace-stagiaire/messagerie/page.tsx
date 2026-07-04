@@ -6,10 +6,15 @@ import { createClient } from "@/lib/supabase/server";
 import type { ChatChannelWithStagiaire, ChatMessage } from "@/lib/types";
 
 export const metadata: Metadata = {
-  title: "Messagerie — FUTURIX-iTech",
+  title: "Messagerie - FUTURIX-iTech",
 };
 
-export default async function StagiaireMessageriePage() {
+export default async function StagiaireMessageriePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ channel?: string }>;
+}) {
+  const { channel: requestedChannelId } = await searchParams;
   const supabase = await createClient();
   const {
     data: { user },
@@ -30,12 +35,16 @@ export default async function StagiaireMessageriePage() {
     .select("*, stagiaire:stagiaires(id, nom, prenom, email)")
     .order("created_at", { ascending: true });
 
-  const sorted = ((channels as ChatChannelWithStagiaire[] | null) ?? []).sort((a, b) =>
-    a.type === b.type ? 0 : a.type === "general" ? -1 : 1
+  const sorted = ((channels as ChatChannelWithStagiaire[] | null) ?? []).sort(
+    (a, b) => (a.type === b.type ? 0 : a.type === "general" ? -1 : 1),
   );
 
   const generalChannel = sorted.find((channel) => channel.type === "general");
-  const initialChannelId = generalChannel?.id ?? sorted[0]?.id ?? "";
+  const requestedChannel = sorted.find(
+    (channel) => channel.id === requestedChannelId,
+  );
+  const initialChannelId =
+    requestedChannel?.id ?? generalChannel?.id ?? sorted[0]?.id ?? "";
 
   const { data: messages } = initialChannelId
     ? await supabase

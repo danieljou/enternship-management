@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 
 import { EmptyStateMessage } from "@/components/empty-state-message";
 import { createClient } from "@/lib/supabase/server";
-import type { Evaluation, StageSession, StagiaireWithRelations } from "@/lib/types";
+import type {
+  Evaluation,
+  StageSession,
+  StagiaireWithRelations,
+} from "@/lib/types";
 
 import { StagiaireHome } from "./stagiaire-home";
 
 export const metadata: Metadata = {
-  title: "Espace stagiaire — FUTURIX-iTech",
+  title: "Espace stagiaire - FUTURIX-iTech",
 };
 
 export default async function EspaceStagiairePage() {
@@ -18,7 +22,9 @@ export default async function EspaceStagiairePage() {
 
   const { data: stagiaire } = await supabase
     .from("stagiaires")
-    .select("*, etablissement:etablissements(id, nom), filiere:filieres(id, nom)")
+    .select(
+      "*, etablissement:etablissements(id, nom), filiere:filieres(id, nom)",
+    )
     .eq("user_id", user!.id)
     .maybeSingle();
 
@@ -26,41 +32,70 @@ export default async function EspaceStagiairePage() {
     return <EmptyStateMessage messageKey="stagiaireHome.no_profile" />;
   }
 
-  const { data: enrollment } = await supabase
-    .from("session_stagiaires")
-    .select("session:stage_sessions(*)")
-    .eq("stagiaire_id", stagiaire.id)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  const [{ data: enrollment }, { count: sessionsCount }, { data: enrollments }, { data: overallEvaluation }] =
+    await Promise.all([
+      supabase
+        .from("session_stagiaires")
+        .select("session:stage_sessions(*)")
+        .eq("stagiaire_id", stagiaire.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+      supabase
+        .from("session_stagiaires")
+        .select("id", { count: "exact", head: true })
+        .eq("stagiaire_id", stagiaire.id),
+      supabase.from("session_stagiaires").select("session_id").eq("stagiaire_id", stagiaire.id),
+      supabase
+        .from("evaluations")
+        .select("note")
+        .eq("stagiaire_id", stagiaire.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+    ]);
 
   const currentSession = enrollment?.session as StageSession | null | undefined;
+  const enrolledSessionIds = (enrollments ?? []).map((row) => row.session_id);
+
+  const { count: documentsCount } =
+    enrolledSessionIds.length > 0
+      ? await supabase
+          .from("session_documents")
+          .select("id", { count: "exact", head: true })
+          .in("session_id", enrolledSessionIds)
+      : { count: 0 };
+
+  const overallLatestNote = (overallEvaluation as { note: number } | null)?.note ?? null;
 
   let etapesCount = 0;
   let tachesCount = 0;
   let latestEvaluation: Evaluation | null = null;
 
   if (currentSession) {
-    const [{ count: etapesTotal }, { count: tachesTotal }, { data: evaluation }] =
-      await Promise.all([
-        supabase
-          .from("session_etapes")
-          .select("id", { count: "exact", head: true })
-          .eq("session_id", currentSession.id),
-        supabase
-          .from("session_taches")
-          .select("id", { count: "exact", head: true })
-          .eq("session_id", currentSession.id)
-          .eq("stagiaire_id", stagiaire.id),
-        supabase
-          .from("evaluations")
-          .select("*")
-          .eq("session_id", currentSession.id)
-          .eq("stagiaire_id", stagiaire.id)
-          .order("created_at", { ascending: false })
-          .limit(1)
-          .maybeSingle(),
-      ]);
+    const [
+      { count: etapesTotal },
+      { count: tachesTotal },
+      { data: evaluation },
+    ] = await Promise.all([
+      supabase
+        .from("session_etapes")
+        .select("id", { count: "exact", head: true })
+        .eq("session_id", currentSession.id),
+      supabase
+        .from("session_taches")
+        .select("id", { count: "exact", head: true })
+        .eq("session_id", currentSession.id)
+        .eq("stagiaire_id", stagiaire.id),
+      supabase
+        .from("evaluations")
+        .select("*")
+        .eq("session_id", currentSession.id)
+        .eq("stagiaire_id", stagiaire.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+    ]);
 
     etapesCount = etapesTotal ?? 0;
     tachesCount = tachesTotal ?? 0;
@@ -74,6 +109,9 @@ export default async function EspaceStagiairePage() {
       etapesCount={etapesCount}
       tachesCount={tachesCount}
       latestEvaluation={latestEvaluation}
+      sessionsCount={sessionsCount ?? 0}
+      documentsCount={documentsCount ?? 0}
+      overallLatestNote={overallLatestNote}
     />
   );
 }

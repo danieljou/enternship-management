@@ -6,13 +6,16 @@ import type { Etablissement, Filiere } from "@/lib/types";
 import { StagiaireCreateForm } from "./create-form";
 
 export const metadata: Metadata = {
-  title: "Nouveau stagiaire — FUTURIX-iTech",
+  title: "Nouveau stagiaire - FUTURIX-iTech",
 };
 
 export default async function NouveauStagiairePage() {
   const supabase = await createClient();
   const [{ data: etablissements }, { data: filieres }] = await Promise.all([
-    supabase.from("etablissements").select("*").order("nom", { ascending: true }),
+    supabase
+      .from("etablissements")
+      .select("*")
+      .order("nom", { ascending: true }),
     supabase.from("filieres").select("*").order("nom", { ascending: true }),
   ]);
 

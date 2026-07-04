@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/server";
 import { UnauthorizedContent } from "./unauthorized-content";
 
 export const metadata: Metadata = {
-  title: "Accès refusé — FUTURIX-iTech",
+  title: "Accès refusé - FUTURIX-iTech",
 };
 
 export default async function UnauthorizedPage() {

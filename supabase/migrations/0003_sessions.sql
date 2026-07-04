@@ -66,7 +66,7 @@ create policy "Admins manage session_taches" on public.session_taches
 
 -- Stagiaires can read the sessions/steps/enrollment they're part of, and
 -- fully manage their own Kanban tasks (create sub-tasks, move them across
--- steps) — enforced here so no extra authorization logic is needed in code.
+-- steps) - enforced here so no extra authorization logic is needed in code.
 drop policy if exists "Stagiaires read own session_stagiaires" on public.session_stagiaires;
 create policy "Stagiaires read own session_stagiaires" on public.session_stagiaires
   for select using (

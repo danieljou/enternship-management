@@ -7,7 +7,7 @@ import type { SessionDocumentWithSession } from "@/lib/types";
 import { DocumentsList } from "./documents-list";
 
 export const metadata: Metadata = {
-  title: "Documents — FUTURIX-iTech",
+  title: "Documents - FUTURIX-iTech",
 };
 
 export default async function StagiaireDocumentsPage() {

@@ -1,53 +1,38 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import {
-  Building2,
-  ClipboardCheck,
-  FileText,
-  GraduationCap,
-  KanbanSquare,
-  NotebookText,
-} from "lucide-react";
+import { ClipboardCheck, FileText, History, ListChecks } from "lucide-react";
 
-interface DashboardStatsProps {
-  stagiaires: number;
-  etablissements: number;
-  filieres: number;
-  sessions: number;
-  evaluations: number;
-  documents: number;
+interface StagiaireStatsProps {
+  sessionsCount: number;
+  tachesCount: number;
+  documentsCount: number;
+  latestNote: number | null;
 }
 
 const TILES = [
-  { key: "stagiaires", icon: GraduationCap, chartVar: "--chart-1" },
-  { key: "etablissements", icon: Building2, chartVar: "--chart-2" },
-  { key: "filieres", icon: NotebookText, chartVar: "--chart-3" },
-  { key: "sessions", icon: KanbanSquare, chartVar: "--chart-4" },
-  { key: "evaluations", icon: ClipboardCheck, chartVar: "--chart-5" },
-  { key: "documents", icon: FileText, chartVar: "--chart-1" },
+  { key: "sessions", icon: History, chartVar: "--chart-1" },
+  { key: "taches", icon: ListChecks, chartVar: "--chart-2" },
+  { key: "documents", icon: FileText, chartVar: "--chart-3" },
+  { key: "note", icon: ClipboardCheck, chartVar: "--chart-4" },
 ] as const;
 
-export function DashboardStats({
-  stagiaires,
-  etablissements,
-  filieres,
-  sessions,
-  evaluations,
-  documents,
-}: DashboardStatsProps) {
+export function StagiaireStats({
+  sessionsCount,
+  tachesCount,
+  documentsCount,
+  latestNote,
+}: StagiaireStatsProps) {
   const { t } = useTranslation();
-  const values: Record<(typeof TILES)[number]["key"], number> = {
-    stagiaires,
-    etablissements,
-    filieres,
-    sessions,
-    evaluations,
-    documents,
+  const values: Record<(typeof TILES)[number]["key"], string> = {
+    sessions: sessionsCount.toLocaleString(),
+    taches: tachesCount.toLocaleString(),
+    documents: documentsCount.toLocaleString(),
+    note: latestNote != null ? `${latestNote}/20` : "—",
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
       {TILES.map(({ key, icon: Icon, chartVar }) => (
         <div
           key={key}
@@ -64,10 +49,10 @@ export function DashboardStats({
             <Icon className="h-5 w-5" style={{ color: `var(${chartVar})` }} />
           </span>
           <p className="mt-3 text-xs text-muted-foreground sm:text-sm">
-            {t(`dashboard.stats.${key}`)}
+            {t(`stagiaireHome.stats.${key}`)}
           </p>
           <p className="text-2xl font-semibold tracking-tight text-foreground tabular-nums sm:text-3xl">
-            {values[key].toLocaleString()}
+            {values[key]}
           </p>
         </div>
       ))}

@@ -9,7 +9,7 @@ import { LoginCopy } from "./login-copy";
 import { LoginHeading } from "./login-heading";
 
 export const metadata: Metadata = {
-  title: "Connexion — FUTURIX-iTech",
+  title: "Connexion - FUTURIX-iTech",
   description: "Accédez à la plateforme de suivi des stagiaires FUTURIX-iTech.",
 };
 

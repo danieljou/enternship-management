@@ -7,7 +7,7 @@ import type { StageSession } from "@/lib/types";
 import { SessionsHistoryList } from "./sessions-history-list";
 
 export const metadata: Metadata = {
-  title: "Historique des sessions — FUTURIX-iTech",
+  title: "Historique des sessions - FUTURIX-iTech",
 };
 
 export default async function StagiaireSessionsPage() {
@@ -32,7 +32,9 @@ export default async function StagiaireSessionsPage() {
     .eq("stagiaire_id", stagiaire.id)
     .order("created_at", { ascending: false });
 
-  const sessions = ((enrollments as { session: StageSession | null }[] | null) ?? [])
+  const sessions = (
+    (enrollments as { session: StageSession | null }[] | null) ?? []
+  )
     .map((row) => row.session)
     .filter((session): session is StageSession => session !== null);
 
@@ -40,5 +42,10 @@ export default async function StagiaireSessionsPage() {
     return <EmptyStateMessage messageKey="stagiaireHistorique.empty" />;
   }
 
-  return <SessionsHistoryList sessions={sessions} currentSessionId={sessions[0]?.id ?? null} />;
+  return (
+    <SessionsHistoryList
+      sessions={sessions}
+      currentSessionId={sessions[0]?.id ?? null}
+    />
+  );
 }

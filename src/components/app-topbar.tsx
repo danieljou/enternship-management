@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import {
   BarChart3,
-  Bell,
   Building2,
   FileText,
   GraduationCap,
@@ -37,17 +36,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/components/ui/empty";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { LanguageToggle } from "@/components/language-toggle";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 import { ThemeToggle } from "@/components/theme-toggle";
+import type { AppNotification } from "@/lib/types";
 
 import { logout } from "@/app/dashboard/actions";
 
@@ -62,7 +55,15 @@ const SEARCH_ITEMS = [
   { href: "/dashboard/parametres", labelKey: "sidebar.parametres", icon: Settings },
 ] as const;
 
-export function AppTopbar({ email }: { email: string | null }) {
+export function AppTopbar({
+  email,
+  userId,
+  initialNotifications,
+}: {
+  email: string | null;
+  userId: string;
+  initialNotifications: AppNotification[];
+}) {
   const { t } = useTranslation();
   const router = useRouter();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -104,31 +105,7 @@ export function AppTopbar({ email }: { email: string | null }) {
       </Button>
 
       <div className="ml-auto flex items-center gap-1">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              aria-label={t("topbar.notifications")}
-            >
-              <Bell className="h-4 w-4" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent align="end" className="w-80">
-            <Empty className="p-2">
-              <EmptyHeader>
-                <EmptyMedia variant="icon">
-                  <Bell />
-                </EmptyMedia>
-                <EmptyTitle>{t("topbar.notifications_empty_title")}</EmptyTitle>
-                <EmptyDescription>
-                  {t("topbar.notifications_empty_description")}
-                </EmptyDescription>
-              </EmptyHeader>
-            </Empty>
-          </PopoverContent>
-        </Popover>
+        <NotificationBell userId={userId} initialNotifications={initialNotifications} />
 
         <LanguageToggle />
         <ThemeToggle />

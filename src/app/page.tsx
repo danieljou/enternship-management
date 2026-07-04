@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { LandingContent } from "./landing-content";
 
 export const metadata: Metadata = {
-  title: "FUTURIX-iTech — Suivi des stagiaires",
+  title: "FUTURIX-iTech - Suivi des stagiaires",
   description:
     "Plateforme de gestion des stagiaires, établissements partenaires et filières pour FUTURIX-iTech.",
 };

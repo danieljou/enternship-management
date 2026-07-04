@@ -6,7 +6,7 @@ import type { Etablissement } from "@/lib/types";
 import { EtablissementsManager } from "./etablissements-manager";
 
 export const metadata: Metadata = {
-  title: "Établissements — FUTURIX-iTech",
+  title: "Établissements - FUTURIX-iTech",
 };
 
 export default async function EtablissementsPage() {
@@ -16,5 +16,7 @@ export default async function EtablissementsPage() {
     .select("*")
     .order("nom", { ascending: true });
 
-  return <EtablissementsManager data={(data as Etablissement[] | null) ?? []} />;
+  return (
+    <EtablissementsManager data={(data as Etablissement[] | null) ?? []} />
+  );
 }

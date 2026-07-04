@@ -131,3 +131,16 @@ export interface ChatMessage {
   body: string;
   created_at: string;
 }
+
+export type NotificationType = "chat_message" | "evaluation" | "document";
+
+export interface AppNotification {
+  id: string;
+  user_id: string;
+  type: NotificationType;
+  title: string;
+  body: string | null;
+  link: string | null;
+  is_read: boolean;
+  created_at: string;
+}

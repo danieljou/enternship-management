@@ -7,7 +7,7 @@ import type { EvaluationWithSession } from "@/lib/types";
 import { EvaluationsList } from "./evaluations-list";
 
 export const metadata: Metadata = {
-  title: "Évaluations — FUTURIX-iTech",
+  title: "Évaluations - FUTURIX-iTech",
 };
 
 export default async function StagiaireEvaluationsPage() {

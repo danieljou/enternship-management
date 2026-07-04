@@ -22,19 +22,28 @@ interface ColumnsOptions {
 }
 
 function formatPeriode(row: SessionWithCounts) {
-  if (!row.date_debut && !row.date_fin) return "—";
-  const debut = row.date_debut ? new Date(row.date_debut).toLocaleDateString() : "?";
+  if (!row.date_debut && !row.date_fin) return "-";
+  const debut = row.date_debut
+    ? new Date(row.date_debut).toLocaleDateString()
+    : "?";
   const fin = row.date_fin ? new Date(row.date_fin).toLocaleDateString() : "?";
   return `${debut} → ${fin}`;
 }
 
-export function getSessionColumns({ t, onEdit, onDelete }: ColumnsOptions): ColumnDef<SessionWithCounts>[] {
+export function getSessionColumns({
+  t,
+  onEdit,
+  onDelete,
+}: ColumnsOptions): ColumnDef<SessionWithCounts>[] {
   return [
     {
       accessorKey: "nom",
       meta: { title: t("sessions.nom_column") },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("sessions.nom_column")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("sessions.nom_column")}
+        />
       ),
       cell: ({ row }) => (
         <Link
@@ -50,14 +59,19 @@ export function getSessionColumns({ t, onEdit, onDelete }: ColumnsOptions): Colu
       meta: { title: t("sessions.periode_column") },
       header: () => <span>{t("sessions.periode_column")}</span>,
       cell: ({ row }) => (
-        <span className="text-muted-foreground">{formatPeriode(row.original)}</span>
+        <span className="text-muted-foreground">
+          {formatPeriode(row.original)}
+        </span>
       ),
     },
     {
       accessorKey: "etapes_count",
       meta: { title: t("sessions.etapes_count_column") },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("sessions.etapes_count_column")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("sessions.etapes_count_column")}
+        />
       ),
       cell: ({ row }) => <span>{row.original.etapes_count}</span>,
     },
@@ -65,7 +79,10 @@ export function getSessionColumns({ t, onEdit, onDelete }: ColumnsOptions): Colu
       accessorKey: "stagiaires_count",
       meta: { title: t("sessions.stagiaires_count_column") },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("sessions.stagiaires_count_column")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("sessions.stagiaires_count_column")}
+        />
       ),
       cell: ({ row }) => <span>{row.original.stagiaires_count}</span>,
     },
@@ -76,7 +93,11 @@ export function getSessionColumns({ t, onEdit, onDelete }: ColumnsOptions): Colu
       cell: ({ row }) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label={t("common.actions")}>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              aria-label={t("common.actions")}
+            >
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -91,7 +112,10 @@ export function getSessionColumns({ t, onEdit, onDelete }: ColumnsOptions): Colu
               <Pencil className="h-4 w-4" />
               {t("common.edit")}
             </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive" onSelect={() => onDelete(row.original)}>
+            <DropdownMenuItem
+              variant="destructive"
+              onSelect={() => onDelete(row.original)}
+            >
               <Trash2 className="h-4 w-4" />
               {t("common.delete")}
             </DropdownMenuItem>
