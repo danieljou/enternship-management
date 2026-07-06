@@ -83,6 +83,7 @@
     "messages": "Messages",
     "stagiaires": "Interns",
     "sessions": "Sessions",
+    "paiements": "Payments",
     "etablissements": "Institutions",
     "filieres": "Programs",
     "taches": "Tasks",
@@ -99,6 +100,8 @@
     "notifications_empty_description": "You're all caught up.",
     "notifications_mark_all_read": "Mark all as read",
     "notifications_enable_push": "Enable browser notifications",
+    "notifications_push_granted": "Browser notifications enabled.",
+    "notifications_push_denied": "Notifications denied. You can allow them in your browser settings.",
     "profile": "Profile",
     "settings": "Settings",
     "logout": "Log out"
@@ -136,7 +139,29 @@
     "section_breakdown_title": "Breakdown by section",
     "section_breakdown_empty": "No interns yet.",
     "filiere_chart_title": "Interns by program",
-    "filiere_chart_empty": "No intern assigned to a program yet."
+    "filiere_chart_empty": "No intern assigned to a program yet.",
+    "paiements_chart_title": "Internship fee collection",
+    "paiements_chart_empty": "No fee amount has been set yet.",
+    "paiements_collecte": "Collected",
+    "paiements_reste": "Remaining to collect"
+  },
+  "paiements": {
+    "title": "Payments",
+    "description": "Track internship fee collection across sessions.",
+    "kpi_attendu": "Total due",
+    "kpi_collecte": "Total collected",
+    "kpi_reste": "Remaining to collect",
+    "kpi_taux": "Collection rate",
+    "column_stagiaire": "Intern",
+    "column_session": "Session",
+    "column_due": "Due",
+    "column_paid": "Paid",
+    "column_remaining": "Remaining",
+    "column_status": "Status",
+    "chart_title": "Due vs collected per session",
+    "chart_empty": "No session has a fee amount set.",
+    "search_placeholder": "Search an intern…",
+    "table_empty": "No intern enrolled in a session with a fee amount set."
   },
   "etablissements": {
     "title": "Institutions",
@@ -245,6 +270,7 @@
     "sessions": "History",
     "evaluations": "Evaluations",
     "documents": "Documents",
+    "paiements": "Internship fees",
     "messagerie": "Messaging",
     "coming_soon": "Coming soon"
   },
@@ -284,6 +310,11 @@
   "stagiaireDocuments": {
     "empty": "No document shared yet."
   },
+  "stagiairePaiements": {
+    "title": "Internship fees",
+    "subtitle": "Track your payments per session.",
+    "empty": "No fee amount has been set for your sessions."
+  },
   "documents": {
     "download_error": "Couldn't download the document."
   },
@@ -317,6 +348,9 @@
     "date_debut_label": "Start date",
     "date_fin_label": "End date",
     "date_range_invalid": "The end date must be after the start date.",
+    "frais_montant_label": "Internship fee amount",
+    "frais_montant_placeholder": "e.g. 50000",
+    "frais_montant_invalid": "Invalid amount.",
     "nom_column": "Name",
     "periode_column": "Period",
     "etapes_count_column": "Steps",
@@ -335,6 +369,7 @@
     "tab_kanban": "Kanban",
     "tab_evaluations": "Evaluations",
     "tab_documents": "Documents",
+    "tab_paiements": "Payments",
     "etapes_description": "Define the internship timeline steps (Kanban columns).",
     "etapes_empty": "No steps defined for this session yet.",
     "etape_add_button": "Add a step",
@@ -400,7 +435,33 @@
     "document_create_error": "Couldn't add the document.",
     "document_delete_success": "Document deleted.",
     "document_delete_error": "Couldn't delete the document.",
-    "document_delete_confirm_description": "This action cannot be undone. The document will be permanently deleted."
+    "document_delete_confirm_description": "This action cannot be undone. The document will be permanently deleted.",
+    "paiement_montant_required": "Amount is required.",
+    "paiement_montant_invalid": "Invalid amount.",
+    "paiement_date_required": "Date is required.",
+    "paiement_create_success": "Payment recorded.",
+    "paiement_create_error": "Couldn't record the payment.",
+    "paiement_delete_success": "Payment deleted.",
+    "paiement_delete_error": "Couldn't delete the payment.",
+    "paiement_delete_confirm_description": "This action cannot be undone. The payment will be permanently deleted.",
+    "paiement_add_title": "New payment",
+    "paiement_add_button": "Add a payment",
+    "paiement_montant_label": "Amount",
+    "paiement_date_label": "Date",
+    "paiement_moyen_label": "Payment method",
+    "paiement_moyen_placeholder": "e.g. Mobile Money, cash, bank transfer…",
+    "paiement_note_label": "Note",
+    "paiement_due_label": "Amount due",
+    "paiement_paid_label": "Amount paid",
+    "paiement_empty": "No payment recorded for this intern.",
+    "paiement_no_frais": "No fee amount has been set for this session. Edit the session to add one.",
+    "paiement_kpi_attendu": "Total due",
+    "paiement_kpi_collecte": "Total collected",
+    "paiement_kpi_reste": "Remaining to collect",
+    "paiement_kpi_a_jour": "Interns up to date",
+    "paiement_status_impaye": "Unpaid",
+    "paiement_status_partiel": "Partial",
+    "paiement_status_paye": "Paid"
   },
   "kanban": {
     "titre_label": "Title",

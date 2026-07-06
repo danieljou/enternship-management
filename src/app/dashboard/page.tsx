@@ -6,6 +6,7 @@ import {
   DashboardFiliereChart,
   type FiliereBreakdownRow,
 } from "./dashboard-filiere-chart";
+import { DashboardPaiementsChart } from "./dashboard-paiements-chart";
 import { DashboardQuickActions } from "./dashboard-quick-actions";
 import { DashboardSectionBreakdown } from "./dashboard-section-breakdown";
 import { DashboardStats } from "./dashboard-stats";
@@ -33,6 +34,8 @@ export default async function DashboardPage() {
     { data: sectionRows },
     { data: filieres },
     { data: stagiaireFilieres },
+    { data: feeSessions },
+    { data: totalPaiements },
   ] = await Promise.all([
     supabase.auth.getUser(),
     supabase.from("stagiaires").select("*", { count: "exact", head: true }),
@@ -46,6 +49,8 @@ export default async function DashboardPage() {
     supabase.from("stagiaires").select("section"),
     supabase.from("filieres").select("id, nom"),
     supabase.from("stagiaires").select("filiere_id"),
+    supabase.from("stage_sessions").select("id, frais_montant").not("frais_montant", "is", null),
+    supabase.from("paiements").select("montant"),
   ]);
 
   const francophone =
@@ -71,6 +76,24 @@ export default async function DashboardPage() {
     .sort((a, b) => b.count - a.count)
     .slice(0, MAX_FILIERE_BARS);
 
+  const feeSessionIds = (feeSessions ?? []).map((session) => session.id);
+  const { data: feeEnrollments } =
+    feeSessionIds.length > 0
+      ? await supabase.from("session_stagiaires").select("session_id").in("session_id", feeSessionIds)
+      : { data: [] };
+
+  const enrolledCountBySession = new Map<string, number>();
+  for (const row of feeEnrollments ?? []) {
+    enrolledCountBySession.set(row.session_id, (enrolledCountBySession.get(row.session_id) ?? 0) + 1);
+  }
+
+  const totalAttendu = (feeSessions ?? []).reduce(
+    (sum, session) => sum + (session.frais_montant ?? 0) * (enrolledCountBySession.get(session.id) ?? 0),
+    0
+  );
+  const totalCollecte = (totalPaiements ?? []).reduce((sum, row) => sum + row.montant, 0);
+  const totalReste = Math.max(totalAttendu - totalCollecte, 0);
+
   return (
     <div className="flex flex-col gap-6">
       <DashboardWelcome email={user?.email ?? null} />
@@ -84,12 +107,13 @@ export default async function DashboardPage() {
         documents={documentsCount ?? 0}
       />
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <DashboardFiliereChart data={filiereBreakdown} />
         <DashboardSectionBreakdown
           francophone={francophone}
           anglophone={anglophone}
         />
+        <DashboardPaiementsChart collecte={totalCollecte} reste={totalReste} />
       </div>
 
       <DashboardQuickActions />

@@ -11,6 +11,7 @@ import {
   Home,
   KanbanSquare,
   MessageCircle,
+  Wallet,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -46,6 +47,7 @@ const NAV_ITEMS: NavItem[] = [
     icon: ClipboardCheck,
   },
   { href: "/espace-stagiaire/documents", labelKey: "stagiaireNav.documents", icon: FileText },
+  { href: "/espace-stagiaire/paiements", labelKey: "stagiaireNav.paiements", icon: Wallet },
   { href: "/espace-stagiaire/messagerie", labelKey: "stagiaireNav.messagerie", icon: MessageCircle },
 ];
 

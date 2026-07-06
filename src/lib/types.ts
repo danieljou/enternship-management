@@ -38,6 +38,7 @@ export interface StageSession {
   description: string | null;
   date_debut: string | null;
   date_fin: string | null;
+  frais_montant: number | null;
   created_at: string;
 }
 
@@ -109,6 +110,21 @@ export interface SessionDocumentWithSession extends SessionDocument {
   session: Pick<StageSession, "id" | "nom"> | null;
 }
 
+export interface Paiement {
+  id: string;
+  session_id: string;
+  stagiaire_id: string;
+  montant: number;
+  moyen: string | null;
+  date_paiement: string;
+  note: string | null;
+  created_at: string;
+}
+
+export interface PaiementWithSession extends Paiement {
+  session: Pick<StageSession, "id" | "nom" | "frais_montant"> | null;
+}
+
 export type ChatChannelType = "general" | "inbox";
 
 export interface ChatChannel {
@@ -132,7 +148,7 @@ export interface ChatMessage {
   created_at: string;
 }
 
-export type NotificationType = "chat_message" | "evaluation" | "document";
+export type NotificationType = "chat_message" | "evaluation" | "document" | "paiement";
 
 export interface AppNotification {
   id: string;

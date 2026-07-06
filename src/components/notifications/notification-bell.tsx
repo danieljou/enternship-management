@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { Bell, BellRing } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -58,6 +59,12 @@ export function NotificationBell({
     if (typeof window === "undefined" || !("Notification" in window)) return;
     const result = await Notification.requestPermission();
     setPermission(result);
+
+    if (result === "granted") {
+      toast.success(t("topbar.notifications_push_granted"));
+    } else if (result === "denied") {
+      toast.error(t("topbar.notifications_push_denied"));
+    }
   }
 
   function handleSelect(notification: AppNotification) {

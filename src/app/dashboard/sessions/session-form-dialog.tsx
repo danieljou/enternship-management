@@ -45,6 +45,7 @@ export function SessionFormDialog({ open, onOpenChange, session }: SessionFormDi
       description: session?.description ?? "",
       dateDebut: session?.date_debut ?? "",
       dateFin: session?.date_fin ?? "",
+      fraisMontant: session?.frais_montant != null ? String(session.frais_montant) : "",
     },
   });
 
@@ -55,6 +56,7 @@ export function SessionFormDialog({ open, onOpenChange, session }: SessionFormDi
         description: session?.description ?? "",
         dateDebut: session?.date_debut ?? "",
         dateFin: session?.date_fin ?? "",
+        fraisMontant: session?.frais_montant != null ? String(session.frais_montant) : "",
       });
     }
   }, [open, session, reset]);
@@ -124,6 +126,24 @@ export function SessionFormDialog({ open, onOpenChange, session }: SessionFormDi
                 </p>
               )}
             </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="session-frais">{t("sessions.frais_montant_label")}</Label>
+            <Input
+              id="session-frais"
+              type="number"
+              min={0}
+              step="0.01"
+              placeholder={t("sessions.frais_montant_placeholder")}
+              aria-invalid={!!errors.fraisMontant}
+              {...register("fraisMontant")}
+            />
+            {errors.fraisMontant && (
+              <p className="text-xs text-red-600 dark:text-red-400">
+                {t(errors.fraisMontant.message ?? "")}
+              </p>
+            )}
           </div>
 
           <DialogFooter>

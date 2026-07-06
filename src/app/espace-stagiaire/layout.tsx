@@ -32,7 +32,7 @@ export default async function EspaceStagiaireLayout({
     <TooltipProvider>
       <SidebarProvider>
         <StagiaireSidebar />
-        <SidebarInset className="overflow-hidden">
+        <SidebarInset className="h-svh overflow-y-auto">
           <StagiaireTopbar
             email={user.email ?? null}
             userId={user.id}

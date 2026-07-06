@@ -15,6 +15,7 @@ import {
   MessageCircle,
   NotebookText,
   Settings,
+  Wallet,
 } from "lucide-react";
 
 import { SidebarCollapseButton } from "@/components/sidebar-collapse-button";
@@ -52,6 +53,7 @@ const NAV_GROUPS: { labelKey: string; items: NavItem[] }[] = [
     items: [
       { href: "/dashboard/stagiaires", labelKey: "sidebar.stagiaires", icon: GraduationCap },
       { href: "/dashboard/sessions", labelKey: "sidebar.sessions", icon: KanbanSquare },
+      { href: "/dashboard/paiements", labelKey: "sidebar.paiements", icon: Wallet },
       { href: "/dashboard/etablissements", labelKey: "sidebar.etablissements", icon: Building2 },
       { href: "/dashboard/filieres", labelKey: "sidebar.filieres", icon: NotebookText },
     ],

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 import { createClient } from "@/lib/supabase/client";
 import type { AppNotification } from "@/lib/types";
@@ -18,6 +19,21 @@ export function useNotifications(userId: string, initial: AppNotification[]) {
         (payload) => {
           const notification = payload.new as AppNotification;
           setNotifications((prev) => [notification, ...prev]);
+
+          // Always show an in-app toast: this fires regardless of the
+          // browser Notification permission, so there is always a visible
+          // signal even when native OS notifications are denied/unsupported.
+          toast(notification.title, {
+            description: notification.body ?? undefined,
+            action: notification.link
+              ? {
+                  label: "Voir",
+                  onClick: () => {
+                    window.location.href = notification.link!;
+                  },
+                }
+              : undefined,
+          });
 
           if (
             typeof window !== "undefined" &&

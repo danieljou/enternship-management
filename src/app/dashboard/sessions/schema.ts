@@ -6,6 +6,12 @@ export const sessionSchema = z
     description: z.string().optional(),
     dateDebut: z.string().optional(),
     dateFin: z.string().optional(),
+    fraisMontant: z
+      .string()
+      .optional()
+      .refine((value) => !value || (!Number.isNaN(Number(value)) && Number(value) >= 0), {
+        message: "sessions.frais_montant_invalid",
+      }),
   })
   .refine((data) => !data.dateDebut || !data.dateFin || data.dateFin >= data.dateDebut, {
     message: "sessions.date_range_invalid",
@@ -42,3 +48,17 @@ export const documentSchema = z.object({
 });
 
 export type DocumentValues = z.infer<typeof documentSchema>;
+
+export const paiementSchema = z.object({
+  montant: z
+    .string()
+    .min(1, "sessions.paiement_montant_required")
+    .refine((value) => !Number.isNaN(Number(value)) && Number(value) > 0, {
+      message: "sessions.paiement_montant_invalid",
+    }),
+  moyen: z.string().optional(),
+  datePaiement: z.string().min(1, "sessions.paiement_date_required"),
+  note: z.string().optional(),
+});
+
+export type PaiementValues = z.infer<typeof paiementSchema>;

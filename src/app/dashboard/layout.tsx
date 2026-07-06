@@ -46,7 +46,7 @@ export default async function DashboardLayout({
     <TooltipProvider>
       <SidebarProvider>
         <AppSidebar />
-        <SidebarInset className="overflow-hidden">
+        <SidebarInset className="h-svh overflow-y-auto">
           <AppTopbar
             email={user.email ?? null}
             userId={user.id}

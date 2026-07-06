@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import type {
   Evaluation,
+  Paiement,
   SessionDocument,
   SessionEtape,
   SessionStagiaireWithRelations,
@@ -43,6 +44,7 @@ export default async function SessionDetailPage({
     { data: taches },
     { data: evaluations },
     { data: documents },
+    { data: paiements },
   ] = await Promise.all([
     supabase
       .from("session_etapes")
@@ -65,6 +67,7 @@ export default async function SessionDetailPage({
       .select("*")
       .eq("session_id", id)
       .order("created_at", { ascending: false }),
+    supabase.from("paiements").select("*").eq("session_id", id),
   ]);
 
   const enrolledRows =
@@ -85,6 +88,7 @@ export default async function SessionDetailPage({
       taches={(taches as SessionTache[] | null) ?? []}
       evaluations={(evaluations as Evaluation[] | null) ?? []}
       documents={(documents as SessionDocument[] | null) ?? []}
+      paiements={(paiements as Paiement[] | null) ?? []}
     />
   );
 }

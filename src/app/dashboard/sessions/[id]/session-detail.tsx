@@ -7,8 +7,10 @@ import { ArrowLeft, Pencil } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { formatMontant } from "@/lib/payment-status";
 import type {
   Evaluation,
+  Paiement,
   SessionDocument,
   SessionEtape,
   SessionStagiaireWithRelations,
@@ -22,6 +24,7 @@ import { SessionDocumentsTab } from "./session-documents-tab";
 import { SessionEtapesManager } from "./session-etapes-manager";
 import { SessionEvaluationsTab } from "./session-evaluations-tab";
 import { SessionKanbanTab } from "./session-kanban-tab";
+import { SessionPaiementsTab } from "./session-paiements-tab";
 import { SessionStagiairesManager } from "./session-stagiaires-manager";
 
 function formatPeriode(session: StageSession) {
@@ -39,6 +42,7 @@ export function SessionDetail({
   taches,
   evaluations,
   documents,
+  paiements,
 }: {
   session: StageSession;
   etapes: SessionEtape[];
@@ -47,6 +51,7 @@ export function SessionDetail({
   taches: SessionTache[];
   evaluations: Evaluation[];
   documents: SessionDocument[];
+  paiements: Paiement[];
 }) {
   const { t } = useTranslation();
   const [editOpen, setEditOpen] = useState(false);
@@ -69,6 +74,11 @@ export function SessionDetail({
               <p className="mt-1 text-sm text-muted-foreground">{session.description}</p>
             )}
             {periode && <p className="mt-1 text-xs text-muted-foreground">{periode}</p>}
+            {session.frais_montant != null && (
+              <p className="mt-1 text-xs text-muted-foreground">
+                {t("sessions.frais_montant_label")}: {formatMontant(session.frais_montant)}
+              </p>
+            )}
           </div>
           <Button variant="outline" onClick={() => setEditOpen(true)}>
             <Pencil className="h-4 w-4" />
@@ -84,6 +94,7 @@ export function SessionDetail({
           <TabsTrigger value="kanban">{t("sessions.tab_kanban")}</TabsTrigger>
           <TabsTrigger value="evaluations">{t("sessions.tab_evaluations")}</TabsTrigger>
           <TabsTrigger value="documents">{t("sessions.tab_documents")}</TabsTrigger>
+          <TabsTrigger value="paiements">{t("sessions.tab_paiements")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="etapes" className="mt-4">
@@ -104,6 +115,10 @@ export function SessionDetail({
 
         <TabsContent value="documents" className="mt-4">
           <SessionDocumentsTab sessionId={session.id} documents={documents} />
+        </TabsContent>
+
+        <TabsContent value="paiements" className="mt-4">
+          <SessionPaiementsTab session={session} enrolled={enrolled} paiements={paiements} />
         </TabsContent>
       </Tabs>
 

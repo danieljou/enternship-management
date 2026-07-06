@@ -83,6 +83,7 @@
     "messages": "Messages",
     "stagiaires": "Stagiaires",
     "sessions": "Sessions",
+    "paiements": "Paiements",
     "etablissements": "Établissements",
     "filieres": "Filières",
     "taches": "Tâches",
@@ -99,6 +100,8 @@
     "notifications_empty_description": "Vous êtes à jour.",
     "notifications_mark_all_read": "Tout marquer comme lu",
     "notifications_enable_push": "Activer les notifications du navigateur",
+    "notifications_push_granted": "Notifications du navigateur activées.",
+    "notifications_push_denied": "Notifications refusées. Vous pouvez les autoriser dans les réglages du navigateur.",
     "profile": "Profil",
     "settings": "Paramètres",
     "logout": "Déconnexion"
@@ -136,7 +139,29 @@
     "section_breakdown_title": "Répartition par section",
     "section_breakdown_empty": "Aucun stagiaire pour le moment.",
     "filiere_chart_title": "Stagiaires par filière",
-    "filiere_chart_empty": "Aucun stagiaire rattaché à une filière pour le moment."
+    "filiere_chart_empty": "Aucun stagiaire rattaché à une filière pour le moment.",
+    "paiements_chart_title": "Recouvrement des frais de stage",
+    "paiements_chart_empty": "Aucun montant de frais n'a encore été défini.",
+    "paiements_collecte": "Collecté",
+    "paiements_reste": "Reste à percevoir"
+  },
+  "paiements": {
+    "title": "Paiements",
+    "description": "Suivez le recouvrement des frais de stage par session.",
+    "kpi_attendu": "Total attendu",
+    "kpi_collecte": "Total collecté",
+    "kpi_reste": "Reste à percevoir",
+    "kpi_taux": "Taux de recouvrement",
+    "column_stagiaire": "Stagiaire",
+    "column_session": "Session",
+    "column_due": "Dû",
+    "column_paid": "Payé",
+    "column_remaining": "Reste",
+    "column_status": "Statut",
+    "chart_title": "Attendu vs collecté par session",
+    "chart_empty": "Aucune session avec des frais définis.",
+    "search_placeholder": "Rechercher un stagiaire…",
+    "table_empty": "Aucun stagiaire inscrit à une session avec des frais définis."
   },
   "etablissements": {
     "title": "Établissements",
@@ -243,6 +268,9 @@
     "date_debut_label": "Date de début",
     "date_fin_label": "Date de fin",
     "date_range_invalid": "La date de fin doit être postérieure à la date de début.",
+    "frais_montant_label": "Montant des frais de stage",
+    "frais_montant_placeholder": "Ex. 50000",
+    "frais_montant_invalid": "Montant invalide.",
     "nom_column": "Nom",
     "periode_column": "Période",
     "etapes_count_column": "Étapes",
@@ -261,6 +289,7 @@
     "tab_kanban": "Kanban",
     "tab_evaluations": "Évaluations",
     "tab_documents": "Documents",
+    "tab_paiements": "Paiements",
     "etapes_description": "Définissez les étapes de la timeline du stage (colonnes du Kanban).",
     "etapes_empty": "Aucune étape définie pour cette session.",
     "etape_add_button": "Ajouter une étape",
@@ -326,7 +355,33 @@
     "document_create_error": "Impossible d'ajouter le document.",
     "document_delete_success": "Document supprimé.",
     "document_delete_error": "Impossible de supprimer le document.",
-    "document_delete_confirm_description": "Cette action est irréversible. Le document sera définitivement supprimé."
+    "document_delete_confirm_description": "Cette action est irréversible. Le document sera définitivement supprimé.",
+    "paiement_montant_required": "Le montant est requis.",
+    "paiement_montant_invalid": "Montant invalide.",
+    "paiement_date_required": "La date est requise.",
+    "paiement_create_success": "Paiement enregistré.",
+    "paiement_create_error": "Impossible d'enregistrer le paiement.",
+    "paiement_delete_success": "Paiement supprimé.",
+    "paiement_delete_error": "Impossible de supprimer le paiement.",
+    "paiement_delete_confirm_description": "Cette action est irréversible. Le paiement sera définitivement supprimé.",
+    "paiement_add_title": "Nouveau paiement",
+    "paiement_add_button": "Ajouter un paiement",
+    "paiement_montant_label": "Montant",
+    "paiement_date_label": "Date",
+    "paiement_moyen_label": "Moyen de paiement",
+    "paiement_moyen_placeholder": "Ex. Mobile Money, espèces, virement…",
+    "paiement_note_label": "Note",
+    "paiement_due_label": "Montant dû",
+    "paiement_paid_label": "Montant payé",
+    "paiement_empty": "Aucun paiement enregistré pour ce stagiaire.",
+    "paiement_no_frais": "Aucun montant de frais n'a été défini pour cette session. Modifiez la session pour en ajouter un.",
+    "paiement_kpi_attendu": "Total attendu",
+    "paiement_kpi_collecte": "Total collecté",
+    "paiement_kpi_reste": "Reste à percevoir",
+    "paiement_kpi_a_jour": "Stagiaires à jour",
+    "paiement_status_impaye": "Impayé",
+    "paiement_status_partiel": "Partiel",
+    "paiement_status_paye": "Payé"
   },
   "kanban": {
     "titre_label": "Titre",
@@ -371,6 +426,7 @@
     "sessions": "Historique",
     "evaluations": "Évaluations",
     "documents": "Documents",
+    "paiements": "Frais de stage",
     "messagerie": "Messagerie",
     "coming_soon": "Bientôt"
   },
@@ -409,6 +465,11 @@
   },
   "stagiaireDocuments": {
     "empty": "Aucun document partagé pour le moment."
+  },
+  "stagiairePaiements": {
+    "title": "Frais de stage",
+    "subtitle": "Suivi de vos paiements par session.",
+    "empty": "Aucun montant de frais n'a été défini pour vos sessions."
   },
   "documents": {
     "download_error": "Impossible de télécharger le document."

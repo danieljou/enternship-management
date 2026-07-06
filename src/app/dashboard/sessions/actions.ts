@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { createNotifications } from "@/lib/notifications";
+import { formatMontant } from "@/lib/payment-status";
 import { createClient } from "@/lib/supabase/server";
 import type { SessionEtape } from "@/lib/types";
 
@@ -10,10 +11,12 @@ import {
   documentSchema,
   etapeSchema,
   evaluationSchema,
+  paiementSchema,
   sessionSchema,
   type DocumentValues,
   type EtapeValues,
   type EvaluationValues,
+  type PaiementValues,
   type SessionValues,
 } from "./schema";
 
@@ -25,6 +28,7 @@ function toSessionRow(values: SessionValues) {
     description: values.description || null,
     date_debut: values.dateDebut || null,
     date_fin: values.dateFin || null,
+    frais_montant: values.fraisMontant ? Number(values.fraisMontant) : null,
   };
 }
 
@@ -399,5 +403,62 @@ export async function deleteSessionDocument(
 
   revalidatePath(`/dashboard/sessions/${sessionId}`);
   revalidatePath("/espace-stagiaire/documents");
+  return { success: true };
+}
+
+export async function createPaiement(
+  sessionId: string,
+  stagiaireId: string,
+  values: PaiementValues
+): Promise<ActionResult> {
+  const parsed = paiementSchema.safeParse(values);
+  if (!parsed.success) {
+    return { error: "sessions.paiement_create_error" };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("paiements").insert({
+    session_id: sessionId,
+    stagiaire_id: stagiaireId,
+    montant: Number(parsed.data.montant),
+    moyen: parsed.data.moyen || null,
+    date_paiement: parsed.data.datePaiement,
+    note: parsed.data.note || null,
+  });
+
+  if (error) {
+    return { error: "sessions.paiement_create_error" };
+  }
+
+  const [{ data: stagiaire }, { data: session }] = await Promise.all([
+    supabase.from("stagiaires").select("user_id").eq("id", stagiaireId).single(),
+    supabase.from("stage_sessions").select("nom").eq("id", sessionId).single(),
+  ]);
+
+  await createNotifications({
+    userIds: [stagiaire?.user_id],
+    type: "paiement",
+    title: "Paiement enregistré",
+    body: `${formatMontant(Number(parsed.data.montant))} — ${session?.nom ?? ""}`,
+    link: "/espace-stagiaire/paiements",
+  });
+
+  revalidatePath(`/dashboard/sessions/${sessionId}`);
+  revalidatePath("/dashboard/paiements");
+  revalidatePath("/espace-stagiaire/paiements");
+  return { success: true };
+}
+
+export async function deletePaiement(id: string, sessionId: string): Promise<ActionResult> {
+  const supabase = await createClient();
+  const { error } = await supabase.from("paiements").delete().eq("id", id);
+
+  if (error) {
+    return { error: "sessions.paiement_delete_error" };
+  }
+
+  revalidatePath(`/dashboard/sessions/${sessionId}`);
+  revalidatePath("/dashboard/paiements");
+  revalidatePath("/espace-stagiaire/paiements");
   return { success: true };
 }
