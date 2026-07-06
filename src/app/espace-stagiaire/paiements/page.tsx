@@ -18,7 +18,7 @@ export default async function StagiairePaiementsPage() {
 
   const { data: stagiaire } = await supabase
     .from("stagiaires")
-    .select("id")
+    .select("id, nom, prenom")
     .eq("user_id", user!.id)
     .maybeSingle();
 
@@ -57,5 +57,11 @@ export default async function StagiairePaiementsPage() {
     paiements: rows.filter((paiement) => paiement.session_id === session.id),
   }));
 
-  return <StagiairePaiementsList groups={groups} />;
+  return (
+    <StagiairePaiementsList
+      groups={groups}
+      stagiaireNom={stagiaire.nom}
+      stagiairePrenom={stagiaire.prenom}
+    />
+  );
 }

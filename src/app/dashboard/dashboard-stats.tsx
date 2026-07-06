@@ -47,7 +47,7 @@ export function DashboardStats({
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 xl:grid-cols-6">
       {TILES.map(({ key, icon: Icon, chartVar }) => (
         <div
           key={key}
@@ -59,7 +59,9 @@ export function DashboardStats({
           />
           <span
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-            style={{ backgroundColor: `color-mix(in oklch, var(${chartVar}), transparent 85%)` }}
+            style={{
+              backgroundColor: `color-mix(in oklch, var(${chartVar}), transparent 85%)`,
+            }}
           >
             <Icon className="h-5 w-5" style={{ color: `var(${chartVar})` }} />
           </span>

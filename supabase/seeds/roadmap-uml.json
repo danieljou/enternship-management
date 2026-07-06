@@ -1,0 +1,1392 @@
+{
+  "id": "uml-modelisation",
+  "titre": "Modélisation UML — De l'analyse à l'architecture logicielle",
+  "branche": "Génie logiciel",
+  "duree_semaines": 6,
+  "niveau": "Débutant à intermédiaire",
+  "statut": "Publié",
+  "version": "1.0",
+  "semaines": [
+    {
+      "numero": 1,
+      "titre": "Fondamentaux UML et diagrammes de cas d'utilisation",
+      "etapes": [
+        {
+          "jour": 1,
+          "titre": "Introduction à UML et à la modélisation objet",
+          "objectifs": [
+            "Comprendre le rôle d'UML dans le cycle de développement logiciel",
+            "Distinguer les diagrammes structurels des diagrammes comportementaux",
+            "Situer UML dans une démarche de conception orientée objet"
+          ],
+          "cours": {
+            "resume": "UML (Unified Modeling Language) est un langage de modélisation graphique normalisé par l'OMG, utilisé pour visualiser, spécifier, construire et documenter les artefacts d'un système logiciel orienté objet. Ce n'est pas une méthode de conception mais un langage commun mobilisable à toutes les phases d'un projet, de l'analyse des besoins à l'architecture technique.",
+            "points_cles": [
+              "UML est normalisé par l'OMG (Object Management Group), version actuelle 2.5.1",
+              "Deux grandes familles de diagrammes : structurels (classes, objets, composants, déploiement, paquetages) et comportementaux (cas d'usage, séquence, activité, état-transition, communication)",
+              "UML n'impose pas de méthode : il s'utilise avec un cycle en cascade, en V, ou agile",
+              "Un diagramme UML est une vue partielle du système ; aucun diagramme seul ne suffit à tout décrire"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "UML - Spécification officielle OMG", "url": "https://www.omg.org/spec/UML/" },
+              { "type": "documentation", "titre": "UML.org - Introduction aux diagrammes", "url": "https://www.uml.org/" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Pour un système que vous connaissez bien (application mobile, site e-commerce, distributeur automatique...), listez 3 questions auxquelles répondrait un diagramme de cas d'utilisation, et 3 questions auxquelles répondrait un diagramme de classes. Justifiez pourquoi ces questions relèvent de diagrammes différents.",
+            "criteres_reussite": [
+              "Les questions proposées sont pertinentes et distinctes entre les deux types de diagrammes",
+              "La justification démontre la compréhension de la différence structurel/comportemental"
+            ]
+          },
+          "livrable_attendu": "Document d'une page présentant le système choisi et l'analyse des deux catégories de questions",
+          "quiz": {
+            "titre": "Quiz - Introduction à UML",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quel organisme normalise UML ?",
+                "choix": ["OMG (Object Management Group)", "ISO", "W3C", "IEEE"],
+                "reponse_correcte": "OMG (Object Management Group)"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "UML impose une méthode de conception précise à suivre.",
+                "reponse_correcte": false
+              },
+              {
+                "type": "qcm_multiple",
+                "question": "Lesquels sont des diagrammes comportementaux UML ?",
+                "choix": ["Diagramme de séquence", "Diagramme de classes", "Diagramme d'activité", "Diagramme de déploiement", "Diagramme d'état-transition"],
+                "reponses_correctes": ["Diagramme de séquence", "Diagramme d'activité", "Diagramme d'état-transition"]
+              }
+            ]
+          }
+        },
+        {
+          "jour": 2,
+          "titre": "Diagramme de cas d'utilisation — acteurs et cas d'usage",
+          "objectifs": [
+            "Identifier les acteurs (primaires et secondaires) d'un système",
+            "Formaliser les cas d'usage et les frontières du système"
+          ],
+          "cours": {
+            "resume": "Le diagramme de cas d'utilisation modélise les fonctionnalités offertes par un système du point de vue de ses utilisateurs (acteurs), sans détailler leur implémentation. Il délimite le système par une frontière et représente les interactions attendues.",
+            "points_cles": [
+              "Un acteur représente un rôle joué par une entité externe (humain, autre système, capteur) interagissant avec le système",
+              "Un cas d'usage décrit une fonctionnalité complète apportant une valeur observable à l'acteur",
+              "La frontière du système (rectangle) sépare ce qui est modélisé de l'environnement externe",
+              "Un acteur primaire déclenche le cas d'usage ; un acteur secondaire est sollicité pendant son déroulement"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Lucidchart - Guide diagramme de cas d'utilisation", "url": "https://www.lucidchart.com/pages/fr/tutoriel-uml-diagramme-de-cas-dutilisation" },
+              { "type": "outil", "titre": "draw.io", "url": "https://draw.io" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez le diagramme de cas d'usage d'un système de réservation de salles de réunion en entreprise : acteurs (employé, administrateur, système de calendrier externe) et au moins 6 cas d'usage.",
+            "criteres_reussite": [
+              "Au moins 2 acteurs identifiés avec leur rôle",
+              "Au moins 6 cas d'usage couvrant les fonctionnalités principales",
+              "Frontière du système correctement représentée"
+            ]
+          },
+          "livrable_attendu": "Diagramme de cas d'usage (image ou PDF) du système de réservation",
+          "quiz": {
+            "titre": "Quiz - Acteurs et cas d'usage",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Qu'est-ce qu'un acteur dans un diagramme de cas d'utilisation ?",
+                "choix": ["Un rôle joué par une entité externe interagissant avec le système", "Une classe du système", "Une méthode d'une classe", "Une base de données interne"],
+                "reponse_correcte": "Un rôle joué par une entité externe interagissant avec le système"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Un acteur peut être un autre système informatique, pas uniquement un humain.",
+                "reponse_correcte": true
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Que représente la frontière du système dans un diagramme de cas d'utilisation ?",
+                "choix": ["La limite entre ce qui est modélisé et l'environnement externe", "La base de données", "Le réseau de l'entreprise", "Le planning du projet"],
+                "reponse_correcte": "La limite entre ce qui est modélisé et l'environnement externe"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 3,
+          "titre": "Relations entre cas d'usage — include, extend, généralisation",
+          "objectifs": [
+            "Distinguer include, extend et généralisation entre cas d'usage",
+            "Utiliser ces relations à bon escient sans les abuser"
+          ],
+          "cours": {
+            "resume": "Trois relations structurent les diagrammes de cas d'usage : «include» factorise un comportement obligatoire commun à plusieurs cas d'usage, «extend» modélise un comportement optionnel qui vient enrichir un cas d'usage de base sous condition, et la généralisation exprime qu'un cas d'usage spécialise un cas d'usage plus général.",
+            "points_cles": [
+              "«include» : le cas d'usage inclus est toujours exécuté, la flèche pointe vers le cas inclus",
+              "«extend» : le cas d'usage étendu est optionnel et conditionnel, la flèche pointe vers le cas de base",
+              "La généralisation entre cas d'usage fonctionne comme l'héritage : le cas spécialisé hérite du comportement du cas général",
+              "Abus fréquent : utiliser extend/include pour tout découper artificiellement au lieu de garder des cas d'usage à valeur métier"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Guide des relations UML include/extend", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Reprenez le diagramme du Jour 2 et ajoutez : une relation include entre 'Réserver une salle' et 'S'authentifier', et une relation extend entre 'Annuler une réservation' et un nouveau cas 'Notifier les participants' (optionnel, si l'annulation a lieu moins de 24h avant).",
+            "criteres_reussite": [
+              "Relation include correctement orientée et justifiée",
+              "Relation extend correctement orientée avec condition documentée"
+            ]
+          },
+          "livrable_attendu": "Diagramme de cas d'usage mis à jour avec les relations include/extend",
+          "quiz": {
+            "titre": "Quiz - Relations entre cas d'usage",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "vrai_faux",
+                "question": "Dans une relation «include», le cas d'usage inclus est toujours exécuté.",
+                "reponse_correcte": true
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Vers quel cas d'usage pointe la flèche d'une relation «extend» ?",
+                "choix": ["Le cas d'usage de base (étendu)", "Le cas d'usage optionnel", "Peu importe le sens", "Vers l'acteur"],
+                "reponse_correcte": "Le cas d'usage de base (étendu)"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quelle relation fonctionne comme l'héritage entre cas d'usage ?",
+                "choix": ["La généralisation", "L'include", "L'extend", "L'association"],
+                "reponse_correcte": "La généralisation"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 4,
+          "titre": "Description textuelle des cas d'usage",
+          "objectifs": [
+            "Rédiger une fiche de cas d'usage complète (scénario nominal et alternatifs)",
+            "Identifier pré-conditions et post-conditions"
+          ],
+          "cours": {
+            "resume": "Un diagramme de cas d'usage seul ne suffit pas : chaque cas d'usage important doit être détaillé par une fiche textuelle décrivant le scénario nominal, les scénarios alternatifs/d'erreur, les pré-conditions et les post-conditions.",
+            "points_cles": [
+              "Structure type : Nom, Acteurs, Pré-conditions, Scénario nominal (étapes numérotées), Scénarios alternatifs, Post-conditions",
+              "Le scénario nominal décrit le chemin où tout se passe bien",
+              "Les scénarios alternatifs couvrent les erreurs et variantes (ex. salle déjà réservée)",
+              "Les pré-conditions doivent être vérifiables avant le déclenchement du cas d'usage"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Modèle de fiche de cas d'usage (template)", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Rédigez la fiche textuelle complète du cas d'usage 'Réserver une salle' du système du Jour 2 : pré-conditions, scénario nominal en au moins 5 étapes, et 2 scénarios alternatifs (salle indisponible, employé non authentifié).",
+            "criteres_reussite": [
+              "Toutes les sections de la fiche sont renseignées",
+              "Le scénario nominal est numéroté et cohérent avec le diagramme",
+              "Au moins 2 scénarios alternatifs réalistes"
+            ]
+          },
+          "livrable_attendu": "Fiche de cas d'usage 'Réserver une salle' au format texte ou tableau",
+          "quiz": {
+            "titre": "Quiz - Description textuelle des cas d'usage",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que décrit le scénario nominal d'une fiche de cas d'usage ?",
+                "choix": ["Le déroulement standard sans erreur", "Uniquement les erreurs possibles", "La structure de la base de données", "Le planning de développement"],
+                "reponse_correcte": "Le déroulement standard sans erreur"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Les pré-conditions doivent pouvoir être vérifiées avant que le cas d'usage ne commence.",
+                "reponse_correcte": true
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel élément n'appartient pas à une fiche de cas d'usage classique ?",
+                "choix": ["Le diagramme de classes complet", "Les pré-conditions", "Le scénario nominal", "Les scénarios alternatifs"],
+                "reponse_correcte": "Le diagramme de classes complet"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 5,
+          "titre": "Mini-projet — cas d'usage d'un système réel",
+          "objectifs": [
+            "Modéliser de façon autonome les cas d'usage d'un système complet"
+          ],
+          "cours": {
+            "resume": "Synthèse de la semaine : mobiliser acteurs, cas d'usage, relations include/extend/généralisation et fiches textuelles sur un système complet et réaliste.",
+            "points_cles": [
+              "Démarche : identifier les acteurs avant les cas d'usage",
+              "Grouper les cas d'usage par acteur puis vérifier les relations transverses",
+              "Limiter le diagramme à 10-15 cas d'usage maximum pour rester lisible"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Modélisez intégralement les cas d'usage d'un système de gestion de bibliothèque (emprunt, retour, réservation d'ouvrage, gestion du catalogue, pénalités de retard) : diagramme complet + 2 fiches textuelles détaillées.",
+            "criteres_reussite": [
+              "Diagramme complet avec au moins 3 acteurs et 8 cas d'usage",
+              "Au moins une relation include et une relation extend justifiées",
+              "2 fiches textuelles complètes et cohérentes avec le diagramme"
+            ]
+          },
+          "livrable_attendu": "Dossier complet : diagramme de cas d'usage + 2 fiches textuelles du système de bibliothèque",
+          "quiz": null
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "titre": "Diagramme de classes — structure statique",
+      "etapes": [
+        {
+          "jour": 1,
+          "titre": "Classes, attributs, méthodes et visibilité",
+          "objectifs": [
+            "Représenter une classe UML (nom, attributs, méthodes)",
+            "Appliquer les niveaux de visibilité (+, -, #, ~)"
+          ],
+          "cours": {
+            "resume": "Une classe UML se représente par un rectangle à trois compartiments : nom de la classe, attributs typés et méthodes (signature avec paramètres et type de retour). La visibilité contrôle l'accessibilité des membres depuis l'extérieur de la classe.",
+            "points_cles": [
+              "Notation d'un attribut : visibilité nom : type [= valeur par défaut], ex. - solde : double = 0.0",
+              "Notation d'une méthode : visibilité nom(param: type): typeRetour, ex. + deposer(montant: double): void",
+              "Visibilités : + public, - privé, # protégé, ~ paquetage",
+              "Un attribut souligné indique un membre de classe (static)"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "UML - Notation des classes", "url": "" },
+              { "type": "video", "titre": "Diagramme de classes en 10 minutes", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez la classe 'CompteBancaire' avec les attributs numero, solde, dateOuverture et les méthodes deposer, retirer, consulterSolde, en appliquant des visibilités cohérentes.",
+            "criteres_reussite": [
+              "Tous les attributs sont typés",
+              "Les méthodes ont une signature complète (paramètres + retour)",
+              "Les visibilités sont cohérentes (attributs privés, méthodes publiques)"
+            ]
+          },
+          "livrable_attendu": "Diagramme de la classe CompteBancaire avec sa notation complète",
+          "quiz": {
+            "titre": "Quiz - Classes, attributs et visibilité",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que signifie le symbole '-' devant un attribut ?",
+                "choix": ["Visibilité privée", "Visibilité publique", "Attribut statique", "Attribut abstrait"],
+                "reponse_correcte": "Visibilité privée"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Comment note-t-on une méthode publique nommée estValide, prenant un entier x en paramètre et retournant un booléen ?",
+                "choix": ["+ estValide(x: int): boolean", "+ estValide(): int boolean", "boolean estValide(int x)", "- int estValide(boolean x)"],
+                "reponse_correcte": "+ estValide(x: int): boolean"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Un attribut souligné dans un diagramme de classes indique un membre statique (de classe).",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 2,
+          "titre": "Relations — association et multiplicité",
+          "objectifs": [
+            "Représenter une association entre classes",
+            "Exprimer correctement les multiplicités"
+          ],
+          "cours": {
+            "resume": "L'association exprime un lien structurel durable entre deux classes. La multiplicité, notée à chaque extrémité, précise combien d'instances peuvent être liées (0..1, 1, 0..*, 1..*, ou une valeur exacte).",
+            "points_cles": [
+              "Une association peut être nommée et porter un sens de lecture (flèche de navigation)",
+              "Multiplicités courantes : 1 (exactement un), 0..1 (zéro ou un), * ou 0..* (zéro ou plusieurs), 1..* (au moins un)",
+              "Un rôle peut être précisé à chaque extrémité de l'association pour clarifier le sens",
+              "Une association peut être navigable dans un seul sens (flèche) ou bidirectionnelle"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Multiplicités UML expliquées", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez les classes Client et Commande avec une association portant les multiplicités correctes (un client passe 0 à plusieurs commandes, une commande appartient à exactement un client), en précisant les rôles.",
+            "criteres_reussite": [
+              "Multiplicités correctement posées des deux côtés",
+              "Rôles nommés de manière explicite",
+              "Sens de navigation cohérent avec le besoin métier"
+            ]
+          },
+          "livrable_attendu": "Diagramme Client-Commande avec association, multiplicités et rôles",
+          "quiz": {
+            "titre": "Quiz - Association et multiplicité",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quelle multiplicité signifie 'zéro ou plusieurs' ?",
+                "choix": ["0..*", "1", "0..1", "1..1"],
+                "reponse_correcte": "0..*"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Une commande appartient à exactement un client : quelle multiplicité du côté Client ?",
+                "choix": ["1", "0..1", "0..*", "1..*"],
+                "reponse_correcte": "1"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Une association peut porter un nom et un sens de lecture.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 3,
+          "titre": "Agrégation et composition",
+          "objectifs": [
+            "Distinguer agrégation et composition",
+            "Choisir la relation adaptée selon le cycle de vie des objets"
+          ],
+          "cours": {
+            "resume": "L'agrégation et la composition sont des formes particulières d'association exprimant une relation 'tout/partie'. Dans une composition, la partie ne peut exister sans le tout ; dans une agrégation, la partie peut exister indépendamment du tout.",
+            "points_cles": [
+              "Composition : losange plein du côté du tout, ex. une Commande composée de LignesDeCommande qui n'existent pas sans elle",
+              "Agrégation : losange vide du côté du tout, ex. une Equipe agrège des Joueurs qui existent indépendamment",
+              "Règle mnémotechnique : si supprimer le tout doit supprimer les parties, c'est une composition",
+              "La composition implique une multiplicité maximale de 1 du côté du tout"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Agrégation vs composition - exemples", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez : (1) une Voiture composée de Roues (composition), et (2) une Bibliotheque agrégeant des Livres qui peuvent aussi exister en dehors d'elle (agrégation). Justifiez chaque choix en une phrase.",
+            "criteres_reussite": [
+              "Notation correcte des losanges plein/vide",
+              "Justification correcte du choix agrégation vs composition",
+              "Multiplicités cohérentes avec le type de relation"
+            ]
+          },
+          "livrable_attendu": "Deux diagrammes (Voiture/Roues et Bibliotheque/Livres) avec justification écrite",
+          "quiz": {
+            "titre": "Quiz - Agrégation et composition",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quel symbole représente une composition ?",
+                "choix": ["Un losange plein du côté du tout", "Un losange vide du côté du tout", "Une flèche pleine", "Un triangle plein"],
+                "reponse_correcte": "Un losange plein du côté du tout"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Dans une agrégation, la partie peut exister indépendamment du tout.",
+                "reponse_correcte": true
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Si la suppression du tout doit entraîner la suppression de la partie, quelle relation utiliser ?",
+                "choix": ["Composition", "Agrégation", "Association simple", "Généralisation"],
+                "reponse_correcte": "Composition"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 4,
+          "titre": "Héritage, classes abstraites et interfaces",
+          "objectifs": [
+            "Modéliser une hiérarchie de généralisation/spécialisation",
+            "Utiliser classes abstraites et interfaces à bon escient"
+          ],
+          "cours": {
+            "resume": "La généralisation modélise une relation 'est-un' entre une classe mère et ses classes filles, qui héritent de ses attributs et méthodes. Une classe abstraite ne peut être instanciée directement ; une interface ne définit qu'un contrat de méthodes sans implémentation.",
+            "points_cles": [
+              "Notation : triangle vide pointant vers la classe mère",
+              "Classe abstraite : nom en italique, peut contenir des méthodes abstraites à implémenter par les filles",
+              "Interface : stéréotype «interface», relation de réalisation en flèche pointillée vers la classe qui l'implémente",
+              "Une classe hérite d'une seule classe mère mais peut implémenter plusieurs interfaces"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Héritage et interfaces en UML", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez une hiérarchie Employe (classe abstraite) avec les sous-classes EmployeCadre et EmployeNonCadre (méthode abstraite calculerSalaire redéfinie dans chaque fille), et une interface Imprimable implémentée par Employe.",
+            "criteres_reussite": [
+              "Classe abstraite correctement notée (italique) avec méthode abstraite",
+              "Sous-classes redéfinissant la méthode abstraite",
+              "Interface avec relation de réalisation correctement représentée"
+            ]
+          },
+          "livrable_attendu": "Diagramme de la hiérarchie Employe avec interface Imprimable",
+          "quiz": {
+            "titre": "Quiz - Héritage et interfaces",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Comment note-t-on le nom d'une classe abstraite dans un diagramme de classes ?",
+                "choix": ["En italique", "En gras", "Souligné", "En majuscules"],
+                "reponse_correcte": "En italique"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel type de flèche représente la réalisation d'une interface ?",
+                "choix": ["Flèche pointillée à tête triangulaire vide", "Flèche pleine simple", "Losange plein", "Flèche pleine à tête triangulaire vide"],
+                "reponse_correcte": "Flèche pointillée à tête triangulaire vide"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Une classe peut implémenter plusieurs interfaces en UML.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 5,
+          "titre": "Mini-projet — diagramme de classes complet",
+          "objectifs": [
+            "Produire un diagramme de classes complet et cohérent pour un domaine métier"
+          ],
+          "cours": {
+            "resume": "Synthèse : combiner attributs/méthodes/visibilité, associations et multiplicités, agrégation/composition, héritage et interfaces sur un domaine métier complet.",
+            "points_cles": [
+              "Démarche : identifier les classes candidates (noms du cahier des charges), puis les relations, puis affiner attributs/méthodes",
+              "Éviter de modéliser plus de 10-12 classes pour un exercice pédagogique"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Modélisez le diagramme de classes complet d'un système de gestion de bibliothèque (Livre, Exemplaire, Adherent, Emprunt, Reservation...) avec au moins une association, une composition/agrégation, et une hiérarchie d'héritage.",
+            "criteres_reussite": [
+              "Au moins 6 classes avec attributs et méthodes typés",
+              "Au moins une association avec multiplicités, une agrégation/composition, une hiérarchie d'héritage",
+              "Diagramme cohérent avec les cas d'usage de la Semaine 1"
+            ]
+          },
+          "livrable_attendu": "Diagramme de classes complet du système de bibliothèque",
+          "quiz": null
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "titre": "Comportement dynamique — séquence et communication",
+      "etapes": [
+        {
+          "jour": 1,
+          "titre": "Diagramme de séquence — bases",
+          "objectifs": [
+            "Lire et construire un diagramme de séquence simple",
+            "Représenter lignes de vie et messages"
+          ],
+          "cours": {
+            "resume": "Le diagramme de séquence illustre les échanges de messages entre objets ou acteurs dans le temps, pour un scénario donné. Chaque participant est représenté par une ligne de vie verticale, et les messages sont des flèches horizontales ordonnées de haut en bas.",
+            "points_cles": [
+              "Ligne de vie : rectangle en tête + ligne pointillée verticale représentant la durée de vie de l'instance",
+              "Barre d'activation (rectangle fin sur la ligne de vie) : période où l'objet exécute une action",
+              "Message synchrone (flèche pleine) : l'émetteur attend la réponse avant de continuer",
+              "Message de retour (flèche pointillée) : optionnel, représente la valeur retournée"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Diagramme de séquence - notation complète", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez le diagramme de séquence du scénario nominal 'Réserver une salle' (Semaine 1) : Employe, InterfaceReservation, ServiceReservation, BaseDeDonnees.",
+            "criteres_reussite": [
+              "Lignes de vie correctement représentées pour chaque participant",
+              "Messages ordonnés de façon cohérente avec le scénario textuel",
+              "Barres d'activation présentes pendant le traitement"
+            ]
+          },
+          "livrable_attendu": "Diagramme de séquence du scénario 'Réserver une salle'",
+          "quiz": {
+            "titre": "Quiz - Diagramme de séquence, bases",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que représente une ligne de vie dans un diagramme de séquence ?",
+                "choix": ["L'existence d'un participant dans le temps", "Une relation d'héritage", "Une multiplicité", "Un attribut de classe"],
+                "reponse_correcte": "L'existence d'un participant dans le temps"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel type de flèche représente un message synchrone ?",
+                "choix": ["Flèche pleine", "Flèche pointillée", "Losange", "Triangle vide"],
+                "reponse_correcte": "Flèche pleine"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Dans un diagramme de séquence, les messages sont ordonnés chronologiquement de haut en bas.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 2,
+          "titre": "Messages asynchrones et fragments combinés",
+          "objectifs": [
+            "Utiliser les fragments combinés alt/opt/loop",
+            "Différencier messages synchrones et asynchrones"
+          ],
+          "cours": {
+            "resume": "Les fragments combinés permettent d'exprimer de la logique conditionnelle et répétitive dans un diagramme de séquence : alt pour une alternative, opt pour une partie optionnelle, loop pour une répétition. Un message asynchrone (flèche à tête ouverte) n'attend pas de réponse immédiate.",
+            "points_cles": [
+              "alt : cadre avec compartiments séparés par une ligne pointillée, chaque compartiment porte sa condition entre crochets",
+              "opt : cadre unique, exécuté seulement si la condition est vraie",
+              "loop : cadre avec condition de répétition (ex. [pour chaque ligne])",
+              "Message asynchrone : flèche à tête ouverte, l'émetteur continue sans attendre"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Fragments combinés UML (alt/opt/loop)", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Enrichissez le diagramme de séquence du Jour 1 avec un fragment alt (salle disponible / salle indisponible) et un fragment loop pour la vérification de chaque créneau du calendrier.",
+            "criteres_reussite": [
+              "Fragment alt avec ses deux conditions correctement notées",
+              "Fragment loop avec condition de répétition explicite",
+              "Diagramme reste lisible et cohérent"
+            ]
+          },
+          "livrable_attendu": "Diagramme de séquence enrichi avec fragments alt et loop",
+          "quiz": {
+            "titre": "Quiz - Fragments combinés",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quel fragment combiné représente une alternative de type if/else ?",
+                "choix": ["alt", "opt", "loop", "par"],
+                "reponse_correcte": "alt"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel fragment représente une partie exécutée uniquement si une condition est vraie, sans alternative ?",
+                "choix": ["opt", "alt", "loop", "ref"],
+                "reponse_correcte": "opt"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Un message asynchrone attend une réponse avant que l'émetteur continue son exécution.",
+                "reponse_correcte": false
+              }
+            ]
+          }
+        },
+        {
+          "jour": 3,
+          "titre": "Diagramme de communication",
+          "objectifs": [
+            "Construire un diagramme de communication équivalent à un diagramme de séquence",
+            "Choisir la représentation adaptée au besoin"
+          ],
+          "cours": {
+            "resume": "Le diagramme de communication représente les mêmes échanges de messages qu'un diagramme de séquence, mais met l'accent sur les liens structurels entre objets plutôt que sur l'ordre temporel strict. Les messages sont numérotés pour indiquer leur séquence.",
+            "points_cles": [
+              "Les objets sont reliés par des liens sur lesquels circulent les messages numérotés",
+              "La numérotation (1, 1.1, 1.2, 2...) exprime l'ordre et l'imbrication des appels",
+              "Diagramme de séquence : lecture temporelle ; diagramme de communication : lecture structurelle",
+              "Les deux diagrammes sont sémantiquement équivalents et peuvent être dérivés l'un de l'autre"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Diagramme de communication vs séquence", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Transformez le diagramme de séquence du Jour 1 (sans les fragments) en diagramme de communication équivalent, avec numérotation correcte des messages.",
+            "criteres_reussite": [
+              "Tous les liens structurels entre objets sont représentés",
+              "Numérotation des messages cohérente avec l'ordre du diagramme de séquence d'origine"
+            ]
+          },
+          "livrable_attendu": "Diagramme de communication équivalent au diagramme de séquence du Jour 1",
+          "quiz": {
+            "titre": "Quiz - Diagramme de communication",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Qu'est-ce qui différencie principalement le diagramme de communication du diagramme de séquence ?",
+                "choix": ["L'accent mis sur les liens structurels plutôt que l'ordre temporel", "L'absence de messages", "L'impossibilité de représenter des boucles", "Le nombre d'acteurs autorisés"],
+                "reponse_correcte": "L'accent mis sur les liens structurels plutôt que l'ordre temporel"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Diagramme de séquence et diagramme de communication sont sémantiquement équivalents.",
+                "reponse_correcte": true
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Comment exprime-t-on l'ordre des messages dans un diagramme de communication ?",
+                "choix": ["Par une numérotation (1, 1.1, 2...)", "Par la position verticale", "Par la couleur des flèches", "Par le nom de la classe"],
+                "reponse_correcte": "Par une numérotation (1, 1.1, 2...)"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 4,
+          "titre": "Diagramme de vue d'ensemble des interactions",
+          "objectifs": [
+            "Comprendre l'usage du diagramme de vue d'ensemble des interactions",
+            "Articuler plusieurs diagrammes de séquence via un diagramme d'activité"
+          ],
+          "cours": {
+            "resume": "Le diagramme de vue d'ensemble des interactions combine la logique de flux du diagramme d'activité avec des références vers des diagrammes de séquence détaillés, pour représenter un enchaînement complexe de scénarios sans surcharger un seul diagramme.",
+            "points_cles": [
+              "Utilise les nœuds du diagramme d'activité (début, fin, décision) comme structure de flux",
+              "Chaque étape peut référencer («ref») un diagramme de séquence détaillé",
+              "Utile lorsque plusieurs scénarios de séquence s'enchaînent conditionnellement"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Esquissez un diagramme de vue d'ensemble des interactions articulant les scénarios 'Réserver une salle' et 'Annuler une réservation' selon la décision de l'utilisateur.",
+            "criteres_reussite": [
+              "Flux de décision clairement représenté",
+              "Références correctes vers les diagrammes de séquence existants"
+            ]
+          },
+          "livrable_attendu": "Schéma du diagramme de vue d'ensemble des interactions",
+          "quiz": {
+            "titre": "Quiz - Vue d'ensemble des interactions",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Le diagramme de vue d'ensemble des interactions combine la logique de quel diagramme avec des références à des diagrammes de séquence ?",
+                "choix": ["Diagramme d'activité", "Diagramme de classes", "Diagramme de déploiement", "Diagramme de paquetages"],
+                "reponse_correcte": "Diagramme d'activité"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Ce diagramme sert à éviter de surcharger un seul diagramme de séquence avec trop de scénarios.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 5,
+          "titre": "Mini-projet — séquence complexe",
+          "objectifs": [
+            "Modéliser un scénario dynamique complexe de bout en bout"
+          ],
+          "cours": {
+            "resume": "Synthèse : mobiliser diagrammes de séquence, fragments combinés et diagramme de communication sur un scénario métier complexe impliquant plusieurs systèmes.",
+            "points_cles": [
+              "Découper un scénario complexe en sous-scénarios avant de les enchaîner",
+              "Vérifier la cohérence entre diagramme de séquence et diagramme de classes (les messages doivent correspondre à des méthodes existantes)"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Modélisez le diagramme de séquence complet du scénario 'Emprunter un livre' du système de bibliothèque (Adherent, InterfaceEmprunt, ServiceEmprunt, CatalogueLivres, BaseDeDonnees), incluant la vérification des pénalités en cours et la mise à jour du stock.",
+            "criteres_reussite": [
+              "Diagramme complet couvrant le scénario nominal et au moins un cas alternatif (pénalité en cours)",
+              "Cohérence avec les classes du diagramme de classes de la Semaine 2"
+            ]
+          },
+          "livrable_attendu": "Diagramme de séquence complet du scénario 'Emprunter un livre'",
+          "quiz": null
+        }
+      ]
+    },
+    {
+      "numero": 4,
+      "titre": "Comportement — activité et état",
+      "etapes": [
+        {
+          "jour": 1,
+          "titre": "Diagramme d'activité — bases",
+          "objectifs": [
+            "Modéliser un flux de processus métier",
+            "Utiliser actions, transitions et nœuds de décision"
+          ],
+          "cours": {
+            "resume": "Le diagramme d'activité modélise un flux de contrôle ou de données entre actions, similaire à un organigramme enrichi. Il est particulièrement adapté pour décrire des processus métier, des algorithmes ou des workflows.",
+            "points_cles": [
+              "Nœud initial (rond plein) et nœud final (rond cerclé plein) délimitent le flux",
+              "Action : rectangle à coins arrondis",
+              "Nœud de décision (losange) : un flux entrant, plusieurs flux sortants avec conditions entre crochets",
+              "Nœud de fusion (losange) : plusieurs flux entrants convergent vers un flux sortant"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Diagramme d'activité - notation de base", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez le diagramme d'activité du processus 'Traiter une commande en ligne' : vérification du stock, décision (en stock / rupture de stock), paiement, expédition.",
+            "criteres_reussite": [
+              "Nœuds initial et final présents",
+              "Au moins un nœud de décision avec conditions explicites",
+              "Flux cohérent et sans blocage"
+            ]
+          },
+          "livrable_attendu": "Diagramme d'activité du processus de traitement de commande",
+          "quiz": {
+            "titre": "Quiz - Diagramme d'activité, bases",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quelle forme représente une action dans un diagramme d'activité ?",
+                "choix": ["Un rectangle à coins arrondis", "Un losange", "Un rond plein", "Un rectangle à trois compartiments"],
+                "reponse_correcte": "Un rectangle à coins arrondis"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel symbole représente un nœud de décision ?",
+                "choix": ["Un losange", "Un rond plein", "Un rectangle", "Une barre de synchronisation"],
+                "reponse_correcte": "Un losange"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Un diagramme d'activité doit démarrer par un nœud initial et se terminer par un nœud final.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 2,
+          "titre": "Diagramme d'activité avancé — couloirs et parallélisme",
+          "objectifs": [
+            "Utiliser les couloirs d'activité (swimlanes) pour répartir les responsabilités",
+            "Modéliser des flux parallèles avec des barres de synchronisation"
+          ],
+          "cours": {
+            "resume": "Les couloirs répartissent les actions d'un diagramme d'activité selon le responsable de leur exécution. Les barres de synchronisation (fork/join) permettent de représenter des actions exécutées en parallèle.",
+            "points_cles": [
+              "Un couloir regroupe les actions sous la responsabilité d'un même acteur/système",
+              "Fork (barre épaisse, un flux entrant, plusieurs sortants) : démarre des actions en parallèle",
+              "Join (barre épaisse, plusieurs flux entrants, un sortant) : synchronise la fin de plusieurs actions parallèles",
+              "Un flux ne franchit un join que lorsque tous les flux entrants sont arrivés"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Couloirs et parallélisme en diagramme d'activité", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Enrichissez le diagramme du Jour 1 avec des couloirs (Client, Systeme, ServicePaiement, Entrepot) et une barre de synchronisation représentant l'envoi simultané de la confirmation email et la préparation du colis.",
+            "criteres_reussite": [
+              "Couloirs correctement attribués à chaque responsable",
+              "Fork/join correctement utilisés pour le parallélisme",
+              "Diagramme reste cohérent et lisible"
+            ]
+          },
+          "livrable_attendu": "Diagramme d'activité enrichi avec couloirs et parallélisme",
+          "quiz": {
+            "titre": "Quiz - Couloirs et parallélisme",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "À quoi servent les couloirs (swimlanes) dans un diagramme d'activité ?",
+                "choix": ["Répartir les actions selon leur responsable", "Modéliser des attributs de classe", "Représenter des multiplicités", "Indiquer la durée d'une action"],
+                "reponse_correcte": "Répartir les actions selon leur responsable"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Que permet une barre de fork ?",
+                "choix": ["Démarrer plusieurs flux en parallèle", "Fusionner des flux alternatifs", "Terminer le diagramme", "Créer une boucle"],
+                "reponse_correcte": "Démarrer plusieurs flux en parallèle"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Un join laisse passer le flux dès qu'un seul des flux entrants est arrivé.",
+                "reponse_correcte": false
+              }
+            ]
+          }
+        },
+        {
+          "jour": 3,
+          "titre": "Diagramme d'état-transition — bases",
+          "objectifs": [
+            "Modéliser le cycle de vie d'un objet avec un diagramme d'état",
+            "Représenter états, transitions et événements déclencheurs"
+          ],
+          "cours": {
+            "resume": "Le diagramme d'état-transition modélise les différents états que peut prendre un objet au cours de sa vie, ainsi que les événements et conditions qui déclenchent le passage d'un état à un autre.",
+            "points_cles": [
+              "État : rectangle à coins arrondis, peut contenir des activités internes (entry/, do/, exit/)",
+              "Transition : flèche étiquetée événement [condition] / action",
+              "État initial (rond plein) et état final (rond cerclé plein)",
+              "Un objet ne peut être que dans un seul état à la fois (hors états composites/parallèles)"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Machine à états UML - notation", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez le cycle de vie d'une Commande : Creee -> Payee -> Expediee -> Livree, avec les transitions Annulee possibles depuis Creee et Payee, en précisant les événements déclencheurs.",
+            "criteres_reussite": [
+              "Tous les états pertinents du cycle de vie sont représentés",
+              "Transitions étiquetées avec leur événement déclencheur",
+              "État initial et final présents"
+            ]
+          },
+          "livrable_attendu": "Diagramme d'état-transition du cycle de vie d'une Commande",
+          "quiz": {
+            "titre": "Quiz - Diagramme d'état-transition, bases",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que représente un état dans un diagramme d'état-transition ?",
+                "choix": ["Une situation stable dans le cycle de vie d'un objet", "Une méthode de classe", "Un acteur externe", "Une relation d'héritage"],
+                "reponse_correcte": "Une situation stable dans le cycle de vie d'un objet"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Un objet peut se trouver simultanément dans deux états simples différents (hors état composite).",
+                "reponse_correcte": false
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel élément déclenche une transition entre deux états ?",
+                "choix": ["Un événement, éventuellement avec une condition et une action", "Une multiplicité", "Un attribut statique", "Une interface"],
+                "reponse_correcte": "Un événement, éventuellement avec une condition et une action"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 4,
+          "titre": "États composites et historique",
+          "objectifs": [
+            "Modéliser des états composites (sous-états)",
+            "Utiliser le pseudo-état historique (H/H*)"
+          ],
+          "cours": {
+            "resume": "Un état composite regroupe des sous-états, permettant de factoriser des transitions communes et de modéliser des comportements imbriqués. Le pseudo-état historique permet de revenir au dernier sous-état actif après une interruption.",
+            "points_cles": [
+              "Un état composite peut contenir une sous-machine à états complète",
+              "Une transition commune sortant de l'état composite s'applique à tous ses sous-états",
+              "Historique superficiel (H) : revient au dernier sous-état direct actif",
+              "Historique profond (H*) : revient au dernier sous-état actif à tous les niveaux d'imbrication"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Enrichissez le diagramme du Jour 3 : transformez l'état 'Expediee' en état composite avec les sous-états EnTransit et EnDouane, et ajoutez un état 'EnPause' avec retour à l'historique (H) en cas de reprise.",
+            "criteres_reussite": [
+              "État composite correctement représenté avec ses sous-états",
+              "Pseudo-état historique correctement utilisé et justifié"
+            ]
+          },
+          "livrable_attendu": "Diagramme d'état-transition enrichi avec état composite et historique",
+          "quiz": {
+            "titre": "Quiz - États composites et historique",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que permet un état composite ?",
+                "choix": ["Regrouper des sous-états imbriqués", "Représenter une multiplicité", "Modéliser une interface", "Représenter un acteur"],
+                "reponse_correcte": "Regrouper des sous-états imbriqués"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "L'historique profond (H*) revient au dernier sous-état actif à tous les niveaux d'imbrication.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 5,
+          "titre": "Mini-projet — modéliser un workflow complet",
+          "objectifs": [
+            "Modéliser de façon autonome un processus métier complet avec activité et état"
+          ],
+          "cours": {
+            "resume": "Synthèse : combiner diagramme d'activité (couloirs, parallélisme) et diagramme d'état-transition (états composites) sur un processus métier réaliste et complet.",
+            "points_cles": [
+              "Le diagramme d'activité décrit le processus ; le diagramme d'état décrit le cycle de vie d'un objet précis du processus",
+              "Vérifier que les deux diagrammes restent cohérents entre eux"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Pour le système de bibliothèque : modélisez le diagramme d'activité complet du processus 'Emprunter un livre' (avec couloirs Adherent/Systeme/Bibliothecaire) et le diagramme d'état-transition du cycle de vie d'un Exemplaire (Disponible, Emprunte, Reserve, EnReparation, Perdu).",
+            "criteres_reussite": [
+              "Diagramme d'activité complet et cohérent avec couloirs",
+              "Diagramme d'état-transition couvrant tous les états pertinents d'un Exemplaire",
+              "Cohérence entre les deux diagrammes et avec les diagrammes des semaines précédentes"
+            ]
+          },
+          "livrable_attendu": "Dossier complet : diagramme d'activité + diagramme d'état-transition du système de bibliothèque",
+          "quiz": null
+        }
+      ]
+    },
+    {
+      "numero": 5,
+      "titre": "Architecture et déploiement",
+      "etapes": [
+        {
+          "jour": 1,
+          "titre": "Diagramme de composants",
+          "objectifs": [
+            "Représenter l'architecture logicielle en composants",
+            "Distinguer composant, interface fournie et interface requise"
+          ],
+          "cours": {
+            "resume": "Le diagramme de composants représente l'organisation et les dépendances entre les modules logiciels (composants) d'un système, en mettant l'accent sur les interfaces qu'ils fournissent ou dont ils dépendent, indépendamment de leur implémentation interne.",
+            "points_cles": [
+              "Composant : rectangle avec stéréotype «component» ou icône dédiée",
+              "Interface fournie (lollipop, cercle plein) : ce que le composant offre",
+              "Interface requise (socket, demi-cercle) : ce dont le composant a besoin",
+              "L'assemblage de deux composants se fait en connectant l'interface requise de l'un à l'interface fournie de l'autre"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Diagramme de composants UML", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez l'architecture en composants du système de bibliothèque : ComposantCatalogue, ComposantEmprunt, ComposantNotification, ComposantAuthentification, avec leurs interfaces fournies/requises.",
+            "criteres_reussite": [
+              "Au moins 4 composants identifiés",
+              "Interfaces fournies et requises correctement représentées et connectées",
+              "Dépendances cohérentes avec le comportement modélisé dans les semaines précédentes"
+            ]
+          },
+          "livrable_attendu": "Diagramme de composants du système de bibliothèque",
+          "quiz": {
+            "titre": "Quiz - Diagramme de composants",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que représente une interface 'requise' (socket) sur un composant ?",
+                "choix": ["Un service dont le composant a besoin pour fonctionner", "Un service que le composant offre aux autres", "Un attribut du composant", "Une relation d'héritage"],
+                "reponse_correcte": "Un service dont le composant a besoin pour fonctionner"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Un diagramme de composants s'intéresse à l'implémentation interne détaillée du code.",
+                "reponse_correcte": false
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Comment relie-t-on deux composants dans un diagramme de composants ?",
+                "choix": ["En connectant l'interface requise de l'un à l'interface fournie de l'autre", "Par une association simple uniquement", "Par une composition obligatoire", "Par un héritage"],
+                "reponse_correcte": "En connectant l'interface requise de l'un à l'interface fournie de l'autre"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 2,
+          "titre": "Diagramme de déploiement",
+          "objectifs": [
+            "Représenter l'architecture physique/matérielle d'un système",
+            "Distinguer nœud, artefact et lien de communication"
+          ],
+          "cours": {
+            "resume": "Le diagramme de déploiement décrit l'architecture physique d'exécution du système : les nœuds matériels, les artefacts logiciels déployés sur ces nœuds, et les liens de communication entre eux.",
+            "points_cles": [
+              "Nœud : cube en 3D, représente une ressource matérielle ou un environnement d'exécution",
+              "Artefact : rectangle avec stéréotype «artifact», représente un livrable physique (fichier .jar, .war, image Docker)",
+              "Un artefact est déployé sur («deploy») un nœud",
+              "Les liens entre nœuds représentent les canaux de communication, souvent stéréotypés (ex. «HTTP», «TCP/IP»)"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Diagramme de déploiement - notation", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez le déploiement du système de bibliothèque : serveur d'application (artefact API), serveur de base de données (artefact SGBD), postes clients (navigateur web), avec les protocoles de communication entre eux.",
+            "criteres_reussite": [
+              "Nœuds correctement représentés (serveurs, postes clients)",
+              "Artefacts déployés sur les bons nœuds",
+              "Protocoles de communication précisés sur les liens"
+            ]
+          },
+          "livrable_attendu": "Diagramme de déploiement du système de bibliothèque",
+          "quiz": {
+            "titre": "Quiz - Diagramme de déploiement",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quelle forme géométrique représente un nœud dans un diagramme de déploiement ?",
+                "choix": ["Un cube en 3D", "Un rectangle simple", "Un losange", "Un cercle"],
+                "reponse_correcte": "Un cube en 3D"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Qu'est-ce qu'un artefact dans un diagramme de déploiement ?",
+                "choix": ["Un livrable logiciel physique déployé sur un nœud", "Un acteur du système", "Une classe abstraite", "Un cas d'usage"],
+                "reponse_correcte": "Un livrable logiciel physique déployé sur un nœud"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Un diagramme de déploiement peut préciser le protocole de communication entre deux nœuds.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 3,
+          "titre": "Diagramme de paquetages",
+          "objectifs": [
+            "Organiser un système en paquetages logiques",
+            "Représenter les dépendances entre paquetages"
+          ],
+          "cours": {
+            "resume": "Le diagramme de paquetages regroupe des éléments de modélisation en unités logiques cohérentes, facilitant la gestion de la complexité et la visualisation des dépendances de haut niveau entre modules.",
+            "points_cles": [
+              "Paquetage : dossier avec onglet, peut contenir des classes ou d'autres paquetages",
+              "Dépendance entre paquetages : flèche pointillée, un paquetage dépend d'un autre s'il utilise ses éléments",
+              "Bonne pratique : éviter les dépendances circulaires entre paquetages",
+              "Un paquetage correspond souvent à un module ou une couche applicative (présentation, métier, persistance)"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Diagramme de paquetages UML", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Organisez le diagramme de classes du système de bibliothèque (Semaine 2) en paquetages : Catalogue, Emprunt, Adherents, Persistance, en représentant les dépendances entre eux.",
+            "criteres_reussite": [
+              "Classes correctement réparties par paquetage cohérent",
+              "Dépendances entre paquetages représentées et justifiées",
+              "Absence de dépendance circulaire"
+            ]
+          },
+          "livrable_attendu": "Diagramme de paquetages du système de bibliothèque",
+          "quiz": {
+            "titre": "Quiz - Diagramme de paquetages",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que représente une flèche pointillée entre deux paquetages ?",
+                "choix": ["Une dépendance", "Une composition", "Un héritage", "Une multiplicité"],
+                "reponse_correcte": "Une dépendance"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Il est recommandé d'avoir des dépendances circulaires entre paquetages pour plus de flexibilité.",
+                "reponse_correcte": false
+              }
+            ]
+          }
+        },
+        {
+          "jour": 4,
+          "titre": "Diagramme d'objets",
+          "objectifs": [
+            "Représenter un instantané des instances d'un système à un moment donné",
+            "Différencier diagramme de classes et diagramme d'objets"
+          ],
+          "cours": {
+            "resume": "Le diagramme d'objets représente un instantané des instances et de leurs liens à un moment précis de l'exécution, ce qui permet de valider ou d'illustrer concrètement un diagramme de classes.",
+            "points_cles": [
+              "Notation d'un objet : nomInstance : NomClasse souligné, avec les valeurs des attributs",
+              "Un lien entre objets est une instance concrète d'une association du diagramme de classes",
+              "Utile pour vérifier la cohérence des multiplicités et illustrer des cas limites"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "À partir du diagramme de classes Client-Commande (Semaine 2, Jour 2), représentez un diagramme d'objets illustrant un client ayant passé exactement 2 commandes, avec des valeurs concrètes d'attributs.",
+            "criteres_reussite": [
+              "Notation des objets correcte (soulignée, avec valeurs)",
+              "Liens cohérents avec les associations et multiplicités du diagramme de classes d'origine"
+            ]
+          },
+          "livrable_attendu": "Diagramme d'objets illustrant le scénario Client/Commandes",
+          "quiz": {
+            "titre": "Quiz - Diagramme d'objets",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que représente un diagramme d'objets ?",
+                "choix": ["Un instantané des instances à un moment donné", "La structure générale des classes", "Le déploiement physique du système", "Le cycle de vie d'un objet"],
+                "reponse_correcte": "Un instantané des instances à un moment donné"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Le nom d'une instance dans un diagramme d'objets est souligné.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 5,
+          "titre": "Lien entre UML et design patterns — synthèse architecture",
+          "objectifs": [
+            "Reconnaître la structure UML de patterns de conception courants",
+            "Faire le lien entre modélisation UML et bonnes pratiques architecturales"
+          ],
+          "cours": {
+            "resume": "Les design patterns se documentent classiquement par un diagramme de classes UML illustrant leur structure. Reconnaître ces structures aide à identifier des opportunités de réutilisation et à communiquer une architecture de façon normalisée.",
+            "points_cles": [
+              "Pattern Observer : un Sujet maintient une liste d'Observateurs et les notifie via une interface commune",
+              "Pattern Strategy : une classe délègue un comportement interchangeable à une interface implémentée par plusieurs stratégies concrètes",
+              "Pattern Factory Method : une méthode de création est déléguée à des sous-classes via une méthode abstraite",
+              "Documenter un pattern en UML facilite sa communication et sa réutilisation dans une équipe"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Design Patterns - Gang of Four (résumé)", "url": "https://sourcemaking.com/design_patterns" }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modélisez en diagramme de classes UML le pattern Observer appliqué au système de bibliothèque : un Livre (Sujet) notifie les Adherents (Observateurs) abonnés lorsqu'un exemplaire redevient disponible.",
+            "criteres_reussite": [
+              "Structure du pattern Observer correctement respectée (interface Observateur, méthode notifier)",
+              "Application cohérente au contexte du système de bibliothèque"
+            ]
+          },
+          "livrable_attendu": "Diagramme de classes du pattern Observer appliqué à la bibliothèque",
+          "quiz": {
+            "titre": "Quiz - UML et design patterns",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Dans le pattern Observer, quel rôle notifie les autres objets d'un changement d'état ?",
+                "choix": ["Le Sujet", "L'Observateur", "La Factory", "Le Singleton"],
+                "reponse_correcte": "Le Sujet"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel pattern délègue la création d'objets à des sous-classes via une méthode abstraite ?",
+                "choix": ["Factory Method", "Observer", "Strategy", "Singleton"],
+                "reponse_correcte": "Factory Method"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Documenter un design pattern en UML facilite sa communication au sein d'une équipe.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "numero": 6,
+      "titre": "Projet de synthèse — de l'analyse au dossier de modélisation",
+      "etapes": [
+        {
+          "jour": 1,
+          "titre": "Cahier des charges → extraction des exigences",
+          "objectifs": [
+            "Extraire les exigences fonctionnelles d'un cahier des charges",
+            "Préparer la modélisation UML à partir d'un besoin réel"
+          ],
+          "cours": {
+            "resume": "Avant de modéliser, il faut analyser le cahier des charges pour en extraire les exigences fonctionnelles et non fonctionnelles, puis identifier les acteurs et les grandes fonctionnalités candidates aux cas d'usage.",
+            "points_cles": [
+              "Repérer les verbes d'action dans le texte : ils annoncent souvent des cas d'usage",
+              "Repérer les noms communs récurrents : ils annoncent souvent des classes candidates",
+              "Distinguer exigences fonctionnelles (comportement attendu) et non fonctionnelles (contraintes de qualité)",
+              "Une matrice de traçabilité relie chaque exigence à un ou plusieurs cas d'usage"
+            ],
+            "ressources": [
+              { "type": "documentation", "titre": "Techniques d'extraction des exigences", "url": "" }
+            ]
+          },
+          "exercice": {
+            "consigne": "À partir du cahier des charges fourni par votre encadrant (ou du projet de stage réel), listez les exigences fonctionnelles et non fonctionnelles, et pré-identifiez les acteurs et classes candidates.",
+            "criteres_reussite": [
+              "Au moins 8 exigences fonctionnelles identifiées",
+              "Exigences non fonctionnelles distinguées des fonctionnelles",
+              "Acteurs et classes candidates cohérents avec le texte du cahier des charges"
+            ]
+          },
+          "livrable_attendu": "Document d'analyse : exigences fonctionnelles/non fonctionnelles, acteurs et classes candidates",
+          "quiz": {
+            "titre": "Quiz - Extraction des exigences",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que recherche-t-on en priorité pour identifier des cas d'usage candidats dans un texte ?",
+                "choix": ["Les verbes d'action", "Les adjectifs", "Les nombres", "Les noms propres"],
+                "reponse_correcte": "Les verbes d'action"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Une exigence non fonctionnelle décrit une contrainte de qualité (performance, sécurité) plutôt qu'un comportement.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 2,
+          "titre": "Modélisation complète — cas d'usage et classes",
+          "objectifs": [
+            "Produire un diagramme de cas d'usage et un diagramme de classes complets pour le projet réel"
+          ],
+          "cours": {
+            "resume": "Application directe des Semaines 1 et 2 sur le projet réel de stage : structurer la vue fonctionnelle (cas d'usage) et la vue statique (classes) de façon cohérente entre elles.",
+            "points_cles": [
+              "Vérifier que chaque cas d'usage majeur trouve un écho dans les méthodes des classes concernées",
+              "Prioriser les cas d'usage et classes essentiels avant les cas secondaires"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Modélisez le diagramme de cas d'usage complet et le diagramme de classes complet du projet réel de stage, en réutilisant la méthode des semaines précédentes.",
+            "criteres_reussite": [
+              "Diagramme de cas d'usage complet et validé avec l'encadrant",
+              "Diagramme de classes complet, cohérent avec les cas d'usage"
+            ]
+          },
+          "livrable_attendu": "Diagramme de cas d'usage + diagramme de classes du projet réel",
+          "quiz": null
+        },
+        {
+          "jour": 3,
+          "titre": "Modélisation complète — séquence et état",
+          "objectifs": [
+            "Produire les diagrammes de séquence et d'état-transition clés du projet réel"
+          ],
+          "cours": {
+            "resume": "Application directe des Semaines 3 et 4 sur le projet réel : modéliser la dynamique des scénarios critiques et le cycle de vie des entités centrales du système.",
+            "points_cles": [
+              "Se concentrer sur les 2-3 scénarios les plus critiques du système, pas sur l'exhaustivité",
+              "Vérifier la cohérence entre messages de séquence et méthodes du diagramme de classes"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Modélisez les diagrammes de séquence des 2-3 scénarios les plus critiques du projet réel, ainsi que le diagramme d'état-transition de l'entité centrale du système.",
+            "criteres_reussite": [
+              "Diagrammes de séquence cohérents avec le diagramme de classes",
+              "Diagramme d'état-transition couvrant les états réellement pertinents de l'entité centrale"
+            ]
+          },
+          "livrable_attendu": "Diagrammes de séquence + diagramme d'état-transition du projet réel",
+          "quiz": null
+        },
+        {
+          "jour": 4,
+          "titre": "Modélisation complète — architecture",
+          "objectifs": [
+            "Produire les diagrammes de composants et de déploiement du projet réel"
+          ],
+          "cours": {
+            "resume": "Application directe de la Semaine 5 sur le projet réel : représenter l'architecture logicielle (composants) et l'architecture physique (déploiement) du système de stage.",
+            "points_cles": [
+              "L'architecture en composants doit refléter la structure technique réelle du projet (frontend/backend/API...)",
+              "Le diagramme de déploiement doit refléter l'environnement d'exécution réel (serveurs, cloud, postes clients)"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Modélisez le diagramme de composants et le diagramme de déploiement du projet réel de stage.",
+            "criteres_reussite": [
+              "Diagramme de composants cohérent avec l'architecture technique réelle du projet",
+              "Diagramme de déploiement cohérent avec l'environnement d'exécution réel"
+            ]
+          },
+          "livrable_attendu": "Diagramme de composants + diagramme de déploiement du projet réel",
+          "quiz": null
+        },
+        {
+          "jour": 5,
+          "titre": "Présentation et revue du dossier de modélisation UML complet",
+          "objectifs": [
+            "Consolider l'ensemble des diagrammes en un dossier de modélisation cohérent",
+            "Présenter et défendre ses choix de modélisation"
+          ],
+          "cours": {
+            "resume": "Dernière étape : rassembler l'ensemble des diagrammes produits en un dossier cohérent, vérifier leur cohérence mutuelle, et préparer une présentation synthétique pour l'encadrant.",
+            "points_cles": [
+              "Un dossier de modélisation doit raconter une histoire cohérente : d'un besoin fonctionnel à une architecture technique",
+              "Vérifier les incohérences croisées : une méthode appelée en séquence doit exister dans le diagramme de classes, un état doit correspondre à un statut réel, etc."
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Assemblez l'ensemble des diagrammes produits durant les 6 semaines en un dossier de modélisation UML unique, avec une page de synthèse expliquant les choix de modélisation, et préparez une présentation orale de 10 minutes.",
+            "criteres_reussite": [
+              "Dossier complet et cohérent regroupant tous les diagrammes du projet réel",
+              "Page de synthèse claire justifiant les principaux choix de modélisation",
+              "Présentation validée par l'encadrant"
+            ]
+          },
+          "livrable_attendu": "Dossier de modélisation UML complet du projet de stage + support de présentation",
+          "quiz": null
+        }
+      ]
+    }
+  ]
+}

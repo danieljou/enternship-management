@@ -13,8 +13,10 @@ import {
   LayoutDashboard,
   ListChecks,
   MessageCircle,
+  Milestone,
   NotebookText,
   Settings,
+  UserRound,
   Wallet,
 } from "lucide-react";
 
@@ -53,6 +55,7 @@ const NAV_GROUPS: { labelKey: string; items: NavItem[] }[] = [
     items: [
       { href: "/dashboard/stagiaires", labelKey: "sidebar.stagiaires", icon: GraduationCap },
       { href: "/dashboard/sessions", labelKey: "sidebar.sessions", icon: KanbanSquare },
+      { href: "/dashboard/roadmaps", labelKey: "sidebar.roadmaps", icon: Milestone },
       { href: "/dashboard/paiements", labelKey: "sidebar.paiements", icon: Wallet },
       { href: "/dashboard/etablissements", labelKey: "sidebar.etablissements", icon: Building2 },
       { href: "/dashboard/filieres", labelKey: "sidebar.filieres", icon: NotebookText },
@@ -130,6 +133,21 @@ export function AppSidebar() {
 
       <SidebarFooter>
         <SidebarMenu>
+          <SidebarMenuItem>
+            {isItemActive(pathname, "/dashboard/profil") && (
+              <span className="absolute inset-y-1.5 left-0 w-0.5 rounded-full bg-sidebar-primary" />
+            )}
+            <SidebarMenuButton
+              asChild
+              isActive={isItemActive(pathname, "/dashboard/profil")}
+              tooltip={t("sidebar.profil")}
+            >
+              <Link href="/dashboard/profil">
+                <UserRound />
+                <span>{t("sidebar.profil")}</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             {isItemActive(pathname, "/dashboard/parametres") && (
               <span className="absolute inset-y-1.5 left-0 w-0.5 rounded-full bg-sidebar-primary" />

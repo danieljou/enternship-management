@@ -44,7 +44,13 @@ interface KanbanBoardProps {
   canEdit: boolean;
 }
 
-export function KanbanBoard({ etapes, taches, sessionId, stagiaireId, canEdit }: KanbanBoardProps) {
+export function KanbanBoard({
+  etapes,
+  taches,
+  sessionId,
+  stagiaireId,
+  canEdit,
+}: KanbanBoardProps) {
   const { t } = useTranslation();
   const [isPending, startTransition] = useTransition();
   const [localTaches, setLocalTaches] = useState(taches);
@@ -61,7 +67,9 @@ export function KanbanBoard({ etapes, taches, sessionId, stagiaireId, canEdit }:
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
   );
 
   const tachesByEtape = useMemo(() => {
@@ -73,7 +81,9 @@ export function KanbanBoard({ etapes, taches, sessionId, stagiaireId, canEdit }:
     return map;
   }, [etapes, localTaches]);
 
-  const activeTache = activeId ? localTaches.find((tache) => tache.id === activeId) : null;
+  const activeTache = activeId
+    ? localTaches.find((tache) => tache.id === activeId)
+    : null;
   const dialogOpen = dialogEtapeId !== null || editing !== null;
 
   function closeDialog() {
@@ -92,7 +102,9 @@ export function KanbanBoard({ etapes, taches, sessionId, stagiaireId, canEdit }:
   }
 
   function handleMoveViaMenu(tache: SessionTache, etapeId: string) {
-    setLocalTaches((prev) => prev.map((t) => (t.id === tache.id ? { ...t, etape_id: etapeId } : t)));
+    setLocalTaches((prev) =>
+      prev.map((t) => (t.id === tache.id ? { ...t, etape_id: etapeId } : t)),
+    );
     persistMove(tache.id, etapeId);
   }
 
@@ -104,12 +116,18 @@ export function KanbanBoard({ etapes, taches, sessionId, stagiaireId, canEdit }:
     const { active, over } = event;
     if (!over || !canEdit) return;
 
-    const overData = over.data.current as { type?: string; etapeId?: string } | undefined;
+    const overData = over.data.current as
+      | { type?: string; etapeId?: string }
+      | undefined;
     const targetEtapeId = overData?.etapeId;
     if (!targetEtapeId) return;
 
     setLocalTaches((prev) =>
-      prev.map((t) => (t.id === active.id && t.etape_id !== targetEtapeId ? { ...t, etape_id: targetEtapeId } : t))
+      prev.map((t) =>
+        t.id === active.id && t.etape_id !== targetEtapeId
+          ? { ...t, etape_id: targetEtapeId }
+          : t,
+      ),
     );
   }
 
@@ -167,7 +185,8 @@ export function KanbanBoard({ etapes, taches, sessionId, stagiaireId, canEdit }:
             etapes={etapes}
             currentEtapeId={activeTache.etape_id}
             colors={getSessionEtapeColorClasses(
-              etapes.find((e) => e.id === activeTache.etape_id)?.couleur ?? "cyan"
+              etapes.find((e) => e.id === activeTache.etape_id)?.couleur ??
+                "cyan",
             )}
             canEdit={canEdit}
             isMovePending={false}
@@ -187,11 +206,18 @@ export function KanbanBoard({ etapes, taches, sessionId, stagiaireId, canEdit }:
         tache={editing}
       />
 
-      <AlertDialog open={!!deleting} onOpenChange={(open) => !open && setDeleting(null)}>
+      <AlertDialog
+        open={!!deleting}
+        onOpenChange={(open) => !open && setDeleting(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t("common.delete_confirm_title")}</AlertDialogTitle>
-            <AlertDialogDescription>{t("kanban.delete_confirm_description")}</AlertDialogDescription>
+            <AlertDialogTitle>
+              {t("common.delete_confirm_title")}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("kanban.delete_confirm_description")}
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>

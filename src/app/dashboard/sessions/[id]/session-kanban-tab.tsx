@@ -11,7 +11,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { KanbanBoard } from "@/components/kanban/kanban-board";
-import type { SessionEtape, SessionStagiaireWithRelations, SessionTache } from "@/lib/types";
+import type {
+  SessionEtape,
+  SessionStagiaireWithRelations,
+  SessionTache,
+} from "@/lib/types";
 
 export function SessionKanbanTab({
   sessionId,
@@ -25,11 +29,13 @@ export function SessionKanbanTab({
   taches: SessionTache[];
 }) {
   const { t } = useTranslation();
-  const [selected, setSelected] = useState<string | undefined>(enrolled[0]?.stagiaire_id);
+  const [selected, setSelected] = useState<string | undefined>(
+    enrolled[0]?.stagiaire_id,
+  );
 
   const stagiaireTaches = useMemo(
     () => taches.filter((tache) => tache.stagiaire_id === selected),
-    [taches, selected]
+    [taches, selected],
   );
 
   if (enrolled.length === 0) {
@@ -49,7 +55,9 @@ export function SessionKanbanTab({
         <SelectContent>
           {enrolled.map(({ stagiaire_id, stagiaire }) => (
             <SelectItem key={stagiaire_id} value={stagiaire_id}>
-              {stagiaire ? `${stagiaire.prenom} ${stagiaire.nom}` : stagiaire_id}
+              {stagiaire
+                ? `${stagiaire.prenom} ${stagiaire.nom}`
+                : stagiaire_id}
             </SelectItem>
           ))}
         </SelectContent>

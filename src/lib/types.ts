@@ -2,6 +2,14 @@ export type StagiaireSection = "francophone" | "anglophone";
 
 export type AppRole = "admin" | "stagiaire";
 
+export interface Profile {
+  id: string;
+  role: AppRole;
+  nom: string | null;
+  prenom: string | null;
+  created_at: string;
+}
+
 export interface Etablissement {
   id: string;
   nom: string;
@@ -21,6 +29,8 @@ export interface Stagiaire {
   prenom: string;
   email: string;
   niveau: number;
+  telephone: string | null;
+  adresse: string | null;
   etablissement_id: string | null;
   filiere_id: string | null;
   section: StagiaireSection;
@@ -148,7 +158,14 @@ export interface ChatMessage {
   created_at: string;
 }
 
-export type NotificationType = "chat_message" | "evaluation" | "document" | "paiement";
+export type NotificationType =
+  | "chat_message"
+  | "evaluation"
+  | "document"
+  | "paiement"
+  | "roadmap_assignation"
+  | "roadmap_quiz"
+  | "roadmap_livrable";
 
 export interface AppNotification {
   id: string;
@@ -158,5 +175,126 @@ export interface AppNotification {
   body: string | null;
   link: string | null;
   is_read: boolean;
+  created_at: string;
+}
+
+export type RoadmapStatut = "brouillon" | "publie" | "archive";
+export type RoadmapLivrableStatut = "non_soumis" | "soumis" | "valide" | "a_corriger";
+export type RoadmapLivrableMode = "lien" | "texte";
+export type RoadmapEtapeState = "a_venir" | "en_cours" | "validee" | "bloquee";
+export type RoadmapRessourceType = "documentation" | "video" | "api" | "outil";
+
+export type RoadmapQuizQuestion =
+  | { type: "qcm_unique"; question: string; choix: string[]; reponse_correcte: string }
+  | { type: "vrai_faux"; question: string; reponse_correcte: boolean }
+  | { type: "qcm_multiple"; question: string; choix: string[]; reponses_correctes: string[] };
+
+export interface RoadmapQuiz {
+  titre: string;
+  score_minimum: number;
+  tentatives_max: number;
+  afficher_corrige: boolean;
+  questions: RoadmapQuizQuestion[];
+}
+
+/** Same shape as RoadmapQuiz but with every correct-answer field stripped, safe to send to a stagiaire before grading. */
+export type RoadmapQuizSanitized = Omit<RoadmapQuiz, "questions"> & {
+  questions: { type: RoadmapQuizQuestion["type"]; question: string; choix?: string[] }[];
+};
+
+export interface RoadmapRessource {
+  type: RoadmapRessourceType;
+  titre: string;
+  url: string;
+}
+
+export interface RoadmapCours {
+  resume: string;
+  points_cles: string[];
+  ressources: RoadmapRessource[];
+}
+
+export interface RoadmapExercice {
+  consigne: string;
+  criteres_reussite: string[];
+}
+
+export interface RoadmapTemplate {
+  id: string;
+  titre: string;
+  branche: string;
+  niveau: string | null;
+  duree_semaines: number;
+  version: string;
+  note: string | null;
+  statut: RoadmapStatut;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface RoadmapSemaine {
+  id: string;
+  roadmap_id: string;
+  numero: number;
+  titre: string;
+  created_at: string;
+}
+
+export interface RoadmapEtape {
+  id: string;
+  semaine_id: string;
+  jour: number;
+  titre: string;
+  objectifs: string[];
+  cours: RoadmapCours;
+  exercice: RoadmapExercice;
+  livrable_attendu: string;
+  quiz: RoadmapQuiz | null;
+  created_at: string;
+}
+
+export interface RoadmapSemaineWithEtapes extends RoadmapSemaine {
+  etapes: RoadmapEtape[];
+}
+
+export interface RoadmapTemplateWithContenu extends RoadmapTemplate {
+  semaines: RoadmapSemaineWithEtapes[];
+}
+
+export interface RoadmapInstance {
+  id: string;
+  template_id: string;
+  stagiaire_id: string;
+  assigned_by: string | null;
+  version_snapshot: string;
+  date_debut: string;
+  date_fin: string;
+  note_interne: string | null;
+  created_at: string;
+}
+
+export interface RoadmapInstanceWithRelations extends RoadmapInstance {
+  template: Pick<RoadmapTemplate, "id" | "titre" | "branche" | "duree_semaines" | "statut"> | null;
+  stagiaire: Pick<Stagiaire, "id" | "nom" | "prenom" | "email"> | null;
+}
+
+export interface RoadmapProgress {
+  id: string;
+  instance_id: string;
+  etape_id: string;
+  quiz_tentatives: number;
+  quiz_meilleur_score: number | null;
+  quiz_reussi: boolean;
+  livrable_statut: RoadmapLivrableStatut;
+  updated_at: string;
+}
+
+export interface RoadmapLivrableSoumission {
+  id: string;
+  progress_id: string;
+  contenu: string;
+  mode: RoadmapLivrableMode;
+  statut: RoadmapLivrableStatut;
+  commentaire: string;
   created_at: string;
 }

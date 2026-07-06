@@ -34,6 +34,7 @@ import type { Paiement, SessionStagiaireWithRelations, StageSession } from "@/li
 
 import { deletePaiement } from "../actions";
 import { PaiementFormDialog } from "./paiement-form-dialog";
+import { PaiementReceiptButton } from "@/components/paiements/paiement-receipt-button";
 
 export function SessionPaiementsTab({
   session,
@@ -75,6 +76,10 @@ export function SessionPaiementsTab({
         .sort((a, b) => b.date_paiement.localeCompare(a.date_paiement)),
     [paiements, selected]
   );
+
+  const selectedStagiaire = enrolled.find((row) => row.stagiaire_id === selected);
+  const selectedStagiaireNom = selectedStagiaire?.stagiaire?.nom ?? "";
+  const selectedStagiairePrenom = selectedStagiaire?.stagiaire?.prenom ?? "";
 
   function confirmDelete() {
     if (!deleting) return;
@@ -147,10 +152,26 @@ export function SessionPaiementsTab({
           </SelectContent>
         </Select>
         {selected && (
-          <Button size="sm" onClick={() => setFormOpen(true)}>
-            <Plus className="h-4 w-4" />
-            {t("sessions.paiement_add_button")}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button size="sm" onClick={() => setFormOpen(true)}>
+              <Plus className="h-4 w-4" />
+              {t("sessions.paiement_add_button")}
+            </Button>
+            {selectedStatus === "paye" && (
+              <PaiementReceiptButton
+                stagiaireNom={selectedStagiaireNom}
+                stagiairePrenom={selectedStagiairePrenom}
+                sessionNom={session.nom}
+                montant={selectedPaid}
+                date_paiement={selectedPaiements[0]?.date_paiement ?? new Date().toISOString()}
+                moyen={selectedPaiements[0]?.moyen ?? null}
+                due={due}
+                paid={selectedPaid}
+                remaining={0}
+                status={selectedStatus}
+              />
+            )}
+          </div>
         )}
       </div>
 

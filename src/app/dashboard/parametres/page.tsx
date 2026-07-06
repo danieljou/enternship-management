@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
-import { ComingSoon } from "@/components/coming-soon";
+import { SettingsPanel } from "@/components/settings/settings-panel";
 
 export const metadata: Metadata = {
   title: "Paramètres - FUTURIX-iTech",
 };
 
 export default function ParametresPage() {
-  return <ComingSoon titleKey="sidebar.parametres" />;
+  return <SettingsPanel />;
 }

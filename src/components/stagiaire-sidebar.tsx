@@ -11,6 +11,8 @@ import {
   Home,
   KanbanSquare,
   MessageCircle,
+  Milestone,
+  UserRound,
   Wallet,
 } from "lucide-react";
 
@@ -39,6 +41,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/espace-stagiaire", labelKey: "stagiaireNav.home", icon: Home },
+  { href: "/espace-stagiaire/roadmap", labelKey: "stagiaireNav.roadmap", icon: Milestone },
   { href: "/espace-stagiaire/kanban", labelKey: "stagiaireNav.kanban", icon: KanbanSquare },
   { href: "/espace-stagiaire/sessions", labelKey: "stagiaireNav.sessions", icon: History },
   {
@@ -49,6 +52,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/espace-stagiaire/documents", labelKey: "stagiaireNav.documents", icon: FileText },
   { href: "/espace-stagiaire/paiements", labelKey: "stagiaireNav.paiements", icon: Wallet },
   { href: "/espace-stagiaire/messagerie", labelKey: "stagiaireNav.messagerie", icon: MessageCircle },
+  { href: "/espace-stagiaire/profil", labelKey: "stagiaireNav.profil", icon: UserRound },
 ];
 
 function isItemActive(pathname: string, href: string) {

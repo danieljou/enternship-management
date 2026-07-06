@@ -55,6 +55,74 @@ export async function createStagiaire(values: StagiaireValues): Promise<ActionRe
   redirect("/dashboard/stagiaires?created=1");
 }
 
+export interface UnlinkedAccount {
+  userId: string;
+  email: string;
+}
+
+/** Auth accounts with the "stagiaire" role that aren't linked to a stagiaires row yet
+ * (e.g. an invite whose stagiaires insert failed, or a row that was later deleted). */
+export async function getUnlinkedStagiaireAccounts(): Promise<UnlinkedAccount[]> {
+  const admin = createAdminClient();
+
+  const [{ data: usersPage }, { data: stagiaireProfiles }, { data: linkedRows }] = await Promise.all([
+    admin.auth.admin.listUsers({ perPage: 1000 }),
+    admin.from("profiles").select("id").eq("role", "stagiaire"),
+    admin.from("stagiaires").select("user_id").not("user_id", "is", null),
+  ]);
+
+  const linkedIds = new Set((linkedRows ?? []).map((row) => row.user_id));
+  const emailById = new Map((usersPage?.users ?? []).map((user) => [user.id, user.email ?? ""]));
+
+  return (stagiaireProfiles ?? [])
+    .filter((profile) => !linkedIds.has(profile.id))
+    .map((profile) => ({ userId: profile.id, email: emailById.get(profile.id) ?? "" }))
+    .filter((account) => account.email)
+    .sort((a, b) => a.email.localeCompare(b.email));
+}
+
+/** Links a stagiaire row to an existing "stagiaire" role account instead of inviting a new one. */
+export async function createStagiaireFromExisting(
+  userId: string,
+  values: StagiaireValues
+): Promise<ActionResult> {
+  const parsed = stagiaireSchema.safeParse(values);
+  if (!parsed.success || !userId) {
+    return { error: "stagiaires.create_error" };
+  }
+
+  const admin = createAdminClient();
+
+  const [{ data: userResult, error: userError }, { data: profile }, { data: alreadyLinked }] =
+    await Promise.all([
+      admin.auth.admin.getUserById(userId),
+      admin.from("profiles").select("role").eq("id", userId).maybeSingle(),
+      admin.from("stagiaires").select("id").eq("user_id", userId).maybeSingle(),
+    ]);
+
+  if (userError || !userResult.user || profile?.role !== "stagiaire") {
+    return { error: "stagiaires.existing_account_invalid" };
+  }
+
+  if (alreadyLinked) {
+    return { error: "stagiaires.existing_account_taken" };
+  }
+
+  const supabase = await createClient();
+  const { error: insertError } = await supabase.from("stagiaires").insert({
+    ...toRow(parsed.data),
+    email: userResult.user.email ?? parsed.data.email,
+    user_id: userId,
+  });
+
+  if (insertError) {
+    return { error: "stagiaires.create_error" };
+  }
+
+  revalidatePath("/dashboard/stagiaires");
+  redirect("/dashboard/stagiaires?created=1");
+}
+
 export async function updateStagiaire(
   id: string,
   userId: string | null,

@@ -98,6 +98,8 @@ export default async function DashboardPage() {
     <div className="flex flex-col gap-6">
       <DashboardWelcome email={user?.email ?? null} />
 
+      <DashboardQuickActions />
+
       <DashboardStats
         stagiaires={stagiairesCount ?? 0}
         etablissements={etablissementsCount ?? 0}
@@ -115,8 +117,6 @@ export default async function DashboardPage() {
         />
         <DashboardPaiementsChart collecte={totalCollecte} reste={totalReste} />
       </div>
-
-      <DashboardQuickActions />
     </div>
   );
 }

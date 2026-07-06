@@ -10,13 +10,22 @@ import {
 } from "@/lib/payment-status";
 import { cn } from "@/lib/utils";
 import type { Paiement, StageSession } from "@/lib/types";
+import { PaiementReceiptButton } from "@/components/paiements/paiement-receipt-button";
 
 export interface SessionPaiementGroup {
   session: StageSession;
   paiements: Paiement[];
 }
 
-export function StagiairePaiementsList({ groups }: { groups: SessionPaiementGroup[] }) {
+export function StagiairePaiementsList({
+  groups,
+  stagiaireNom,
+  stagiairePrenom,
+}: {
+  groups: SessionPaiementGroup[];
+  stagiaireNom: string;
+  stagiairePrenom: string;
+}) {
   const { t } = useTranslation();
 
   return (
@@ -35,9 +44,25 @@ export function StagiairePaiementsList({ groups }: { groups: SessionPaiementGrou
           <div key={session.id} className="rounded-2xl border bg-card p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-sm font-semibold text-foreground">{session.nom}</h2>
-              <Badge className={cn("border-0", getPaiementStatusClasses(status))}>
-                {t(`sessions.paiement_status_${status}`)}
-              </Badge>
+              <div className="flex items-center gap-2">
+                <Badge className={cn("border-0", getPaiementStatusClasses(status))}>
+                  {t(`sessions.paiement_status_${status}`)}
+                </Badge>
+                {status === "paye" && (
+                  <PaiementReceiptButton
+                    stagiaireNom={stagiaireNom}
+                    stagiairePrenom={stagiairePrenom}
+                    sessionNom={session.nom}
+                    montant={paid}
+                    date_paiement={paiements[paiements.length - 1]?.date_paiement ?? new Date().toISOString()}
+                    moyen={paiements[paiements.length - 1]?.moyen ?? null}
+                    due={due}
+                    paid={paid}
+                    remaining={0}
+                    status={status}
+                  />
+                )}
+              </div>
             </div>
 
             <div className="mt-3 flex flex-wrap gap-4 text-sm">

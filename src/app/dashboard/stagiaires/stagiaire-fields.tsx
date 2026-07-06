@@ -24,6 +24,8 @@ interface StagiaireFieldsProps {
   errors: FieldErrors<StagiaireValues>;
   etablissements: Etablissement[];
   filieres: Filiere[];
+  /** Replaces the default email input - used when linking an existing account instead of typing a new email. */
+  emailSlot?: React.ReactNode;
 }
 
 export function StagiaireFields({
@@ -32,6 +34,7 @@ export function StagiaireFields({
   errors,
   etablissements,
   filieres,
+  emailSlot,
 }: StagiaireFieldsProps) {
   const { t } = useTranslation();
 
@@ -67,13 +70,15 @@ export function StagiaireFields({
 
       <div className="flex flex-col gap-2 sm:col-span-2">
         <Label htmlFor="stagiaire-email">{t("stagiaires.email_label")}</Label>
-        <Input
-          id="stagiaire-email"
-          type="email"
-          placeholder={t("stagiaires.email_placeholder")}
-          aria-invalid={!!errors.email}
-          {...register("email")}
-        />
+        {emailSlot ?? (
+          <Input
+            id="stagiaire-email"
+            type="email"
+            placeholder={t("stagiaires.email_placeholder")}
+            aria-invalid={!!errors.email}
+            {...register("email")}
+          />
+        )}
         {errors.email && (
           <p className="text-xs text-red-600 dark:text-red-400">
             {t(errors.email.message ?? "")}

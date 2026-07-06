@@ -1,0 +1,1175 @@
+{
+  "id": "web-fullstack",
+  "titre": "Développeur Web Full-Stack (React + Django)",
+  "branche": "Web",
+  "duree_semaines": 4,
+  "niveau": "Débutant à intermédiaire",
+  "statut": "Publié",
+  "version": "1.0",
+  "semaines": [
+    {
+      "numero": 1,
+      "titre": "Bases visuelles : HTML, CSS, Tailwind",
+      "etapes": [
+        {
+          "jour": 1,
+          "titre": "HTML5 sémantique",
+          "objectifs": [
+            "Structurer une page avec les balises sémantiques HTML5",
+            "Créer un formulaire avec validation native",
+            "Appliquer les bases de l'accessibilité (alt, label, aria)"
+          ],
+          "cours": {
+            "resume": "Le HTML5 introduit des balises sémantiques (header, nav, main, section, article, aside, footer) qui remplacent les <div> génériques pour décrire le sens du contenu, ce qui améliore le SEO et l'accessibilité.",
+            "points_cles": [
+              "header, nav, main, section, article, aside, footer",
+              "Formulaires : input (text, email, number...), select, textarea, attributs required/pattern/min/max",
+              "Accessibilité : alt sur les images, label associé à chaque input, attributs aria-*",
+              "Structure de document : DOCTYPE, head (meta, title), body"
+            ],
+            "ressources": [
+              {
+                "type": "documentation",
+                "titre": "MDN - HTML sémantique",
+                "url": "https://developer.mozilla.org/fr/docs/Web/HTML"
+              },
+              {
+                "type": "video",
+                "titre": "HTML5 en 1h (tutoriel)",
+                "url": ""
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Reconstruire la structure HTML (sans CSS) d'une page d'accueil type 'entreprise' : header avec logo et nav, section hero, section services (3 cartes), section contact avec formulaire (nom, email, message), footer.",
+            "criteres_reussite": [
+              "Toutes les balises sémantiques utilisées correctement",
+              "Formulaire fonctionnel avec validation HTML5 (required, type=email)",
+              "Code validé par le validateur W3C"
+            ]
+          },
+          "livrable_attendu": "Fichier index.html déposé sur le repo Git du stagiaire",
+          "quiz": {
+            "titre": "Quiz - HTML5 sémantique",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quelle balise est utilisée pour le contenu principal et unique d'une page ?",
+                "choix": [
+                  "<main>",
+                  "<section>",
+                  "<div id='main'>",
+                  "<body>"
+                ],
+                "reponse_correcte": "<main>"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "L'attribut 'alt' sur une image est uniquement décoratif et n'a pas d'impact sur l'accessibilité.",
+                "reponse_correcte": false
+              },
+              {
+                "type": "qcm_multiple",
+                "question": "Lesquelles de ces balises sont des balises sémantiques HTML5 ?",
+                "choix": [
+                  "<header>",
+                  "<div>",
+                  "<article>",
+                  "<span>",
+                  "<footer>"
+                ],
+                "reponses_correctes": [
+                  "<header>",
+                  "<article>",
+                  "<footer>"
+                ]
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel attribut rend un champ de formulaire obligatoire en HTML5 ?",
+                "choix": [
+                  "required",
+                  "mandatory",
+                  "validate",
+                  "needed"
+                ],
+                "reponse_correcte": "required"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 2,
+          "titre": "CSS3 : Flexbox, Grid, Responsive",
+          "objectifs": [
+            "Maîtriser le box model CSS",
+            "Construire une mise en page avec Flexbox et Grid",
+            "Rendre une page responsive avec les media queries"
+          ],
+          "cours": {
+            "resume": "Flexbox gère les alignements sur un axe (ligne ou colonne), Grid gère des mises en page en deux dimensions (lignes et colonnes). Les media queries adaptent le rendu selon la largeur d'écran.",
+            "points_cles": [
+              "box model : content, padding, border, margin",
+              "Flexbox : display:flex, justify-content, align-items, flex-wrap, gap",
+              "Grid : display:grid, grid-template-columns, grid-template-areas, gap",
+              "Responsive : @media (max-width: 768px) { ... }, approche mobile-first"
+            ],
+            "ressources": [
+              {
+                "type": "documentation",
+                "titre": "CSS Tricks - Guide complet Flexbox",
+                "url": ""
+              },
+              {
+                "type": "documentation",
+                "titre": "CSS Tricks - Guide complet Grid",
+                "url": ""
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Transformer la page du Jour 1 : mise en page de la nav en flexbox, grille de 3 cartes 'services' en CSS Grid, rendre la page responsive (1 colonne sur mobile, 3 sur desktop).",
+            "criteres_reussite": [
+              "Nav alignée horizontalement avec flexbox",
+              "Grille responsive fonctionnelle (3 colonnes desktop, 1 colonne mobile)",
+              "Aucun débordement horizontal sur mobile (375px)"
+            ]
+          },
+          "livrable_attendu": "Fichier style.css + index.html mis à jour",
+          "quiz": {
+            "titre": "Quiz - CSS Flexbox & Grid",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quelle propriété centre les éléments sur l'axe principal en Flexbox ?",
+                "choix": [
+                  "justify-content",
+                  "align-items",
+                  "flex-direction",
+                  "text-align"
+                ],
+                "reponse_correcte": "justify-content"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "CSS Grid permet de créer des mises en page en deux dimensions (lignes et colonnes).",
+                "reponse_correcte": true
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Dans le box model, quel élément est le plus à l'extérieur ?",
+                "choix": [
+                  "margin",
+                  "padding",
+                  "border",
+                  "content"
+                ],
+                "reponse_correcte": "margin"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quelle est la bonne syntaxe pour une media query ciblant les écrans de moins de 768px ?",
+                "choix": [
+                  "@media (max-width: 768px) {}",
+                  "@media (min-width: 768px) {}",
+                  "@screen (max-width: 768px) {}",
+                  "@responsive (768px) {}"
+                ],
+                "reponse_correcte": "@media (max-width: 768px) {}"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 3,
+          "titre": "Tailwind CSS (bases)",
+          "objectifs": [
+            "Installer et configurer Tailwind CSS",
+            "Utiliser les classes utilitaires pour le style et le responsive"
+          ],
+          "cours": {
+            "resume": "Tailwind est un framework 'utility-first' : au lieu d'écrire du CSS personnalisé, on compose le style directement dans le HTML avec des classes utilitaires (p-4, flex, text-xl, md:grid-cols-3...).",
+            "points_cles": [
+              "Installation via CDN (prototypage) ou npm + PostCSS (production)",
+              "Classes d'espacement : p-*, m-*, gap-*",
+              "Classes de couleur, typographie, bordures",
+              "Préfixes responsive : sm:, md:, lg:, xl:"
+            ],
+            "ressources": [
+              {
+                "type": "documentation",
+                "titre": "Tailwind CSS - Documentation officielle",
+                "url": "https://tailwindcss.com/docs"
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Reprendre intégralement la page des Jours 1-2 et la recoder uniquement avec des classes Tailwind, sans aucun fichier CSS personnalisé.",
+            "criteres_reussite": [
+              "Aucune règle CSS custom (uniquement classes Tailwind)",
+              "Rendu visuel identique ou amélioré",
+              "Responsive géré via les préfixes Tailwind"
+            ]
+          },
+          "livrable_attendu": "Page HTML stylée en Tailwind, repo Git à jour",
+          "quiz": {
+            "titre": "Quiz - Tailwind CSS bases",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quelle classe Tailwind applique un padding de taille moyenne sur tous les côtés ?",
+                "choix": [
+                  "p-4",
+                  "padding-4",
+                  "pad-4",
+                  "m-4"
+                ],
+                "reponse_correcte": "p-4"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel préfixe applique un style uniquement à partir des écrans moyens (768px) ?",
+                "choix": [
+                  "md:",
+                  "sm:",
+                  "lg:",
+                  "xl:"
+                ],
+                "reponse_correcte": "md:"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Tailwind est un framework qui fournit des composants visuels préconçus comme Bootstrap.",
+                "reponse_correcte": false
+              }
+            ]
+          }
+        },
+        {
+          "jour": 4,
+          "titre": "Tailwind avancé : composants & configuration",
+          "objectifs": [
+            "Configurer tailwind.config.js",
+            "Créer des composants visuels réutilisables",
+            "Gérer les états (hover, focus) et le dark mode"
+          ],
+          "cours": {
+            "resume": "tailwind.config.js permet de personnaliser le thème (couleurs, polices, breakpoints). Les états hover:, focus:, disabled: permettent d'ajouter de l'interactivité visuelle sans JavaScript.",
+            "points_cles": [
+              "Personnalisation du thème dans tailwind.config.js",
+              "États : hover:, focus:, active:, disabled:",
+              "Dark mode : classe 'dark' + préfixe dark:",
+              "Extraction de composants réutilisables (pattern de classes communes)"
+            ],
+            "ressources": [
+              {
+                "type": "documentation",
+                "titre": "Tailwind - Configuration",
+                "url": "https://tailwindcss.com/docs/configuration"
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Créer un composant Navbar réutilisable et un composant Card (avec hover effect), en respectant une palette de couleurs personnalisée définie dans tailwind.config.js.",
+            "criteres_reussite": [
+              "tailwind.config.js modifié avec une palette personnalisée",
+              "Composant Navbar réutilisable sur plusieurs pages",
+              "Effet hover visible sur les Cards"
+            ]
+          },
+          "livrable_attendu": "2-3 composants HTML/Tailwind documentés + config",
+          "quiz": {
+            "titre": "Quiz - Tailwind avancé",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Où personnalise-t-on les couleurs du thème Tailwind ?",
+                "choix": [
+                  "tailwind.config.js",
+                  "package.json",
+                  "index.html",
+                  "style.css"
+                ],
+                "reponse_correcte": "tailwind.config.js"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quelle classe applique un style uniquement au survol de la souris ?",
+                "choix": [
+                  "hover:bg-blue-500",
+                  "onhover-bg-blue-500",
+                  "mouseover:bg-blue-500",
+                  "active:bg-blue-500"
+                ],
+                "reponse_correcte": "hover:bg-blue-500"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 5,
+          "titre": "Mini-projet : Landing page complète",
+          "objectifs": [
+            "Assembler les compétences de la semaine sur un projet complet"
+          ],
+          "cours": {
+            "resume": "Synthèse de la semaine : structuration sémantique, mise en page responsive, stylisation Tailwind, composants réutilisables.",
+            "points_cles": [
+              "Plan type d'une landing page : hero, features, pricing/contact, footer",
+              "Bonnes pratiques de structuration de fichiers"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Réaliser une landing page complète et responsive (hero, features, pricing ou contact, footer) en HTML + Tailwind, à partir d'une maquette libre ou imposée.",
+            "criteres_reussite": [
+              "Page complète, responsive (mobile/tablette/desktop)",
+              "Code propre, composants réutilisés",
+              "Déployée localement et poussée sur Git"
+            ]
+          },
+          "livrable_attendu": "Landing page complète, lien du repo Git",
+          "quiz": null
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "titre": "Logique & état : JavaScript, React, Redux Toolkit",
+      "etapes": [
+        {
+          "jour": 1,
+          "titre": "JavaScript moderne (ES6+)",
+          "objectifs": [
+            "Maîtriser la syntaxe ES6+",
+            "Manipuler des tableaux d'objets avec map/filter/reduce"
+          ],
+          "cours": {
+            "resume": "ES6+ introduit let/const, les fonctions fléchées, la déstructuration, le spread/rest et les modules, qui sont la base de tout code React moderne.",
+            "points_cles": [
+              "let/const vs var, portée de bloc",
+              "Fonctions fléchées : (a, b) => a + b",
+              "Déstructuration d'objets et de tableaux",
+              "Spread/rest : {...obj}, [...arr]",
+              "map(), filter(), reduce() sur les tableaux",
+              "Modules : import/export"
+            ],
+            "ressources": [
+              {
+                "type": "documentation",
+                "titre": "MDN - JavaScript ES6+",
+                "url": "https://developer.mozilla.org/fr/docs/Web/JavaScript"
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "À partir d'un tableau d'objets 'produits' (nom, prix, catégorie, stock), écrire 5 fonctions utilitaires : filtrer par catégorie, calculer le total du stock, trier par prix, trouver le produit le plus cher, transformer en liste de noms uniquement.",
+            "criteres_reussite": [
+              "Les 5 fonctions utilisent map/filter/reduce de façon appropriée",
+              "Aucune boucle for utilisée (privilégier les méthodes fonctionnelles)",
+              "Code testé avec plusieurs jeux de données"
+            ]
+          },
+          "livrable_attendu": "Fichier utils.js avec les 5 fonctions + tests",
+          "quiz": {
+            "titre": "Quiz - JavaScript ES6+",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quelle méthode retourne un nouveau tableau contenant uniquement les éléments respectant une condition ?",
+                "choix": [
+                  "filter()",
+                  "map()",
+                  "reduce()",
+                  "find()"
+                ],
+                "reponse_correcte": "filter()"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Que fait la méthode reduce() ?",
+                "choix": [
+                  "Elle accumule les valeurs d'un tableau en une seule valeur",
+                  "Elle trie le tableau",
+                  "Elle filtre le tableau",
+                  "Elle inverse le tableau"
+                ],
+                "reponse_correcte": "Elle accumule les valeurs d'un tableau en une seule valeur"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "const empêche de modifier les propriétés internes d'un objet déclaré avec const.",
+                "reponse_correcte": false
+              }
+            ]
+          }
+        },
+        {
+          "jour": 2,
+          "titre": "DOM, événements, asynchrone (fetch API)",
+          "objectifs": [
+            "Manipuler le DOM dynamiquement",
+            "Consommer une API avec fetch et async/await"
+          ],
+          "cours": {
+            "resume": "fetch() permet d'effectuer des requêtes HTTP. Combiné à async/await, le code asynchrone devient lisible comme du code synchrone, avec try/catch pour la gestion d'erreurs.",
+            "points_cles": [
+              "Sélection DOM : querySelector, addEventListener",
+              "fetch(url).then(res => res.json())",
+              "async/await + try/catch",
+              "Affichage dynamique de données dans le DOM"
+            ],
+            "ressources": [
+              {
+                "type": "api",
+                "titre": "JSONPlaceholder (API de test)",
+                "url": "https://jsonplaceholder.typicode.com/"
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Créer une page qui récupère une liste d'utilisateurs depuis JSONPlaceholder et les affiche dynamiquement dans une liste HTML, avec un message de chargement et une gestion d'erreur si l'API échoue.",
+            "criteres_reussite": [
+              "Utilisation d'async/await",
+              "Gestion d'erreur avec try/catch",
+              "Affichage d'un état de chargement"
+            ]
+          },
+          "livrable_attendu": "Page HTML/JS connectée à l'API, code sur Git",
+          "quiz": {
+            "titre": "Quiz - DOM & Async JS",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quel mot-clé permet d'attendre la résolution d'une promesse dans une fonction async ?",
+                "choix": [
+                  "await",
+                  "wait",
+                  "async",
+                  "then"
+                ],
+                "reponse_correcte": "await"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "fetch() renvoie directement les données JSON sans étape supplémentaire.",
+                "reponse_correcte": false
+              }
+            ]
+          }
+        },
+        {
+          "jour": 3,
+          "titre": "Découvrir React : composants et props",
+          "objectifs": [
+            "Comprendre JSX",
+            "Créer et composer des composants fonctionnels"
+          ],
+          "cours": {
+            "resume": "React permet de découper l'interface en composants réutilisables. JSX est une syntaxe qui mélange JavaScript et balisage. Les props permettent de transmettre des données d'un composant parent à un enfant.",
+            "points_cles": [
+              "JSX : retourner du 'HTML' depuis une fonction JavaScript",
+              "Composants fonctionnels : function MonComposant(props) {}",
+              "Props : passage de données en lecture seule",
+              "Composition de composants (Header, Card, List)"
+            ],
+            "ressources": [
+              {
+                "type": "documentation",
+                "titre": "React - Documentation officielle (react.dev)",
+                "url": "https://react.dev"
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Créer un projet React (Vite) avec 3-4 composants : Header, Card (réutilisable avec props titre/description/image), List (qui affiche plusieurs Card). Assembler le tout dans App.jsx.",
+            "criteres_reussite": [
+              "Composants fonctionnels avec props typées logiquement",
+              "Au moins 3 Card affichées via une List",
+              "Projet démarré avec Vite, lancé en local"
+            ]
+          },
+          "livrable_attendu": "Projet React statique sur Git",
+          "quiz": {
+            "titre": "Quiz - React Components & Props",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Qu'est-ce que JSX ?",
+                "choix": [
+                  "Une syntaxe qui permet d'écrire du balisage dans du JavaScript",
+                  "Un langage de templating séparé de JS",
+                  "Une base de données",
+                  "Un framework CSS"
+                ],
+                "reponse_correcte": "Une syntaxe qui permet d'écrire du balisage dans du JavaScript"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Les props peuvent être modifiées directement par le composant enfant qui les reçoit.",
+                "reponse_correcte": false
+              }
+            ]
+          }
+        },
+        {
+          "jour": 4,
+          "titre": "État local : useState et useEffect",
+          "objectifs": [
+            "Gérer un état local avec useState",
+            "Synchroniser un effet avec useEffect"
+          ],
+          "cours": {
+            "resume": "useState permet à un composant de mémoriser et mettre à jour une valeur entre les rendus. useEffect permet d'exécuter du code en réaction à un changement (montage, mise à jour, démontage).",
+            "points_cles": [
+              "useState(valeurInitiale) → [valeur, setValeur]",
+              "Formulaires contrôlés (value + onChange)",
+              "useEffect(fn, [dependances])",
+              "Rendu conditionnel et listes avec key"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Créer une todo-list React : ajout, suppression, marquage 'terminé' d'une tâche, avec persistance dans le state local.",
+            "criteres_reussite": [
+              "Ajout/suppression/complétion fonctionnels",
+              "Formulaire contrôlé pour l'ajout",
+              "Liste rendue avec key unique par tâche"
+            ]
+          },
+          "livrable_attendu": "Todo-list React fonctionnelle, code sur Git",
+          "quiz": {
+            "titre": "Quiz - useState & useEffect",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que retourne l'appel useState(0) ?",
+                "choix": [
+                  "Un tableau [valeur, fonctionDeMiseAJour]",
+                  "Un objet {value, set}",
+                  "Une simple valeur numérique",
+                  "Une promesse"
+                ],
+                "reponse_correcte": "Un tableau [valeur, fonctionDeMiseAJour]"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Pourquoi faut-il une 'key' unique sur chaque élément d'une liste React ?",
+                "choix": [
+                  "Pour aider React à identifier les éléments entre les rendus",
+                  "Pour le style CSS",
+                  "Ce n'est pas nécessaire",
+                  "Pour trier la liste automatiquement"
+                ],
+                "reponse_correcte": "Pour aider React à identifier les éléments entre les rendus"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 5,
+          "titre": "Structurer en Vues (Pages) avec React Router",
+          "objectifs": [
+            "Différencier Components et Pages/Views",
+            "Mettre en place la navigation avec React Router"
+          ],
+          "cours": {
+            "resume": "Une Page/View est un composant-écran complet rattaché à une route (ex: HomePage, ProductListPage), distincte des Components réutilisables (Button, Card). React Router gère la navigation entre ces Pages sans rechargement complet.",
+            "points_cles": [
+              "BrowserRouter, Routes, Route, Link",
+              "Organisation des dossiers : /components vs /pages",
+              "Layout commun (Navbar persistante entre les pages)",
+              "Navigation programmatique avec useNavigate"
+            ],
+            "ressources": [
+              {
+                "type": "documentation",
+                "titre": "React Router - Documentation officielle",
+                "url": "https://reactrouter.com"
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Reprendre l'app du Jour 3-4 et la structurer avec au moins 3 pages (HomePage, ListPage, DetailPage) reliées par React Router, avec un layout commun contenant la Navbar.",
+            "criteres_reussite": [
+              "Dossiers /components et /pages clairement séparés",
+              "Navigation fonctionnelle entre 3 pages minimum",
+              "Layout commun affiché sur toutes les pages"
+            ]
+          },
+          "livrable_attendu": "App React multi-pages avec routing, code sur Git",
+          "quiz": {
+            "titre": "Quiz - React Router & architecture Vues",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quelle est la différence principale entre une Page et un Component réutilisable ?",
+                "choix": [
+                  "La Page est rattachée à une route, le Component est réutilisable n'importe où",
+                  "Il n'y a aucune différence",
+                  "La Page ne peut pas contenir de Component",
+                  "Le Component gère toujours l'état global"
+                ],
+                "reponse_correcte": "La Page est rattachée à une route, le Component est réutilisable n'importe où"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel composant de React Router définit l'ensemble des routes de l'application ?",
+                "choix": [
+                  "<Routes>",
+                  "<RouteList>",
+                  "<Switcher>",
+                  "<Navigation>"
+                ],
+                "reponse_correcte": "<Routes>"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 6,
+          "titre": "Redux Toolkit : comprendre l'état global",
+          "objectifs": [
+            "Comprendre le besoin d'un état global",
+            "Créer un slice avec createSlice"
+          ],
+          "cours": {
+            "resume": "Quand plusieurs composants/pages éloignés ont besoin de partager et modifier la même donnée (utilisateur connecté, panier, filtres), un state local ne suffit plus : Redux Toolkit centralise cet état dans un store unique.",
+            "points_cles": [
+              "configureStore() : création du store",
+              "createSlice({name, initialState, reducers}) : définit un état + ses actions",
+              "Provider : rend le store disponible à toute l'app",
+              "Différence state local (useState) vs état global (Redux)"
+            ],
+            "ressources": [
+              {
+                "type": "documentation",
+                "titre": "Redux Toolkit - Documentation officielle",
+                "url": "https://redux-toolkit.js.org"
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Créer un slice 'cartSlice' (panier) avec les actions addItem, removeItem, clearCart, et l'intégrer dans le store via configureStore.",
+            "criteres_reussite": [
+              "Slice fonctionnel avec 3 actions minimum",
+              "Store configuré et Provider en place",
+              "État du slice visible dans Redux DevTools"
+            ]
+          },
+          "livrable_attendu": "Slice Redux fonctionnel, code sur Git",
+          "quiz": {
+            "titre": "Quiz - Redux Toolkit bases",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quelle fonction crée un état partagé avec ses actions en Redux Toolkit ?",
+                "choix": [
+                  "createSlice",
+                  "createStore",
+                  "useReducer",
+                  "createContext"
+                ],
+                "reponse_correcte": "createSlice"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Redux est nécessaire pour tout état dans une application React, même purement local à un composant.",
+                "reponse_correcte": false
+              }
+            ]
+          }
+        },
+        {
+          "jour": 7,
+          "titre": "Connecter Redux aux Vues",
+          "objectifs": [
+            "Lire l'état global avec useSelector",
+            "Déclencher des actions avec useDispatch"
+          ],
+          "cours": {
+            "resume": "useSelector permet de lire une portion du store Redux dans un composant. useDispatch permet d'envoyer une action qui modifiera cet état via le reducer correspondant.",
+            "points_cles": [
+              "useSelector(state => state.cart.items)",
+              "useDispatch() + dispatch(actionCreator(payload))",
+              "Connexion du state global aux Pages créées au Jour 5",
+              "Bonnes pratiques : ne pas dupliquer l'état local et global"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Connecter le slice 'cartSlice' du Jour 6 à l'application multi-pages du Jour 5 : afficher le nombre d'articles dans la Navbar (lecture via useSelector), ajouter un article depuis la ListPage (dispatch).",
+            "criteres_reussite": [
+              "Compteur d'articles affiché et synchronisé en temps réel",
+              "Ajout d'article fonctionnel depuis une page différente de l'affichage",
+              "Aucune duplication d'état (local vs global)"
+            ]
+          },
+          "livrable_attendu": "App React + Redux Toolkit fonctionnelle de bout en bout, code sur Git",
+          "quiz": {
+            "titre": "Quiz - Connexion Redux/Vues",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quel hook permet de lire une valeur du store Redux dans un composant ?",
+                "choix": [
+                  "useSelector",
+                  "useState",
+                  "useContext",
+                  "useStore"
+                ],
+                "reponse_correcte": "useSelector"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quel hook permet d'envoyer une action au store ?",
+                "choix": [
+                  "useDispatch",
+                  "useAction",
+                  "useSend",
+                  "useReducer"
+                ],
+                "reponse_correcte": "useDispatch"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "titre": "Modélisation & Back-end : UML, Python, Django",
+      "etapes": [
+        {
+          "jour": 1,
+          "titre": "UML : cas d'usage et classes",
+          "objectifs": [
+            "Modéliser les acteurs et cas d'usage",
+            "Modéliser les classes principales"
+          ],
+          "cours": {
+            "resume": "Le diagramme de cas d'usage décrit les interactions entre acteurs et fonctionnalités. Le diagramme de classes décrit la structure des données : attributs, méthodes et relations (héritage, association, agrégation).",
+            "points_cles": [
+              "Acteurs, cas d'usage, relations include/extend",
+              "Classe : nom, attributs, méthodes",
+              "Relations : association, agrégation, composition, héritage",
+              "Multiplicités (1, 0..1, 1..*, *)"
+            ],
+            "ressources": [
+              {
+                "type": "outil",
+                "titre": "draw.io / PlantUML",
+                "url": "https://draw.io"
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Modéliser le diagramme de cas d'usage et le diagramme de classes du projet réel de stage du stagiaire (à partir de son cahier des charges fourni par l'encadrant).",
+            "criteres_reussite": [
+              "Tous les acteurs identifiés",
+              "Au moins 5 cas d'usage représentés",
+              "Diagramme de classes avec relations et multiplicités correctes"
+            ]
+          },
+          "livrable_attendu": "2 diagrammes UML (cas d'usage + classes) du projet réel",
+          "quiz": {
+            "titre": "Quiz - UML cas d'usage & classes",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Que représente un diagramme de cas d'utilisation ?",
+                "choix": [
+                  "Les interactions entre acteurs et fonctionnalités du système",
+                  "La structure interne du code",
+                  "Le déploiement physique du système",
+                  "Le planning du projet"
+                ],
+                "reponse_correcte": "Les interactions entre acteurs et fonctionnalités du système"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quelle relation UML représente un lien fort où l'objet contenu ne peut exister sans le conteneur ?",
+                "choix": [
+                  "Composition",
+                  "Association simple",
+                  "Dépendance",
+                  "Réalisation"
+                ],
+                "reponse_correcte": "Composition"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 2,
+          "titre": "UML : séquence et activité",
+          "objectifs": [
+            "Modéliser les interactions entre objets",
+            "Modéliser un flux de processus"
+          ],
+          "cours": {
+            "resume": "Le diagramme de séquence montre les échanges de messages entre objets dans le temps pour un scénario donné. Le diagramme d'activité représente un flux de processus avec ses étapes et décisions.",
+            "points_cles": [
+              "Acteurs/objets, lignes de vie, messages synchrones/asynchrones",
+              "Diagramme d'activité : actions, décisions (losanges), flux"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Modéliser le diagramme de séquence d'un scénario clé du projet réel (ex : 'un utilisateur s'inscrit') et le diagramme d'activité du processus correspondant.",
+            "criteres_reussite": [
+              "Diagramme de séquence cohérent avec le diagramme de classes du Jour 1",
+              "Diagramme d'activité incluant au moins une décision",
+              "Diagrammes validés par l'encadrant"
+            ]
+          },
+          "livrable_attendu": "Diagrammes de séquence et d'activité validés",
+          "quiz": null
+        },
+        {
+          "jour": 3,
+          "titre": "Python (rappels) + installation Django",
+          "objectifs": [
+            "Réviser les bases POO de Python",
+            "Installer et structurer un projet Django"
+          ],
+          "cours": {
+            "resume": "Django suit le pattern MVT (Model-View-Template), une variante du MVC. Un projet Django contient une ou plusieurs 'apps', chacune avec ses modèles, vues et urls.",
+            "points_cles": [
+              "Rappels Python : classes, héritage, list comprehension",
+              "django-admin startproject / startapp",
+              "Structure : settings.py, urls.py, models.py, views.py",
+              "Lancer le serveur de développement (runserver)"
+            ],
+            "ressources": [
+              {
+                "type": "documentation",
+                "titre": "Django - Documentation officielle",
+                "url": "https://docs.djangoproject.com"
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Créer un projet Django avec une app, configurer settings.py, créer une première vue 'Hello World' accessible via une URL.",
+            "criteres_reussite": [
+              "Projet Django démarré sans erreur",
+              "Une vue accessible via navigateur",
+              "App enregistrée dans INSTALLED_APPS"
+            ]
+          },
+          "livrable_attendu": "Projet Django fonctionnel en local, repo Git",
+          "quiz": {
+            "titre": "Quiz - Python & Django bases",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quel pattern architectural suit Django ?",
+                "choix": [
+                  "MVT (Model-View-Template)",
+                  "MVVM",
+                  "MVP",
+                  "Microservices"
+                ],
+                "reponse_correcte": "MVT (Model-View-Template)"
+              },
+              {
+                "type": "qcm_unique",
+                "question": "Quelle commande crée une nouvelle application Django ?",
+                "choix": [
+                  "python manage.py startapp nom_app",
+                  "django new app",
+                  "python manage.py createapp",
+                  "django-admin newapp"
+                ],
+                "reponse_correcte": "python manage.py startapp nom_app"
+              }
+            ]
+          }
+        },
+        {
+          "jour": 4,
+          "titre": "Django : modèles & ORM",
+          "objectifs": [
+            "Définir des modèles Django",
+            "Utiliser l'admin Django",
+            "Effectuer des requêtes ORM"
+          ],
+          "cours": {
+            "resume": "L'ORM Django traduit les classes Python (models.py) en tables SQL. Les migrations appliquent les changements de modèles à la base de données. L'admin Django génère automatiquement une interface de gestion.",
+            "points_cles": [
+              "models.py : Model, CharField, ForeignKey, ManyToManyField",
+              "makemigrations / migrate",
+              "admin.py : enregistrement des modèles",
+              "ORM : Model.objects.filter(), .get(), relations"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Implémenter en Django les classes du diagramme UML du Jour 1 (au moins 2-3 modèles liés par une ForeignKey), les migrer et les enregistrer dans l'admin.",
+            "criteres_reussite": [
+              "Modèles cohérents avec le diagramme de classes",
+              "Migrations appliquées sans erreur",
+              "Modèles visibles et gérables dans /admin"
+            ]
+          },
+          "livrable_attendu": "Modèles Django migrés, accessibles dans l'admin",
+          "quiz": {
+            "titre": "Quiz - Django ORM & modèles",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quelle commande génère les fichiers de migration à partir des modèles ?",
+                "choix": [
+                  "python manage.py makemigrations",
+                  "python manage.py migrate",
+                  "python manage.py syncdb",
+                  "python manage.py createmigrations"
+                ],
+                "reponse_correcte": "python manage.py makemigrations"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "ForeignKey permet de représenter une relation un-vers-plusieurs entre deux modèles.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        },
+        {
+          "jour": 5,
+          "titre": "Django : vues & API REST (DRF)",
+          "objectifs": [
+            "Créer des vues Django (function/class-based)",
+            "Exposer une API REST avec Django REST Framework"
+          ],
+          "cours": {
+            "resume": "Les Vues Django (différentes des Vues React) traitent les requêtes HTTP côté serveur. Django REST Framework simplifie la création d'API REST via les serializers et les ViewSets.",
+            "points_cles": [
+              "Serializers : transformation modèle <-> JSON",
+              "ViewSets + Routers : CRUD automatique",
+              "Différenciation Vue React (écran) vs Vue Django (logique serveur)",
+              "Test d'API avec Postman/Insomnia"
+            ],
+            "ressources": [
+              {
+                "type": "documentation",
+                "titre": "Django REST Framework - Documentation",
+                "url": "https://www.django-rest-framework.org"
+              }
+            ]
+          },
+          "exercice": {
+            "consigne": "Exposer les modèles du Jour 4 via une API REST complète (GET, POST, PUT, DELETE) avec Django REST Framework.",
+            "criteres_reussite": [
+              "CRUD complet fonctionnel sur au moins un modèle",
+              "Endpoints testés et validés avec Postman",
+              "Code organisé (serializers.py, views.py, urls.py séparés)"
+            ]
+          },
+          "livrable_attendu": "API REST testable, collection Postman, repo Git",
+          "quiz": {
+            "titre": "Quiz - Django REST Framework",
+            "score_minimum": 70,
+            "tentatives_max": 3,
+            "afficher_corrige": true,
+            "questions": [
+              {
+                "type": "qcm_unique",
+                "question": "Quel composant DRF transforme un objet Python en JSON et vice-versa ?",
+                "choix": [
+                  "Serializer",
+                  "ViewSet",
+                  "Router",
+                  "Middleware"
+                ],
+                "reponse_correcte": "Serializer"
+              },
+              {
+                "type": "vrai_faux",
+                "question": "Un ViewSet associé à un Router génère automatiquement les routes CRUD standard.",
+                "reponse_correcte": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "numero": 4,
+      "titre": "Intégration Front/Back & démarrage du projet",
+      "etapes": [
+        {
+          "jour": 1,
+          "titre": "Connecter React et Django",
+          "objectifs": [
+            "Configurer CORS",
+            "Consommer l'API Django depuis React"
+          ],
+          "cours": {
+            "resume": "CORS (Cross-Origin Resource Sharing) doit être configuré côté Django pour autoriser les requêtes venant du front React (souvent sur un port différent). Le front utilise fetch ou axios pour consommer l'API.",
+            "points_cles": [
+              "django-cors-headers : configuration CORS",
+              "axios vs fetch",
+              "Gestion des erreurs réseau côté React"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Afficher dans une Page React les données provenant de l'API Django créée en Semaine 3 (liste d'objets avec gestion du chargement et des erreurs).",
+            "criteres_reussite": [
+              "CORS configuré sans erreur en console",
+              "Données affichées correctement",
+              "Gestion d'erreur réseau visible à l'utilisateur"
+            ]
+          },
+          "livrable_attendu": "Page React connectée à l'API Django, repo Git",
+          "quiz": null
+        },
+        {
+          "jour": 2,
+          "titre": "Synchroniser Redux avec l'API (createAsyncThunk)",
+          "objectifs": [
+            "Utiliser createAsyncThunk pour les appels API dans Redux"
+          ],
+          "cours": {
+            "resume": "createAsyncThunk encapsule un appel asynchrone (API) et génère automatiquement les actions pending/fulfilled/rejected, que l'on gère dans les extraReducers d'un slice.",
+            "points_cles": [
+              "createAsyncThunk(type, payloadCreator)",
+              "extraReducers : pending, fulfilled, rejected",
+              "Gestion d'un état de chargement et d'erreur dans le slice"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Créer un thunk qui récupère les données de l'API Django et alimente un slice Redux dédié (avec état loading/error/data).",
+            "criteres_reussite": [
+              "Thunk fonctionnel avec les 3 états gérés",
+              "Données affichées via useSelector dans une Page",
+              "Aucun appel API direct dans les composants (tout passe par Redux)"
+            ]
+          },
+          "livrable_attendu": "Slice Redux connecté à l'API Django via thunk",
+          "quiz": null
+        },
+        {
+          "jour": 3,
+          "titre": "Authentification bout en bout",
+          "objectifs": [
+            "Implémenter login/register avec Django + JWT",
+            "Gérer l'état utilisateur connecté dans Redux"
+          ],
+          "cours": {
+            "resume": "djangorestframework-simplejwt fournit l'authentification par token JWT côté Django. Côté React, le token est stocké (en mémoire/Redux, pas en localStorage pour la sécurité) et l'état d'authentification est partagé via un slice 'auth'.",
+            "points_cles": [
+              "djangorestframework-simplejwt : endpoints token/refresh",
+              "Slice 'auth' : user, token, isAuthenticated",
+              "Routes protégées côté React (redirection si non connecté)"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Implémenter un flux complet login/logout : formulaire React → API Django (JWT) → mise à jour du slice auth → protection d'une route nécessitant une connexion.",
+            "criteres_reussite": [
+              "Login fonctionnel avec retour de token",
+              "État d'authentification persistant pendant la session",
+              "Route protégée inaccessible sans connexion"
+            ]
+          },
+          "livrable_attendu": "Flux d'authentification complet, repo Git",
+          "quiz": null
+        },
+        {
+          "jour": 4,
+          "titre": "Cahier des charges du projet réel",
+          "objectifs": [
+            "Affiner les diagrammes UML avec l'encadrant",
+            "Découper le projet en backlog de tâches"
+          ],
+          "cours": {
+            "resume": "Synthèse méthodologique : passage des diagrammes UML validés à un backlog de tâches actionnable (approche simplifiée de découpage en sprints).",
+            "points_cles": [
+              "Découpage en user stories/tâches",
+              "Priorisation simple (must-have / nice-to-have)"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Reprendre les diagrammes UML validés en Semaine 3, les affiner avec l'encadrant, et produire un backlog de tâches pour le projet réel de stage.",
+            "criteres_reussite": [
+              "Backlog validé par l'encadrant",
+              "Tâches priorisées"
+            ]
+          },
+          "livrable_attendu": "Backlog de tâches du projet de stage",
+          "quiz": null
+        },
+        {
+          "jour": 5,
+          "titre": "Démarrage effectif du projet de stage",
+          "objectifs": [
+            "Mettre en place le socle technique du vrai projet"
+          ],
+          "cours": {
+            "resume": "Mise en place de la structure de référence (repo Git, organisation /components /pages /store côté front, structure Django côté back) qui servira de base à tout le développement du stage.",
+            "points_cles": [
+              "Structure de dossiers standard front/back",
+              "Premier modèle + premier écran connecté"
+            ],
+            "ressources": []
+          },
+          "exercice": {
+            "consigne": "Initialiser le repo Git du projet réel, structurer le front (components/pages/store) et le back (apps Django), implémenter le premier modèle et le premier écran fonctionnel connecté à l'API.",
+            "criteres_reussite": [
+              "Repo initialisé avec structure claire",
+              "Premier modèle + premier écran fonctionnels de bout en bout"
+            ]
+          },
+          "livrable_attendu": "Socle technique du projet de stage, prêt pour la suite du développement",
+          "quiz": null
+        }
+      ]
+    }
+  ]
+}
