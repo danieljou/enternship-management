@@ -126,6 +126,8 @@ export function getPaiementColumns({
         }
         return (
           <PaiementReceiptButton
+            sessionId={row.original.sessionId}
+            stagiaireId={row.original.stagiaireId}
             stagiaireNom={row.original.stagiaireNom}
             stagiairePrenom={row.original.stagiairePrenom}
             sessionNom={row.original.sessionNom}

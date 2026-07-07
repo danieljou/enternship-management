@@ -2,7 +2,7 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 import type { TFunction } from "i18next";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { KeyRound, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,12 +18,14 @@ interface ColumnsOptions {
   t: TFunction;
   onEdit: (row: StagiaireWithRelations) => void;
   onDelete: (row: StagiaireWithRelations) => void;
+  onSendReset: (row: StagiaireWithRelations) => void;
 }
 
 export function getStagiaireColumns({
   t,
   onEdit,
   onDelete,
+  onSendReset,
 }: ColumnsOptions): ColumnDef<StagiaireWithRelations>[] {
   return [
     {
@@ -130,6 +132,12 @@ export function getStagiaireColumns({
               <Pencil className="h-4 w-4" />
               {t("common.edit")}
             </DropdownMenuItem>
+            {row.original.user_id && (
+              <DropdownMenuItem onSelect={() => onSendReset(row.original)}>
+                <KeyRound className="h-4 w-4" />
+                {t("stagiaires.send_reset_action")}
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem
               variant="destructive"
               onSelect={() => onDelete(row.original)}

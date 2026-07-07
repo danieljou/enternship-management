@@ -4,11 +4,14 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FileText } from "lucide-react";
 import { pdf } from "@react-pdf/renderer";
+import QRCode from "qrcode";
 
 import { Button } from "@/components/ui/button";
 import { PaiementReceipt } from "./paiement-receipt";
 
 interface PaiementReceiptButtonProps {
+  sessionId: string;
+  stagiaireId: string;
   stagiaireNom: string;
   stagiairePrenom: string;
   sessionNom: string;
@@ -23,6 +26,8 @@ interface PaiementReceiptButtonProps {
 }
 
 export function PaiementReceiptButton({
+  sessionId,
+  stagiaireId,
   stagiaireNom,
   stagiairePrenom,
   sessionNom,
@@ -41,7 +46,16 @@ export function PaiementReceiptButton({
   async function handlePrint() {
     setIsGenerating(true);
     try {
-      const receiptNumber = `REC-${new Date(date_paiement).getFullYear()}-${Date.now().toString(36).toUpperCase().slice(-6)}`;
+      const receiptNumber = `REC-${new Date(date_paiement).getFullYear()}-${sessionId.slice(0, 4)}${stagiaireId.slice(0, 4)}`.toUpperCase();
+
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? window.location.origin;
+      const verifyUrl = `${siteUrl}/verify/${sessionId}/${stagiaireId}`;
+      const qrCodeDataUrl = await QRCode.toDataURL(verifyUrl, {
+        margin: 1,
+        width: 200,
+        color: { dark: "#166534", light: "#ffffff" },
+      });
+
       const blob = await pdf(
         <PaiementReceipt
           stagiaireNom={stagiaireNom}
@@ -55,6 +69,7 @@ export function PaiementReceiptButton({
           remaining={remaining}
           status={status}
           receiptNumber={receiptNumber}
+          qrCodeDataUrl={qrCodeDataUrl}
         />,
       ).toBlob();
 

@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { DataTable, type FilterField } from "@/components/data-table";
 import type { Etablissement, Filiere, StagiaireWithRelations } from "@/lib/types";
 
-import { deleteStagiaire } from "./actions";
+import { deleteStagiaire, sendStagiairePasswordReset } from "./actions";
 import { getStagiaireColumns } from "./columns";
 import { StagiaireEditDialog } from "./stagiaire-edit-dialog";
 
@@ -46,6 +46,16 @@ export function StagiairesManager({
         t,
         onEdit: (row) => setEditing(row),
         onDelete: (row) => setDeleting(row),
+        onSendReset: (row) => {
+          startTransition(async () => {
+            const result = await sendStagiairePasswordReset(row.email);
+            if ("error" in result) {
+              toast.error(t(result.error));
+            } else {
+              toast.success(t("stagiaires.send_reset_success"));
+            }
+          });
+        },
       }),
     [t]
   );

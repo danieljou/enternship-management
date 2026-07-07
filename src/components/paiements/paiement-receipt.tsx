@@ -1,5 +1,7 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, Image, StyleSheet } from "@react-pdf/renderer";
 import { useMemo } from "react";
+
+const BRAND = "#166534";
 
 const styles = StyleSheet.create({
   page: {
@@ -11,55 +13,70 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginBottom: 30,
-    borderBottom: "2 solid #166534",
-    paddingBottom: 16,
+    alignItems: "center",
+    marginBottom: 28,
+    paddingBottom: 20,
+    borderBottom: `2 solid ${BRAND}`,
   },
-  orgBlock: {
-    flexDirection: "column",
+  brandRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
   },
-  orgName: {
+  logoMark: {
+    width: 34,
+    height: 34,
+    borderRadius: 8,
+    backgroundColor: BRAND,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logoMarkText: {
+    color: "#ffffff",
     fontSize: 16,
     fontWeight: "bold",
-    color: "#166534",
+  },
+  orgName: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: BRAND,
   },
   orgDoc: {
     fontSize: 9,
     color: "#6b7280",
-    marginTop: 2,
+    marginTop: 1,
   },
   titleBlock: {
     alignItems: "flex-end",
   },
   documentTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     textTransform: "uppercase",
-    letterSpacing: 2,
-    color: "#166534",
+    letterSpacing: 3,
+    color: BRAND,
   },
   metaGrid: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 24,
     backgroundColor: "#f8fafc",
-    padding: 12,
-    borderRadius: 6,
+    padding: 14,
+    borderRadius: 8,
     border: "1 solid #e5e7eb",
   },
   metaItem: {
     flexDirection: "column",
-    gap: 2,
+    gap: 3,
   },
   metaLabel: {
-    fontSize: 9,
+    fontSize: 8.5,
     color: "#6b7280",
     textTransform: "uppercase",
     letterSpacing: 1,
   },
   metaValue: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#111827",
   },
@@ -67,17 +84,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 10,
+    fontSize: 9.5,
     fontWeight: "bold",
-    color: "#166534",
+    color: BRAND,
     textTransform: "uppercase",
-    letterSpacing: 1,
-    marginBottom: 8,
+    letterSpacing: 1.2,
+    marginBottom: 10,
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 6,
+    paddingVertical: 7,
     borderBottom: "1 solid #f3f4f6",
   },
   rowLabel: {
@@ -90,17 +107,17 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   amountBox: {
-    marginTop: 20,
-    padding: 16,
+    marginTop: 8,
+    padding: 18,
     backgroundColor: "#f0fdf4",
-    border: "2 solid #166534",
-    borderRadius: 8,
+    border: `2 solid ${BRAND}`,
+    borderRadius: 10,
   },
   amountRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 6,
+    marginBottom: 7,
   },
   amountLabel: {
     fontSize: 11,
@@ -109,25 +126,30 @@ const styles = StyleSheet.create({
   amountValue: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "#166534",
+    color: BRAND,
   },
   statusRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 10,
-    paddingTop: 10,
+    marginTop: 12,
+    paddingTop: 12,
     borderTop: "1 solid #bbf7d0",
   },
   statusLabel: {
     fontSize: 11,
     color: "#374151",
   },
-  statusValue: {
-    fontSize: 13,
+  statusPill: {
+    backgroundColor: BRAND,
+    color: "#ffffff",
+    fontSize: 10,
     fontWeight: "bold",
-    color: "#166534",
     textTransform: "uppercase",
+    letterSpacing: 0.5,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 999,
   },
   footer: {
     position: "absolute",
@@ -137,8 +159,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: 16,
+    paddingTop: 18,
     borderTop: "1 solid #e5e7eb",
+  },
+  qrBlock: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  qrImage: {
+    width: 52,
+    height: 52,
+  },
+  qrCaption: {
+    fontSize: 8,
+    color: "#6b7280",
+    maxWidth: 130,
+  },
+  footerRight: {
+    alignItems: "flex-end",
   },
   footerText: {
     fontSize: 9,
@@ -158,6 +197,7 @@ interface PaiementReceiptProps {
   remaining: number;
   status: "impaye" | "partiel" | "paye";
   receiptNumber?: string;
+  qrCodeDataUrl?: string;
 }
 
 export function PaiementReceipt({
@@ -172,6 +212,7 @@ export function PaiementReceipt({
   remaining,
   status,
   receiptNumber,
+  qrCodeDataUrl,
 }: PaiementReceiptProps) {
   const formattedDate = useMemo(() => {
     const base = new Date(date_paiement);
@@ -201,9 +242,14 @@ export function PaiementReceipt({
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <View style={styles.orgBlock}>
-            <Text style={styles.orgName}>FUTURIX-iTech</Text>
-            <Text style={styles.orgDoc}>Reçu officiel de paiement</Text>
+          <View style={styles.brandRow}>
+            <View style={styles.logoMark}>
+              <Text style={styles.logoMarkText}>F</Text>
+            </View>
+            <View>
+              <Text style={styles.orgName}>FUTURIX-iTech</Text>
+              <Text style={styles.orgDoc}>Reçu officiel de paiement</Text>
+            </View>
           </View>
           <View style={styles.titleBlock}>
             <Text style={styles.documentTitle}>Reçu</Text>
@@ -267,7 +313,7 @@ export function PaiementReceipt({
             <Text
               style={{
                 ...styles.amountValue,
-                color: remaining > 0 ? "#b45309" : "#166534",
+                color: remaining > 0 ? "#b45309" : BRAND,
               }}
             >
               {remaining.toLocaleString("fr-FR")} FCFA
@@ -276,15 +322,28 @@ export function PaiementReceipt({
 
           <View style={styles.statusRow}>
             <Text style={styles.statusLabel}>Statut</Text>
-            <Text style={styles.statusValue}>{statusLabel}</Text>
+            <Text style={styles.statusPill}>{statusLabel}</Text>
           </View>
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            FUTURIX-iTech — Reçu généré automatiquement
-          </Text>
-          <Text style={styles.footerText}>{receiptNumber}</Text>
+          {qrCodeDataUrl ? (
+            <View style={styles.qrBlock}>
+              {/* react-pdf's Image has no `alt` prop (PDF output, not HTML) - false positive */}
+              {/* eslint-disable-next-line jsx-a11y/alt-text */}
+              <Image src={qrCodeDataUrl} style={styles.qrImage} />
+              <Text style={styles.qrCaption}>
+                Scannez ce code pour vérifier l&apos;authenticité de ce reçu, sans connexion requise.
+              </Text>
+            </View>
+          ) : (
+            <Text style={styles.footerText}>
+              FUTURIX-iTech — Reçu généré automatiquement
+            </Text>
+          )}
+          <View style={styles.footerRight}>
+            <Text style={styles.footerText}>{receiptNumber}</Text>
+          </View>
         </View>
       </Page>
     </Document>

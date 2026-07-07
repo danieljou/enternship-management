@@ -258,6 +258,9 @@
     "existing_account_invalid": "Ce compte n'est plus disponible.",
     "existing_account_taken": "Ce compte est déjà rattaché à un autre stagiaire.",
     "no_unlinked_accounts": "Aucun compte stagiaire disponible à rattacher pour le moment.",
+    "send_reset_action": "Envoyer un lien de réinitialisation",
+    "send_reset_success": "Lien de réinitialisation envoyé.",
+    "send_reset_error": "Impossible d'envoyer le lien de réinitialisation.",
     "edit_title": "Modifier le stagiaire",
     "update_success": "Stagiaire mis à jour.",
     "update_error": "Impossible de mettre à jour le stagiaire.",
@@ -533,7 +536,9 @@
     "submitting": "Enregistrement…",
     "success": "Mot de passe défini, vous pouvez vous connecter.",
     "error": "Le lien est invalide ou a expiré.",
-    "invalid_link": "Lien invalide ou expiré. Demandez à un administrateur de vous renvoyer une invitation."
+    "invalid_link": "Lien invalide ou expiré. Demandez à un administrateur de vous renvoyer une invitation.",
+    "same_password": "Le nouveau mot de passe doit être différent de l'ancien.",
+    "update_error": "Une erreur est survenue. Réessayez."
   },
   "forgotPassword": {
     "title": "Mot de passe oublié",
@@ -556,7 +561,11 @@
     "submit": "Réinitialiser le mot de passe",
     "submitting": "Enregistrement…",
     "success": "Mot de passe réinitialisé, vous pouvez vous connecter.",
-    "invalid_link": "Ce lien est invalide ou a expiré. Refaites une demande de réinitialisation."
+    "invalid_link": "Ce lien est invalide ou a expiré. Refaites une demande de réinitialisation.",
+    "error": "Le lien est invalide ou a expiré.",
+    "request_new": "Demander un nouveau lien",
+    "same_password": "Le nouveau mot de passe doit être différent de l'ancien.",
+    "update_error": "Une erreur est survenue. Réessayez."
   },
   "settings": {
     "title": "Paramètres",
@@ -837,5 +846,18 @@
     "livrable_statut_soumis": "Soumis",
     "livrable_statut_valide": "Validé",
     "livrable_statut_a_corriger": "À corriger"
+  },
+  "verify": {
+    "valid_title": "Reçu vérifié",
+    "valid_description": "Ce paiement est bien enregistré dans le système FUTURIX-iTech.",
+    "invalid_title": "Reçu introuvable",
+    "invalid_description": "Ce lien de vérification n'est pas valide ou ne correspond à aucun paiement enregistré.",
+    "stagiaire_label": "Stagiaire",
+    "session_label": "Session",
+    "due_label": "Montant dû",
+    "paid_label": "Total payé",
+    "remaining_label": "Reste à payer",
+    "last_payment_label": "Dernier paiement",
+    "footer_note": "Vérification officielle FUTURIX-iTech — aucune connexion requise."
   }
 }

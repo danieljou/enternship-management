@@ -18,7 +18,7 @@ export async function requestPasswordReset(values: ForgotPasswordValues): Promis
   // Always report success regardless of the outcome so we don't leak which
   // email addresses have an account.
   await supabase.auth.resetPasswordForEmail(parsed.data.email, {
-    redirectTo: `${siteUrl}/reset-password`,
+    redirectTo: `${siteUrl}/auth/confirm?next=/reset-password`,
   });
 
   return { success: true };

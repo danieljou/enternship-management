@@ -159,6 +159,8 @@ export function SessionPaiementsTab({
             </Button>
             {selectedStatus === "paye" && (
               <PaiementReceiptButton
+                sessionId={session.id}
+                stagiaireId={selected}
                 stagiaireNom={selectedStagiaireNom}
                 stagiairePrenom={selectedStagiairePrenom}
                 sessionNom={session.nom}

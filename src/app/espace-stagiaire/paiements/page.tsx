@@ -60,6 +60,7 @@ export default async function StagiairePaiementsPage() {
   return (
     <StagiairePaiementsList
       groups={groups}
+      stagiaireId={stagiaire.id}
       stagiaireNom={stagiaire.nom}
       stagiairePrenom={stagiaire.prenom}
     />

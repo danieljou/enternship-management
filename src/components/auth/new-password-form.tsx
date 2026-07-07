@@ -54,7 +54,21 @@ export function NewPasswordForm({ namespace }: NewPasswordFormProps) {
       const { error } = await supabase.auth.updateUser({ password: values.password });
 
       if (error) {
-        toast.error(t(`${namespace}.invalid_link`));
+        const sessionErrorCodes = [
+          "session_not_found",
+          "session_expired",
+          "bad_code_verifier",
+          "flow_state_not_found",
+          "flow_state_expired",
+        ];
+        if (sessionErrorCodes.includes(error.code ?? "")) {
+          toast.error(t(`${namespace}.invalid_link`));
+        } else if (error.code === "same_password") {
+          toast.error(t(`${namespace}.same_password`));
+        } else {
+          console.error("[new-password-form] updateUser failed:", error.code, error.message);
+          toast.error(t(`${namespace}.update_error`));
+        }
         return;
       }
 

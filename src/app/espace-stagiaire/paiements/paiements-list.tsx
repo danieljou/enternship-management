@@ -19,10 +19,12 @@ export interface SessionPaiementGroup {
 
 export function StagiairePaiementsList({
   groups,
+  stagiaireId,
   stagiaireNom,
   stagiairePrenom,
 }: {
   groups: SessionPaiementGroup[];
+  stagiaireId: string;
   stagiaireNom: string;
   stagiairePrenom: string;
 }) {
@@ -50,6 +52,8 @@ export function StagiairePaiementsList({
                 </Badge>
                 {status === "paye" && (
                   <PaiementReceiptButton
+                    sessionId={session.id}
+                    stagiaireId={stagiaireId}
                     stagiaireNom={stagiaireNom}
                     stagiairePrenom={stagiairePrenom}
                     sessionNom={session.nom}

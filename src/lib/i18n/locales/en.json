@@ -258,6 +258,9 @@
     "existing_account_invalid": "This account is no longer available.",
     "existing_account_taken": "This account is already linked to another intern.",
     "no_unlinked_accounts": "No intern account is available to link right now.",
+    "send_reset_action": "Send password reset link",
+    "send_reset_success": "Password reset link sent.",
+    "send_reset_error": "Couldn't send the password reset link.",
     "edit_title": "Edit intern",
     "update_success": "Intern updated.",
     "update_error": "Couldn't update the intern.",
@@ -533,7 +536,9 @@
     "submitting": "Saving…",
     "success": "Password set, you can now sign in.",
     "error": "This link is invalid or has expired.",
-    "invalid_link": "Invalid or expired link. Ask an admin to resend an invite."
+    "invalid_link": "Invalid or expired link. Ask an admin to resend an invite.",
+    "same_password": "The new password must be different from the current one.",
+    "update_error": "Something went wrong. Please try again."
   },
   "forgotPassword": {
     "title": "Forgot password",
@@ -556,7 +561,11 @@
     "submit": "Reset password",
     "submitting": "Saving…",
     "success": "Password reset, you can now sign in.",
-    "invalid_link": "This link is invalid or has expired. Request a new reset link."
+    "invalid_link": "This link is invalid or has expired. Request a new reset link.",
+    "error": "This link is invalid or has expired.",
+    "request_new": "Request a new link",
+    "same_password": "The new password must be different from the current one.",
+    "update_error": "Something went wrong. Please try again."
   },
   "settings": {
     "title": "Settings",
@@ -836,5 +845,18 @@
     "livrable_statut_soumis": "Submitted",
     "livrable_statut_valide": "Approved",
     "livrable_statut_a_corriger": "Needs changes"
+  },
+  "verify": {
+    "valid_title": "Receipt verified",
+    "valid_description": "This payment is confirmed in the FUTURIX-iTech system.",
+    "invalid_title": "Receipt not found",
+    "invalid_description": "This verification link is invalid or doesn't match any recorded payment.",
+    "stagiaire_label": "Intern",
+    "session_label": "Session",
+    "due_label": "Amount due",
+    "paid_label": "Total paid",
+    "remaining_label": "Remaining",
+    "last_payment_label": "Last payment",
+    "footer_note": "Official FUTURIX-iTech verification — no sign-in required."
   }
 }

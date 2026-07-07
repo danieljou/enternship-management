@@ -33,7 +33,7 @@ export async function createStagiaire(values: StagiaireValues): Promise<ActionRe
 
   const { data: invited, error: inviteError } = await admin.auth.admin.inviteUserByEmail(
     parsed.data.email,
-    { redirectTo: `${siteUrl}/set-password` }
+    { redirectTo: `${siteUrl}/auth/confirm?next=/set-password` }
   );
 
   if (inviteError || !invited.user) {
@@ -150,6 +150,21 @@ export async function updateStagiaire(
   }
 
   revalidatePath("/dashboard/stagiaires");
+  return { success: true };
+}
+
+export async function sendStagiairePasswordReset(email: string): Promise<ActionResult> {
+  const supabase = await createClient();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${siteUrl}/auth/confirm?next=/reset-password`,
+  });
+
+  if (error) {
+    return { error: "stagiaires.send_reset_error" };
+  }
+
   return { success: true };
 }
 

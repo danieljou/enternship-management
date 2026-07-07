@@ -21,12 +21,12 @@ export default async function Home({
 
   // Safety net: a Supabase auth link (password recovery, invite...) whose
   // redirect_to isn't in the project's allow-list falls back to this bare
-  // domain instead of the intended page - forward the PKCE code here
-  // instead of stranding the user on the landing page.
+  // domain instead of the intended page - forward the PKCE code to the
+  // exchange route instead of stranding the user on the landing page.
   if (params.code) {
-    const query = new URLSearchParams({ code: params.code });
-    if (params.type) query.set("type", params.type);
-    redirect(`/reset-password?${query.toString()}`);
+    const next = params.type === "invite" ? "/set-password" : "/reset-password";
+    const query = new URLSearchParams({ code: params.code, next });
+    redirect(`/auth/confirm?${query.toString()}`);
   }
 
   const supabase = await createClient();
