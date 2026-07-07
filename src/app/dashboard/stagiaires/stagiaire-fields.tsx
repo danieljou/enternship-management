@@ -16,7 +16,10 @@ import {
 } from "@/components/ui/select";
 import type { Etablissement, Filiere } from "@/lib/types";
 
+import type { EncadrantOption } from "../encadrants/actions";
 import type { StagiaireValues } from "./schema";
+
+const NO_ENCADRANT = "none";
 
 interface StagiaireFieldsProps {
   register: UseFormRegister<StagiaireValues>;
@@ -24,6 +27,7 @@ interface StagiaireFieldsProps {
   errors: FieldErrors<StagiaireValues>;
   etablissements: Etablissement[];
   filieres: Filiere[];
+  encadrants: EncadrantOption[];
   /** Replaces the default email input - used when linking an existing account instead of typing a new email. */
   emailSlot?: React.ReactNode;
 }
@@ -34,6 +38,7 @@ export function StagiaireFields({
   errors,
   etablissements,
   filieres,
+  encadrants,
   emailSlot,
 }: StagiaireFieldsProps) {
   const { t } = useTranslation();
@@ -194,6 +199,32 @@ export function StagiaireFields({
             {t(errors.filiereId.message ?? "")}
           </p>
         )}
+      </div>
+
+      <div className="flex flex-col gap-2 sm:col-span-2">
+        <Label>{t("stagiaires.encadrant_label")}</Label>
+        <Controller
+          control={control}
+          name="encadrantId"
+          render={({ field }) => (
+            <Select
+              value={field.value || NO_ENCADRANT}
+              onValueChange={(value) => field.onChange(value === NO_ENCADRANT ? "" : value)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={t("stagiaires.encadrant_placeholder")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={NO_ENCADRANT}>{t("stagiaires.encadrant_none")}</SelectItem>
+                {encadrants.map((item) => (
+                  <SelectItem key={item.userId} value={item.userId}>
+                    {item.prenom} {item.nom}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        />
       </div>
     </div>
   );

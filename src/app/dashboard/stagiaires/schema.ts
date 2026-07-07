@@ -10,6 +10,7 @@ export const stagiaireSchema = z.object({
   niveau: z.enum(["1", "2", "3", "4", "5"], "stagiaires.niveau_required"),
   etablissementId: z.string().min(1, "stagiaires.etablissement_required"),
   filiereId: z.string().min(1, "stagiaires.filiere_required"),
+  encadrantId: z.string().optional(),
   section: z.enum(["francophone", "anglophone"], "stagiaires.section_required"),
 });
 

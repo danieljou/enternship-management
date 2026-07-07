@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import type { Etablissement, Filiere, StagiaireWithRelations } from "@/lib/types";
 
+import type { EncadrantOption } from "../encadrants/actions";
 import { updateStagiaire } from "./actions";
 import { stagiaireSchema, type StagiaireValues } from "./schema";
 import { StagiaireFields } from "./stagiaire-fields";
@@ -26,6 +27,7 @@ interface StagiaireEditDialogProps {
   stagiaire: StagiaireWithRelations | null;
   etablissements: Etablissement[];
   filieres: Filiere[];
+  encadrants: EncadrantOption[];
 }
 
 export function StagiaireEditDialog({
@@ -34,6 +36,7 @@ export function StagiaireEditDialog({
   stagiaire,
   etablissements,
   filieres,
+  encadrants,
 }: StagiaireEditDialogProps) {
   const { t } = useTranslation();
   const [isPending, startTransition] = useTransition();
@@ -53,6 +56,7 @@ export function StagiaireEditDialog({
       niveau: "" as StagiaireValues["niveau"],
       etablissementId: "",
       filiereId: "",
+      encadrantId: "",
       section: "" as StagiaireValues["section"],
     },
   });
@@ -66,6 +70,7 @@ export function StagiaireEditDialog({
         niveau: String(stagiaire.niveau) as StagiaireValues["niveau"],
         etablissementId: stagiaire.etablissement_id ?? "",
         filiereId: stagiaire.filiere_id ?? "",
+        encadrantId: stagiaire.encadrant_id ?? "",
         section: stagiaire.section,
       });
     }
@@ -98,6 +103,7 @@ export function StagiaireEditDialog({
             errors={errors}
             etablissements={etablissements}
             filieres={filieres}
+            encadrants={encadrants}
           />
 
           <DialogFooter>

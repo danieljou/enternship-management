@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { Plus } from "lucide-react";
+import { Plus, Upload } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -20,25 +20,30 @@ import { Button } from "@/components/ui/button";
 import { DataTable, type FilterField } from "@/components/data-table";
 import type { Etablissement, Filiere, StagiaireWithRelations } from "@/lib/types";
 
+import type { EncadrantOption } from "../encadrants/actions";
 import { deleteStagiaire, sendStagiairePasswordReset } from "./actions";
 import { getStagiaireColumns } from "./columns";
+import { StagiaireImportDialog } from "./import-dialog";
 import { StagiaireEditDialog } from "./stagiaire-edit-dialog";
 
 interface StagiairesManagerProps {
   data: StagiaireWithRelations[];
   etablissements: Etablissement[];
   filieres: Filiere[];
+  encadrants: EncadrantOption[];
 }
 
 export function StagiairesManager({
   data,
   etablissements,
   filieres,
+  encadrants,
 }: StagiairesManagerProps) {
   const { t } = useTranslation();
   const [isPending, startTransition] = useTransition();
   const [editing, setEditing] = useState<StagiaireWithRelations | null>(null);
   const [deleting, setDeleting] = useState<StagiaireWithRelations | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
 
   const columns = useMemo(
     () =>
@@ -100,12 +105,18 @@ export function StagiairesManager({
           <h1 className="text-2xl font-semibold text-foreground">{t("stagiaires.title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">{t("stagiaires.description")}</p>
         </div>
-        <Button asChild>
-          <Link href="/dashboard/stagiaires/nouveau">
-            <Plus className="h-4 w-4" />
-            {t("stagiaires.add_button")}
-          </Link>
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button variant="outline" onClick={() => setImportOpen(true)}>
+            <Upload className="h-4 w-4" />
+            {t("bulk_import.open_button")}
+          </Button>
+          <Button asChild>
+            <Link href="/dashboard/stagiaires/nouveau">
+              <Plus className="h-4 w-4" />
+              {t("stagiaires.add_button")}
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <DataTable
@@ -117,12 +128,15 @@ export function StagiairesManager({
         showViewOptions
       />
 
+      <StagiaireImportDialog open={importOpen} onOpenChange={setImportOpen} />
+
       <StagiaireEditDialog
         open={!!editing}
         onOpenChange={(open) => !open && setEditing(null)}
         stagiaire={editing}
         etablissements={etablissements}
         filieres={filieres}
+        encadrants={encadrants}
       />
 
       <AlertDialog open={!!deleting} onOpenChange={(open) => !open && setDeleting(null)}>

@@ -30,7 +30,13 @@ export interface AdminProfileData {
   createdAt: string;
 }
 
-export function AdminProfileView({ profile }: { profile: AdminProfileData }) {
+export function AdminProfileView({
+  profile,
+  roleLabelKey = "profile.role_admin",
+}: {
+  profile: AdminProfileData;
+  roleLabelKey?: string;
+}) {
   const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -93,7 +99,7 @@ export function AdminProfileView({ profile }: { profile: AdminProfileData }) {
             <InfoRow label={t("profile.email")} value={profile.email} />
             <InfoRow
               label={t("profile.role")}
-              value={t("profile.role_admin")}
+              value={t(roleLabelKey)}
             />
             <InfoRow
               label={t("profile.created_at")}

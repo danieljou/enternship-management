@@ -31,6 +31,10 @@ export default async function DashboardLayout({
     redirect("/espace-stagiaire");
   }
 
+  if (profile?.role === "encadrant") {
+    redirect("/espace-encadrant");
+  }
+
   if (profile?.role !== "admin") {
     redirect("/unauthorized");
   }

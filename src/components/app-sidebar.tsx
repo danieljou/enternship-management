@@ -16,6 +16,7 @@ import {
   Milestone,
   NotebookText,
   Settings,
+  UserCog,
   UserRound,
   Wallet,
 } from "lucide-react";
@@ -54,6 +55,7 @@ const NAV_GROUPS: { labelKey: string; items: NavItem[] }[] = [
     labelKey: "sidebar.group_management",
     items: [
       { href: "/dashboard/stagiaires", labelKey: "sidebar.stagiaires", icon: GraduationCap },
+      { href: "/dashboard/encadrants", labelKey: "sidebar.encadrants", icon: UserCog },
       { href: "/dashboard/sessions", labelKey: "sidebar.sessions", icon: KanbanSquare },
       { href: "/dashboard/roadmaps", labelKey: "sidebar.roadmaps", icon: Milestone },
       { href: "/dashboard/paiements", labelKey: "sidebar.paiements", icon: Wallet },

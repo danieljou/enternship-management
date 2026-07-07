@@ -74,9 +74,8 @@ export const etapeSchema = z.object({
 
 export type EtapeValues = z.infer<typeof etapeSchema>;
 
-export const assignRoadmapSchema = z
+export const bulkAssignRoadmapSchema = z
   .object({
-    stagiaireId: z.string().min(1, "roadmaps.assign_stagiaire_required"),
     dateDebut: z.string().min(1, "roadmaps.assign_date_debut_required"),
     dateFin: z.string().min(1, "roadmaps.assign_date_fin_required"),
   })
@@ -85,7 +84,7 @@ export const assignRoadmapSchema = z
     path: ["dateFin"],
   });
 
-export type AssignRoadmapValues = z.infer<typeof assignRoadmapSchema>;
+export type BulkAssignRoadmapValues = z.infer<typeof bulkAssignRoadmapSchema>;
 
 export const livrableReviewSchema = z.object({
   decision: z.enum(["valide", "a_corriger"]),

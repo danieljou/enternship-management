@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -19,6 +19,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "FUTURIX-iTech - Suivi des stagiaires",
   description: "Plateforme de suivi des stagiaires FUTURIX-iTech.",
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "FUTURIX-iTech",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#166534",
 };
 
 export default function RootLayout({

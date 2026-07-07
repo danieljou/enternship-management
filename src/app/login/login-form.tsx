@@ -66,15 +66,6 @@ export function LoginForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <Label htmlFor="password">{t("login.password_label")}</Label>
-          <Link
-            href="/forgot-password"
-            className="text-xs font-medium text-cyan-600 transition-colors hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300"
-          >
-            {t("login.forgot_password")}
-          </Link>
-        </div>
         <div className="relative">
           <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -106,13 +97,23 @@ export function LoginForm() {
             {t(errors.password.message ?? "")}
           </p>
         )}
+
+        <div className="flex items-center justify-between">
+          <Label htmlFor="password">{t("login.password_label")}</Label>
+          <Link
+            href="/forgot-password"
+            className="text-xs font-medium text-cyan-600 transition-colors hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300"
+          >
+            {t("login.forgot_password")}
+          </Link>
+        </div>
       </div>
 
       <div
         role="alert"
         className={cn(
           "-mt-1 rounded-lg bg-red-500/10 px-3.5 py-2.5 text-sm text-red-600 transition-all dark:text-red-400",
-          serverError ? "opacity-100" : "hidden opacity-0"
+          serverError ? "opacity-100" : "hidden opacity-0",
         )}
       >
         {serverError ? t(serverError) : null}

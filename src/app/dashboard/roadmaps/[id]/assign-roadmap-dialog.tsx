@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useTransition } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useEffect, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -16,17 +17,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import type { Stagiaire } from "@/lib/types";
 
-import { assignRoadmap } from "../actions";
-import { assignRoadmapSchema, type AssignRoadmapValues } from "../schema";
+import { bulkAssignRoadmap } from "../actions";
+import { bulkAssignRoadmapSchema, type BulkAssignRoadmapValues } from "../schema";
 
 export function AssignRoadmapDialog({
   open,
@@ -41,25 +35,45 @@ export function AssignRoadmapDialog({
 }) {
   const { t } = useTranslation();
   const [isPending, startTransition] = useTransition();
+  const [syncedOpen, setSyncedOpen] = useState(open);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
-    control,
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<AssignRoadmapValues>({
-    resolver: zodResolver(assignRoadmapSchema),
-    defaultValues: { stagiaireId: "", dateDebut: "", dateFin: "" },
+  } = useForm<BulkAssignRoadmapValues>({
+    resolver: zodResolver(bulkAssignRoadmapSchema),
+    defaultValues: { dateDebut: "", dateFin: "" },
   });
 
+  if (open !== syncedOpen) {
+    setSyncedOpen(open);
+    setSelectedIds([]);
+    setSubmitError(null);
+  }
+
   useEffect(() => {
-    if (open) reset({ stagiaireId: "", dateDebut: "", dateFin: "" });
+    if (open) {
+      reset({ dateDebut: "", dateFin: "" });
+    }
   }, [open, reset]);
 
-  function onSubmit(values: AssignRoadmapValues) {
+  function toggle(id: string) {
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
+  }
+
+  function onSubmit(values: BulkAssignRoadmapValues) {
+    if (selectedIds.length === 0) {
+      setSubmitError(t("roadmaps.assign_stagiaire_required"));
+      return;
+    }
+    setSubmitError(null);
+
     startTransition(async () => {
-      const result = await assignRoadmap(templateId, values);
+      const result = await bulkAssignRoadmap(templateId, selectedIds, values);
       if ("error" in result) {
         toast.error(t(result.error));
         return;
@@ -78,28 +92,31 @@ export function AssignRoadmapDialog({
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="assign-stagiaire">{t("roadmaps.assign_stagiaire_label")}</Label>
-            <Controller
-              control={control}
-              name="stagiaireId"
-              render={({ field }) => (
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger id="assign-stagiaire" className="w-full" aria-invalid={!!errors.stagiaireId}>
-                    <SelectValue placeholder={t("roadmaps.assign_stagiaire_placeholder")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {stagiaires.map((stagiaire) => (
-                      <SelectItem key={stagiaire.id} value={stagiaire.id}>
-                        {stagiaire.prenom} {stagiaire.nom}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-            />
-            {errors.stagiaireId && (
-              <p className="text-xs text-red-600 dark:text-red-400">{t(errors.stagiaireId.message ?? "")}</p>
+            <Label>{t("roadmaps.assign_stagiaire_label")}</Label>
+            {stagiaires.length === 0 ? (
+              <p className="rounded-md border border-dashed px-3 py-2 text-sm text-muted-foreground">
+                {t("roadmaps.assign_no_stagiaires")}
+              </p>
+            ) : (
+              <div className="max-h-48 overflow-y-auto rounded-md border p-1.5">
+                {stagiaires.map((stagiaire) => (
+                  <label
+                    key={stagiaire.id}
+                    className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm text-foreground hover:bg-accent"
+                  >
+                    <Checkbox
+                      checked={selectedIds.includes(stagiaire.id)}
+                      onCheckedChange={() => toggle(stagiaire.id)}
+                    />
+                    {stagiaire.prenom} {stagiaire.nom}
+                  </label>
+                ))}
+              </div>
             )}
+            <p className="text-xs text-muted-foreground">
+              {t("roadmaps.assign_selected_count", { count: selectedIds.length })}
+            </p>
+            {submitError && <p className="text-xs text-red-600 dark:text-red-400">{submitError}</p>}
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

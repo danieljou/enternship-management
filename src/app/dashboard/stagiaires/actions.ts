@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { logActivity } from "@/lib/activity-log";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
@@ -18,6 +19,7 @@ function toRow(values: StagiaireValues) {
     niveau: Number(values.niveau),
     etablissement_id: values.etablissementId,
     filiere_id: values.filiereId,
+    encadrant_id: values.encadrantId || null,
     section: values.section,
   };
 }
@@ -42,6 +44,10 @@ export async function createStagiaire(values: StagiaireValues): Promise<ActionRe
   }
 
   const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { error: insertError } = await supabase
     .from("stagiaires")
     .insert({ ...toRow(parsed.data), user_id: invited.user.id });
@@ -50,6 +56,12 @@ export async function createStagiaire(values: StagiaireValues): Promise<ActionRe
     await admin.auth.admin.deleteUser(invited.user.id);
     return { error: "stagiaires.create_error" };
   }
+
+  await logActivity({
+    actorId: user?.id,
+    actionType: "stagiaire_created",
+    description: `${parsed.data.prenom} ${parsed.data.nom} a été ajouté(e) comme stagiaire`,
+  });
 
   revalidatePath("/dashboard/stagiaires");
   redirect("/dashboard/stagiaires?created=1");
@@ -166,6 +178,100 @@ export async function sendStagiairePasswordReset(email: string): Promise<ActionR
   }
 
   return { success: true };
+}
+
+export interface BulkImportRow {
+  line: number;
+  nom: string;
+  prenom: string;
+  email: string;
+  niveau: string;
+  etablissementNom: string;
+  filiereNom: string;
+  section: string;
+}
+
+export interface BulkImportResult {
+  created: number;
+  errors: { line: number; message: string }[];
+}
+
+export async function bulkCreateStagiaires(rows: BulkImportRow[]): Promise<BulkImportResult> {
+  const admin = createAdminClient();
+  const supabase = await createClient();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
+  const [{ data: etablissements }, { data: filieres }] = await Promise.all([
+    admin.from("etablissements").select("id, nom"),
+    admin.from("filieres").select("id, nom"),
+  ]);
+
+  const etablissementByName = new Map(
+    (etablissements ?? []).map((row) => [row.nom.trim().toLowerCase(), row.id]),
+  );
+  const filiereByName = new Map((filieres ?? []).map((row) => [row.nom.trim().toLowerCase(), row.id]));
+
+  const errors: { line: number; message: string }[] = [];
+  let created = 0;
+
+  for (const row of rows) {
+    const parsed = stagiaireSchema.safeParse({
+      nom: row.nom,
+      prenom: row.prenom,
+      email: row.email,
+      niveau: row.niveau,
+      etablissementId: etablissementByName.get(row.etablissementNom.trim().toLowerCase()) ?? "",
+      filiereId: filiereByName.get(row.filiereNom.trim().toLowerCase()) ?? "",
+      section: row.section === "anglophone" ? "anglophone" : "francophone",
+    });
+
+    if (!parsed.success) {
+      const firstIssue = parsed.error.issues[0];
+      errors.push({ line: row.line, message: firstIssue?.message ?? "bulk_import.row_invalid" });
+      continue;
+    }
+
+    if (!etablissementByName.has(row.etablissementNom.trim().toLowerCase())) {
+      errors.push({ line: row.line, message: "bulk_import.etablissement_not_found" });
+      continue;
+    }
+    if (!filiereByName.has(row.filiereNom.trim().toLowerCase())) {
+      errors.push({ line: row.line, message: "bulk_import.filiere_not_found" });
+      continue;
+    }
+
+    const { data: invited, error: inviteError } = await admin.auth.admin.inviteUserByEmail(
+      parsed.data.email,
+      { redirectTo: `${siteUrl}/auth/confirm?next=/set-password` }
+    );
+
+    if (inviteError || !invited.user) {
+      const alreadyExists = inviteError?.message?.toLowerCase().includes("already");
+      errors.push({
+        line: row.line,
+        message: alreadyExists ? "bulk_import.email_taken" : "bulk_import.create_failed",
+      });
+      continue;
+    }
+
+    const { error: insertError } = await supabase
+      .from("stagiaires")
+      .insert({ ...toRow(parsed.data), user_id: invited.user.id });
+
+    if (insertError) {
+      await admin.auth.admin.deleteUser(invited.user.id);
+      errors.push({ line: row.line, message: "bulk_import.create_failed" });
+      continue;
+    }
+
+    created += 1;
+  }
+
+  if (created > 0) {
+    revalidatePath("/dashboard/stagiaires");
+  }
+
+  return { created, errors };
 }
 
 export async function deleteStagiaire(id: string, userId: string | null): Promise<ActionResult> {

@@ -2,18 +2,19 @@
 
 import { revalidatePath } from "next/cache";
 
+import { logActivity } from "@/lib/activity-log";
 import { createNotifications } from "@/lib/notifications";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import type { RoadmapStatut } from "@/lib/types";
 
 import {
-  assignRoadmapSchema,
+  bulkAssignRoadmapSchema,
   etapeSchema,
   livrableReviewSchema,
   roadmapTemplateSchema,
   semaineSchema,
-  type AssignRoadmapValues,
+  type BulkAssignRoadmapValues,
   type EtapeValues,
   type LivrableReviewValues,
   type RoadmapTemplateValues,
@@ -21,6 +22,31 @@ import {
 } from "./schema";
 
 export type ActionResult = { error: string } | { success: true };
+
+/** reviewLivrable is reachable from both the admin validation queue and the
+ * encadrant portal, both of which call it with a service-role client that
+ * bypasses RLS - this replaces that missing row-level check by hand. */
+async function assertCanReviewInstance(instanceId: string): Promise<boolean> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return false;
+
+  const admin = createAdminClient();
+  const { data: profile } = await admin.from("profiles").select("role").eq("id", user.id).single();
+  if (profile?.role === "admin") return true;
+  if (profile?.role !== "encadrant") return false;
+
+  const { data: instance } = await admin
+    .from("roadmap_instances")
+    .select("stagiaire:stagiaires(encadrant_id)")
+    .eq("id", instanceId)
+    .single();
+
+  const stagiaire = instance?.stagiaire as unknown as { encadrant_id: string | null } | null;
+  return stagiaire?.encadrant_id === user.id;
+}
 
 function toTemplateRow(values: RoadmapTemplateValues) {
   return {
@@ -209,9 +235,13 @@ export async function deleteEtape(id: string, roadmapId: string): Promise<Action
   return { success: true };
 }
 
-export async function assignRoadmap(templateId: string, values: AssignRoadmapValues): Promise<ActionResult> {
-  const parsed = assignRoadmapSchema.safeParse(values);
-  if (!parsed.success) return { error: "roadmaps.assign_error" };
+export async function bulkAssignRoadmap(
+  templateId: string,
+  stagiaireIds: string[],
+  values: BulkAssignRoadmapValues,
+): Promise<ActionResult> {
+  const parsed = bulkAssignRoadmapSchema.safeParse(values);
+  if (!parsed.success || stagiaireIds.length === 0) return { error: "roadmaps.assign_error" };
 
   const supabase = await createClient();
   const {
@@ -224,29 +254,47 @@ export async function assignRoadmap(templateId: string, values: AssignRoadmapVal
     .eq("id", templateId)
     .single();
 
-  const { error } = await supabase.from("roadmap_instances").insert({
-    template_id: templateId,
-    stagiaire_id: parsed.data.stagiaireId,
-    assigned_by: user?.id ?? null,
-    version_snapshot: template?.version ?? "1.0",
-    date_debut: parsed.data.dateDebut,
-    date_fin: parsed.data.dateFin,
-  });
+  // Skip stagiaires already assigned to this template rather than failing the whole batch.
+  const { data: existing } = await supabase
+    .from("roadmap_instances")
+    .select("stagiaire_id")
+    .eq("template_id", templateId)
+    .in("stagiaire_id", stagiaireIds);
+  const alreadyAssigned = new Set((existing ?? []).map((row) => row.stagiaire_id));
+  const targetIds = stagiaireIds.filter((id) => !alreadyAssigned.has(id));
+
+  if (targetIds.length === 0) return { error: "roadmaps.assign_error" };
+
+  const { error } = await supabase.from("roadmap_instances").insert(
+    targetIds.map((stagiaireId) => ({
+      template_id: templateId,
+      stagiaire_id: stagiaireId,
+      assigned_by: user?.id ?? null,
+      version_snapshot: template?.version ?? "1.0",
+      date_debut: parsed.data.dateDebut,
+      date_fin: parsed.data.dateFin,
+    })),
+  );
 
   if (error) return { error: "roadmaps.assign_error" };
 
-  const { data: stagiaire } = await supabase
-    .from("stagiaires")
-    .select("user_id")
-    .eq("id", parsed.data.stagiaireId)
-    .single();
+  const { data: stagiaires } = await supabase.from("stagiaires").select("user_id").in("id", targetIds);
 
   await createNotifications({
-    userIds: [stagiaire?.user_id],
+    userIds: (stagiaires ?? []).map((row) => row.user_id),
     type: "roadmap_assignation",
     title: "Nouvelle roadmap assignée",
     body: "Une nouvelle roadmap vous a été assignée.",
     link: "/espace-stagiaire/roadmap",
+  });
+
+  await logActivity({
+    actorId: user?.id,
+    actionType: "roadmap_assigned",
+    description:
+      targetIds.length === 1
+        ? "Une roadmap a été affectée à un stagiaire"
+        : `Une roadmap a été affectée à ${targetIds.length} stagiaires`,
   });
 
   revalidatePath(`/dashboard/roadmaps/${templateId}`);
@@ -271,6 +319,10 @@ export async function reviewLivrable(
 ): Promise<ActionResult> {
   const parsed = livrableReviewSchema.safeParse(values);
   if (!parsed.success) return { error: "roadmaps.livrable_review_error" };
+
+  if (!(await assertCanReviewInstance(instanceId))) {
+    return { error: "roadmaps.livrable_review_error" };
+  }
 
   const admin = createAdminClient();
 
@@ -322,6 +374,17 @@ export async function reviewLivrable(
 
 export async function unlockEtape(progressId: string): Promise<ActionResult> {
   const admin = createAdminClient();
+
+  const { data: progress } = await admin
+    .from("roadmap_progress")
+    .select("instance_id")
+    .eq("id", progressId)
+    .single();
+
+  if (!progress || !(await assertCanReviewInstance(progress.instance_id))) {
+    return { error: "roadmaps.unlock_error" };
+  }
+
   const { error } = await admin
     .from("roadmap_progress")
     .update({ quiz_tentatives: 0, updated_at: new Date().toISOString() })

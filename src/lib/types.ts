@@ -1,6 +1,6 @@
 export type StagiaireSection = "francophone" | "anglophone";
 
-export type AppRole = "admin" | "stagiaire";
+export type AppRole = "admin" | "stagiaire" | "encadrant";
 
 export interface Profile {
   id: string;
@@ -33,8 +33,16 @@ export interface Stagiaire {
   adresse: string | null;
   etablissement_id: string | null;
   filiere_id: string | null;
+  encadrant_id: string | null;
   section: StagiaireSection;
   created_at: string;
+}
+
+export interface Encadrant {
+  userId: string;
+  nom: string;
+  prenom: string;
+  email: string;
 }
 
 export interface StagiaireWithRelations extends Stagiaire {
@@ -103,6 +111,28 @@ export interface Evaluation {
 
 export interface EvaluationWithSession extends Evaluation {
   session: Pick<StageSession, "id" | "nom"> | null;
+}
+
+export type TacheStatut = "a_faire" | "en_cours" | "termine";
+export type TachePriorite = "basse" | "normale" | "haute";
+
+export interface Tache {
+  id: string;
+  titre: string;
+  description: string | null;
+  statut: TacheStatut;
+  priorite: TachePriorite;
+  echeance: string | null;
+  stagiaire_id: string | null;
+  assigned_to: string | null;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TacheWithRelations extends Tache {
+  stagiaire: Pick<Stagiaire, "id" | "nom" | "prenom"> | null;
+  assignee: Pick<Profile, "id" | "nom" | "prenom"> | null;
 }
 
 export interface SessionDocument {

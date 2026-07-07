@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { ActivityLogWidget, type ActivityLogItem } from "@/components/activity-log-widget";
+import type { ActivityActionType } from "@/lib/activity-log";
 import { createClient } from "@/lib/supabase/server";
 
 import {
@@ -36,6 +38,7 @@ export default async function DashboardPage() {
     { data: stagiaireFilieres },
     { data: feeSessions },
     { data: totalPaiements },
+    { data: activityRows },
   ] = await Promise.all([
     supabase.auth.getUser(),
     supabase.from("stagiaires").select("*", { count: "exact", head: true }),
@@ -51,7 +54,21 @@ export default async function DashboardPage() {
     supabase.from("stagiaires").select("filiere_id"),
     supabase.from("stage_sessions").select("id, frais_montant").not("frais_montant", "is", null),
     supabase.from("paiements").select("montant"),
+    supabase
+      .from("activity_log")
+      .select("id, actor_nom, actor_prenom, action_type, description, created_at")
+      .order("created_at", { ascending: false })
+      .limit(8),
   ]);
+
+  const activityItems: ActivityLogItem[] = (activityRows ?? []).map((row) => ({
+    id: row.id,
+    actorNom: row.actor_nom,
+    actorPrenom: row.actor_prenom,
+    actionType: row.action_type as ActivityActionType,
+    description: row.description,
+    createdAt: row.created_at,
+  }));
 
   const francophone =
     sectionRows?.filter((row) => row.section === "francophone").length ?? 0;
@@ -117,6 +134,8 @@ export default async function DashboardPage() {
         />
         <DashboardPaiementsChart collecte={totalCollecte} reste={totalReste} />
       </div>
+
+      <ActivityLogWidget items={activityItems} />
     </div>
   );
 }

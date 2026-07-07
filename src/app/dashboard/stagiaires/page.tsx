@@ -7,6 +7,7 @@ import type {
   StagiaireWithRelations,
 } from "@/lib/types";
 
+import { getEncadrants } from "../encadrants/actions";
 import { StagiaireCreatedToast } from "./created-toast";
 import { StagiairesManager } from "./stagiaires-manager";
 
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 export default async function StagiairesPage() {
   const supabase = await createClient();
 
-  const [{ data: stagiaires }, { data: etablissements }, { data: filieres }] =
+  const [{ data: stagiaires }, { data: etablissements }, { data: filieres }, encadrants] =
     await Promise.all([
       supabase
         .from("stagiaires")
@@ -30,6 +31,7 @@ export default async function StagiairesPage() {
         .select("*")
         .order("nom", { ascending: true }),
       supabase.from("filieres").select("*").order("nom", { ascending: true }),
+      getEncadrants(),
     ]);
 
   return (
@@ -39,6 +41,7 @@ export default async function StagiairesPage() {
         data={(stagiaires as StagiaireWithRelations[] | null) ?? []}
         etablissements={(etablissements as Etablissement[] | null) ?? []}
         filieres={(filieres as Filiere[] | null) ?? []}
+        encadrants={encadrants}
       />
     </>
   );

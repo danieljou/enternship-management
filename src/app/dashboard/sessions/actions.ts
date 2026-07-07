@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
+import { logActivity } from "@/lib/activity-log";
 import { createNotifications } from "@/lib/notifications";
 import { formatMontant } from "@/lib/payment-status";
 import { createClient } from "@/lib/supabase/server";
@@ -308,6 +309,7 @@ export async function createEvaluation(
 
   revalidatePath(`/dashboard/sessions/${sessionId}`);
   revalidatePath("/espace-stagiaire/evaluations");
+  revalidatePath(`/espace-encadrant/stagiaires/${stagiaireId}`);
   return { success: true };
 }
 
@@ -431,7 +433,7 @@ export async function createPaiement(
   }
 
   const [{ data: stagiaire }, { data: session }] = await Promise.all([
-    supabase.from("stagiaires").select("user_id").eq("id", stagiaireId).single(),
+    supabase.from("stagiaires").select("user_id, nom, prenom").eq("id", stagiaireId).single(),
     supabase.from("stage_sessions").select("nom").eq("id", sessionId).single(),
   ]);
 
@@ -441,6 +443,16 @@ export async function createPaiement(
     title: "Paiement enregistré",
     body: `${formatMontant(Number(parsed.data.montant))} — ${session?.nom ?? ""}`,
     link: "/espace-stagiaire/paiements",
+  });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  await logActivity({
+    actorId: user?.id,
+    actionType: "paiement_recorded",
+    description: `Paiement de ${formatMontant(Number(parsed.data.montant))} enregistré pour ${stagiaire?.prenom ?? ""} ${stagiaire?.nom ?? ""}`.trim(),
   });
 
   revalidatePath(`/dashboard/sessions/${sessionId}`);

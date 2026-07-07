@@ -21,6 +21,19 @@ export default async function EspaceStagiaireLayout({
     redirect("/login");
   }
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  if (profile?.role === "admin") {
+    redirect("/dashboard");
+  }
+  if (profile?.role === "encadrant") {
+    redirect("/espace-encadrant");
+  }
+
   const { data: notifications } = await supabase
     .from("notifications")
     .select("*")

@@ -19,6 +19,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { Etablissement, Filiere } from "@/lib/types";
 
+import type { EncadrantOption } from "../../encadrants/actions";
 import { createStagiaire, createStagiaireFromExisting, type UnlinkedAccount } from "../actions";
 import { stagiaireSchema, type StagiaireValues } from "../schema";
 import { StagiaireFields } from "../stagiaire-fields";
@@ -27,12 +28,14 @@ interface StagiaireCreateFormProps {
   etablissements: Etablissement[];
   filieres: Filiere[];
   unlinkedAccounts: UnlinkedAccount[];
+  encadrants: EncadrantOption[];
 }
 
 export function StagiaireCreateForm({
   etablissements,
   filieres,
   unlinkedAccounts,
+  encadrants,
 }: StagiaireCreateFormProps) {
   const { t } = useTranslation();
   const [isPending, startTransition] = useTransition();
@@ -54,6 +57,7 @@ export function StagiaireCreateForm({
       niveau: "" as StagiaireValues["niveau"],
       etablissementId: "",
       filiereId: "",
+      encadrantId: "",
       section: "" as StagiaireValues["section"],
     },
   });
@@ -123,6 +127,7 @@ export function StagiaireCreateForm({
             errors={errors}
             etablissements={etablissements}
             filieres={filieres}
+            encadrants={encadrants}
             emailSlot={
               mode === "invite" ? undefined : unlinkedAccounts.length === 0 ? (
                 <p className="rounded-lg border border-dashed px-3 py-2 text-sm text-muted-foreground">

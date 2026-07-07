@@ -9,9 +9,11 @@ import {
   Building2,
   FileText,
   GraduationCap,
+  KanbanSquare,
   LayoutDashboard,
   ListChecks,
   LogOut,
+  Milestone,
   NotebookText,
   Search,
   Settings,
@@ -40,9 +42,12 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { LanguageToggle } from "@/components/language-toggle";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { globalSearch, type GlobalSearchResults } from "@/lib/actions/global-search";
 import type { AppNotification } from "@/lib/types";
 
 import { logout } from "@/app/dashboard/actions";
+
+const EMPTY_SEARCH_RESULTS: GlobalSearchResults = { stagiaires: [], sessions: [], roadmaps: [] };
 
 const SEARCH_ITEMS = [
   { href: "/dashboard", labelKey: "sidebar.dashboard", icon: LayoutDashboard },
@@ -67,6 +72,8 @@ export function AppTopbar({
   const { t } = useTranslation();
   const router = useRouter();
   const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [dataResults, setDataResults] = useState<GlobalSearchResults>(EMPTY_SEARCH_RESULTS);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -80,8 +87,26 @@ export function AppTopbar({
     return () => document.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    const timeout = setTimeout(() => {
+      if (query.trim().length < 2) {
+        if (!cancelled) setDataResults(EMPTY_SEARCH_RESULTS);
+        return;
+      }
+      globalSearch(query).then((results) => {
+        if (!cancelled) setDataResults(results);
+      });
+    }, 250);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+  }, [query]);
+
   function goTo(href: string) {
     setSearchOpen(false);
+    setQuery("");
     router.push(href);
   }
 
@@ -152,13 +177,66 @@ export function AppTopbar({
         onOpenChange={setSearchOpen}
         title={t("topbar.search_dialog_title")}
       >
-        <Command>
-          <CommandInput placeholder={t("topbar.search_placeholder")} />
+        <Command shouldFilter={false}>
+          <CommandInput
+            placeholder={t("topbar.search_placeholder")}
+            value={query}
+            onValueChange={setQuery}
+          />
           <CommandList>
             <CommandEmpty>{t("topbar.no_results")}</CommandEmpty>
-            <CommandGroup>
-              {SEARCH_ITEMS.map(({ href, labelKey, icon: Icon }) => (
-                <CommandItem key={href} value={t(labelKey)} onSelect={() => goTo(href)}>
+
+            {dataResults.stagiaires.length > 0 && (
+              <CommandGroup heading={t("topbar.search_group_stagiaires")}>
+                {dataResults.stagiaires.map((stagiaire) => (
+                  <CommandItem
+                    key={stagiaire.id}
+                    value={`stagiaire-${stagiaire.id}`}
+                    onSelect={() => goTo("/dashboard/stagiaires")}
+                  >
+                    <GraduationCap />
+                    {stagiaire.prenom} {stagiaire.nom}
+                    <span className="ml-auto text-xs text-muted-foreground">{stagiaire.email}</span>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+
+            {dataResults.sessions.length > 0 && (
+              <CommandGroup heading={t("topbar.search_group_sessions")}>
+                {dataResults.sessions.map((session) => (
+                  <CommandItem
+                    key={session.id}
+                    value={`session-${session.id}`}
+                    onSelect={() => goTo(`/dashboard/sessions/${session.id}`)}
+                  >
+                    <KanbanSquare />
+                    {session.nom}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+
+            {dataResults.roadmaps.length > 0 && (
+              <CommandGroup heading={t("topbar.search_group_roadmaps")}>
+                {dataResults.roadmaps.map((roadmap) => (
+                  <CommandItem
+                    key={roadmap.id}
+                    value={`roadmap-${roadmap.id}`}
+                    onSelect={() => goTo(`/dashboard/roadmaps/${roadmap.id}`)}
+                  >
+                    <Milestone />
+                    {roadmap.titre}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+
+            <CommandGroup heading={t("topbar.search_group_pages")}>
+              {SEARCH_ITEMS.filter(({ labelKey }) =>
+                t(labelKey).toLowerCase().includes(query.toLowerCase()),
+              ).map(({ href, labelKey, icon: Icon }) => (
+                <CommandItem key={href} value={href} onSelect={() => goTo(href)}>
                   <Icon />
                   {t(labelKey)}
                 </CommandItem>
