@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-import { RecoveryLinkFallback } from "@/components/auth/recovery-link-fallback";
+import { AuthHashFallback } from "@/components/auth/auth-hash-fallback";
 import { createClient } from "@/lib/supabase/server";
 
 import { LandingContent } from "./landing-content";
@@ -36,7 +36,7 @@ export default async function Home({
 
   return (
     <>
-      <RecoveryLinkFallback />
+      <AuthHashFallback />
       <LandingContent isAuthenticated={!!user} />
     </>
   );
