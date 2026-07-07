@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
+import { RecoveryLinkFallback } from "@/components/auth/recovery-link-fallback";
 import { createClient } from "@/lib/supabase/server";
 
 import { LandingContent } from "./landing-content";
@@ -10,11 +12,32 @@ export const metadata: Metadata = {
     "Plateforme de gestion des stagiaires, établissements partenaires et filières pour FUTURIX-iTech.",
 };
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ code?: string; type?: string }>;
+}) {
+  const params = await searchParams;
+
+  // Safety net: a Supabase auth link (password recovery, invite...) whose
+  // redirect_to isn't in the project's allow-list falls back to this bare
+  // domain instead of the intended page - forward the PKCE code here
+  // instead of stranding the user on the landing page.
+  if (params.code) {
+    const query = new URLSearchParams({ code: params.code });
+    if (params.type) query.set("type", params.type);
+    redirect(`/reset-password?${query.toString()}`);
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return <LandingContent isAuthenticated={!!user} />;
+  return (
+    <>
+      <RecoveryLinkFallback />
+      <LandingContent isAuthenticated={!!user} />
+    </>
+  );
 }
