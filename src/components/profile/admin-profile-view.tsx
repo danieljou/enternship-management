@@ -16,11 +16,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  adminProfileSchema,
-  updateAdminProfile,
-  type AdminProfileValues,
-} from "@/app/profile/actions";
+import { updateAdminProfile } from "@/app/profile/actions";
+import { adminProfileSchema, type AdminProfileValues } from "@/app/profile/schema";
 
 export interface AdminProfileData {
   userId: string;

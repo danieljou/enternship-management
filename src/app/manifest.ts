@@ -4,11 +4,12 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "FUTURIX-iTech - Suivi des stagiaires",
     short_name: "FUTURIX-iTech",
-    description: "Plateforme de suivi des stagiaires, établissements et filières.",
+    description:
+      "Plateforme de suivi des stagiaires, établissements et filières.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
-    theme_color: "#166534",
+    theme_color: "#0092b8",
     icons: [
       {
         src: "/icon.svg",

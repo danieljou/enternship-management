@@ -1,6 +1,6 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
-const BRAND = "#166534";
+const BRAND = "#0092b8";
 
 const styles = StyleSheet.create({
   page: {
@@ -105,7 +105,13 @@ export function TableReportPdf({
             ))}
           </View>
           {rows.map((row, rowIndex) => (
-            <View key={rowIndex} style={[styles.row, ...(rowIndex % 2 === 1 ? [styles.rowAlt] : [])]}>
+            <View
+              key={rowIndex}
+              style={[
+                styles.row,
+                ...(rowIndex % 2 === 1 ? [styles.rowAlt] : []),
+              ]}
+            >
               {row.map((cell, cellIndex) => (
                 <Text key={cellIndex} style={styles.cell}>
                   {cell}
@@ -116,7 +122,8 @@ export function TableReportPdf({
         </View>
 
         <Text style={styles.footer} fixed>
-          FUTURIX-iTech — {rows.length} ligne(s) — Document généré automatiquement
+          FUTURIX-iTech — {rows.length} ligne(s) — Document généré
+          automatiquement
         </Text>
       </Page>
     </Document>

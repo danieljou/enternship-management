@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import { StagiaireMobileNav } from "@/components/stagiaire-mobile-nav";
 import { StagiaireSidebar } from "@/components/stagiaire-sidebar";
 import { StagiaireTopbar } from "@/components/stagiaire-topbar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
@@ -51,8 +52,9 @@ export default async function EspaceStagiaireLayout({
             userId={user.id}
             initialNotifications={(notifications as AppNotification[] | null) ?? []}
           />
-          <div className="flex-1 p-4 sm:p-6">{children}</div>
+          <div className="flex-1 p-4 pb-24 sm:p-6 md:pb-6">{children}</div>
         </SidebarInset>
+        <StagiaireMobileNav />
       </SidebarProvider>
     </TooltipProvider>
   );

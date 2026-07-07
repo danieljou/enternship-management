@@ -996,5 +996,9 @@
     "filiere_not_found": "Program not found.",
     "email_taken": "This email address is already in use.",
     "create_failed": "Creation failed."
+  },
+  "mobileNav": {
+    "navigation": "Main navigation",
+    "more": "More"
   }
 }

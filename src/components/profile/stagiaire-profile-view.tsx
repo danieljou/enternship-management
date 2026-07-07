@@ -16,11 +16,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  stagiaireProfileSchema,
-  updateStagiaireProfile,
-  type StagiaireProfileValues,
-} from "@/app/profile/actions";
+import { updateStagiaireProfile } from "@/app/profile/actions";
+import { stagiaireProfileSchema, type StagiaireProfileValues } from "@/app/profile/schema";
 import type { StagiaireWithRelations } from "@/lib/types";
 
 export interface StagiaireProfileViewData {

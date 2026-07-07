@@ -1,7 +1,14 @@
-import { Document, Page, Text, View, Image, StyleSheet } from "@react-pdf/renderer";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  Image,
+  StyleSheet,
+} from "@react-pdf/renderer";
 import { useMemo } from "react";
 
-const BRAND = "#166534";
+const BRAND = "#0092b8";
 
 const styles = StyleSheet.create({
   page: {
@@ -333,7 +340,8 @@ export function PaiementReceipt({
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
               <Image src={qrCodeDataUrl} style={styles.qrImage} />
               <Text style={styles.qrCaption}>
-                Scannez ce code pour vérifier l&apos;authenticité de ce reçu, sans connexion requise.
+                Scannez ce code pour vérifier l&apos;authenticité de ce reçu,
+                sans connexion requise.
               </Text>
             </View>
           ) : (
