@@ -121,7 +121,7 @@ export function getPaiementColumns({
         />
       ),
       cell: ({ row }) => {
-        if (row.original.status !== "paye") {
+        if (row.original.status !== "paye" && row.original.status !== "partiel") {
           return null;
         }
         return (

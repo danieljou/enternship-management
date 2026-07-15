@@ -157,7 +157,7 @@ export function SessionPaiementsTab({
               <Plus className="h-4 w-4" />
               {t("sessions.paiement_add_button")}
             </Button>
-            {selectedStatus === "paye" && (
+            {(selectedStatus === "paye" || selectedStatus === "partiel") && (
               <PaiementReceiptButton
                 sessionId={session.id}
                 stagiaireId={selected}
@@ -169,7 +169,7 @@ export function SessionPaiementsTab({
                 moyen={selectedPaiements[0]?.moyen ?? null}
                 due={due}
                 paid={selectedPaid}
-                remaining={0}
+                remaining={Math.max(due - selectedPaid, 0)}
                 status={selectedStatus}
               />
             )}

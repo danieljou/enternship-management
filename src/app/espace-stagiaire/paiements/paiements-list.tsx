@@ -50,7 +50,7 @@ export function StagiairePaiementsList({
                 <Badge className={cn("border-0", getPaiementStatusClasses(status))}>
                   {t(`sessions.paiement_status_${status}`)}
                 </Badge>
-                {status === "paye" && (
+                {(status === "paye" || status === "partiel") && (
                   <PaiementReceiptButton
                     sessionId={session.id}
                     stagiaireId={stagiaireId}
@@ -62,7 +62,7 @@ export function StagiairePaiementsList({
                     moyen={paiements[paiements.length - 1]?.moyen ?? null}
                     due={due}
                     paid={paid}
-                    remaining={0}
+                    remaining={Math.max(due - paid, 0)}
                     status={status}
                   />
                 )}
